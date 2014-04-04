@@ -1,0 +1,35 @@
+# imports functions
+importFrom(mvtnorm,rmvnorm)
+import(betareg)
+import(MASS)
+import(Formula)
+import(boot)
+import(plsdof)
+import(plsRglm)
+
+
+# functions
+export(bootplsbeta                )
+export(coefs.plsRbeta             ) 
+export(kfolds2CVinfos_beta        ) 
+export(permcoefs.plsRbeta         ) 
+export(PLS_beta                   ) 
+export(PLS_beta_formula           ) 
+export(PLS_beta_kfoldcv           ) 
+export(PLS_beta_kfoldcv_formula   ) 
+export(PLS_beta_wvc               ) 
+export(plsRbeta                   ) 
+export(plsRbetamodel.default      ) 
+export(plsRbetamodel.formula      ) 
+export(print.plsRbetamodel        ) 
+export(print.summary.plsRbetamodel) 
+export(simul_data_UniYX_beta      )
+export(summary.plsRbetamodel      ) 
+export(tilt.bootplsbeta           )
+ 
+
+
+## S3 methods for generics in base
+S3method("print", "plsRbetamodel")
+S3method("summary", "plsRbetamodel")
+S3method("print", "summary.plsRbetamodel")
