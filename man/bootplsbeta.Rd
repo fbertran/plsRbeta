@@ -29,7 +29,7 @@ sim="ordinary", stype="i", ...)
 }
 \references{
 \enc{Frédéric}{Fr\'ed\'eric} Bertrand, Nicolas Meyer, \enc{Michèle}{Mich\`ele} Beau-Faller, Karim El Bayed, Izzie-Jacques Namer, Myriam Maumy-Bertrand (2013). \enc{Régression}{R\'egression} \enc{Bêta}{B\^eta} PLS. \emph{Journal de la \enc{Société}{Soci\'et'e} Française de Statistique}, \bold{154}(3):143-159.
-\url{http://smf4.emath.fr/Publications/JSFdS/154_3/html/}
+\url{http://publications-sfds.math.cnrs.fr/index.php/J-SFdS/article/view/215}
 }
 \author{\enc{Frédéric}{Fr\'ed\'eric} Bertrand\cr
 \email{frederic.bertrand@math.unistra.fr}\cr
@@ -50,18 +50,14 @@ boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), type = c("norm","basic","perc"
 boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), type = c("norm","basic","perc","bca"), index=5)
 boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), type = c("norm","basic","perc","bca"), index=6)
 
-boxplots.bootpls(GazYield.boot)
-confints.bootpls(GazYield.boot)
-plots.confints.bootpls(confints.bootpls(GazYield.boot))
+plsRglm::boxplots.bootpls(GazYield.boot)
+plsRglm::confints.bootpls(GazYield.boot)
+plsRglm::plots.confints.bootpls(plsRglm::confints.bootpls(GazYield.boot))
 
 
 plot(GazYield.boot,index=2)
-jack.after.boot(GazYield.boot, index=2, useJ=TRUE, nt=3)
+boot::jack.after.boot(GazYield.boot, index=2, useJ=TRUE, nt=3)
 plot(GazYield.boot, index=2,jack=TRUE)
-
-aze_compl.tilt.boot <- tilt.bootplsbeta(plsRbeta(yield~.,data=GasolineYield,
-nt=3,modele="pls-beta"), statistic=coefs.plsR, R=c(499, 100, 100), 
-alpha=c(0.025, 0.975), sim="ordinary", stype="i", index=1)
 
 # PLS bootstrap balanced
 
@@ -75,19 +71,15 @@ boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), type = c("norm","basic","perc"
 boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), type = c("norm","basic","perc","bca"), index=6)
 
 
-boxplots.bootpls(GazYield.boot)
-confints.bootpls(GazYield.boot)
-plots.confints.bootpls(confints.bootpls(GazYield.boot))
+plsRglm::boxplots.bootpls(GazYield.boot)
+plsRglm::confints.bootpls(GazYield.boot)
+plsRglm::plots.confints.bootpls(plsRglm::confints.bootpls(GazYield.boot))
 
 
 
 plot(GazYield.boot)
-jack.after.boot(GazYield.boot, index=1, useJ=TRUE, nt=3)
+boot::jack.after.boot(GazYield.boot, index=1, useJ=TRUE, nt=3)
 plot(GazYield.boot,jack=TRUE)
-
-aze_compl.tilt.boot <- tilt.bootplsbeta(plsRbeta(yield~.,data=GasolineYield,
-nt=3,modele="pls-beta"), statistic=coefs.plsR, R=c(499, 100, 100), 
-alpha=c(0.025, 0.975), sim="balanced", stype="i", index=1)
 
 
 # PLS permutation bootstrap
@@ -100,7 +92,7 @@ boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), type = c("norm","basic","perc"
 boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), type = c("norm","basic","perc"), index=4)
 boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), type = c("norm","basic","perc"), index=5)
 boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), type = c("norm","basic","perc"), index=6)
-boxplots.bootpls(GazYield.boot)
+plsRglm::boxplots.bootpls(GazYield.boot)
 plot(GazYield.boot)
 }
 }\keyword{models}

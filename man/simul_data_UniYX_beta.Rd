@@ -23,16 +23,16 @@ This function should be combined with the replicate function to give rise to a l
 }
 \references{
 \enc{Frédéric}{Fr\'ed\'eric} Bertrand, Nicolas Meyer, \enc{Michèle}{Mich\`ele} Beau-Faller, Karim El Bayed, Izzie-Jacques Namer, Myriam Maumy-Bertrand (2013). \enc{Régression}{R\'egression} \enc{Bêta}{B\^eta} PLS. \emph{Journal de la \enc{Société}{Soci\'et'e} Française de Statistique}, \bold{154}(3):143-159.
-\url{http://smf4.emath.fr/Publications/JSFdS/154_3/html/}
+\url{http://publications-sfds.math.cnrs.fr/index.php/J-SFdS/article/view/215}
 
 T. Naes, H. Martens (1985). Comparison of prediction methods for 
 multicollinear data.  \emph{Commun. Stat., Simul.}, \bold{14}:545-576.
-\url{http://dx.doi.org/10.1080/03610918508812458}
+<doi:10.1080/03610918508812458>
  
 Baibing Li, Julian Morris, Elaine B. Martin (2002).
 Model selection for partial least squares regression, 
 \emph{Chemometrics and Intelligent Laboratory Systems}, \bold{64}:79-89.
-\url{http://dx.doi.org/10.1016/S0169-7439(02)00051-5}
+<doi:110.1016/S0169-7439(02)00051-5>
 }
 \author{\enc{Fr?d?ric}{Fr\'ed\'eric} Bertrand\cr
 \email{frederic.bertrand@math.unistra.fr}\cr

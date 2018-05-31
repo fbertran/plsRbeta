@@ -9,7 +9,7 @@ citEntry(entry="article",
          pages = 143-159,
          year         = 2013,
          note         = "Paris",
-         url          = "http://smf4.emath.fr/Publications/JSFdS/154_3/html/",
+         url          = "http://publications-sfds.math.cnrs.fr/index.php/J-SFdS/article/view/215",
          textVersion = 
          paste("Frederic Bertrand, Nicolas Meyer, Michele Beau-Faller, Karim El Bayed, Izzie-Jacques Namer, Myriam Maumy-Bertrand (2013). Regression Beta PLS. Journal de la Societe Francaise de Statistique, 154(3):143-159. http://smf4.emath.fr/Publications/JSFdS/154_3/html/.")
 )
@@ -20,13 +20,13 @@ vers <- paste("R package version", meta$Version)
 
 citEntry(entry="Manual",
          title = titl,
-         author = personList(as.person("F. Bertrand"), as.person("M. Maumy-Bertrand"), as.person("N. Meyer")),
+         author = personList(as.person("F. Bertrand"), as.person("M. Maumy-Bertrand")),
    publisher = "manual",
          year         = year,
          note         = vers,
          url          = "http://www-irma.u-strasbg.fr/~fbertran/",
          textVersion = 
-         paste("Frederic Bertrand, Nicolas Meyer and Myriam Maumy-Bertrand (",year ,"). ", 
+         paste("Frederic Bertrand and Myriam Maumy-Bertrand (",year ,"). ", 
                titl, ", ", vers, ".", sep=""
                )
 )
