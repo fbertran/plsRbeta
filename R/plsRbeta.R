@@ -1,1 +1,1 @@
-plsRbeta <- function (x, ...) UseMethod("plsRbetamodel")
+plsRbeta <- plsRbetamodel <- function (x, ...) UseMethod("plsRbetamodel")

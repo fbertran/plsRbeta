@@ -38,6 +38,8 @@ export(tilt.bootplsbeta           )
 
 
 ## S3 methods for generics in base
+S3method("plsRbetamodel", "default")
+S3method("plsRbetamodel", "formula")
 S3method("print", "plsRbetamodel")
 S3method("summary", "plsRbetamodel")
 S3method("print", "summary.plsRbetamodel")
