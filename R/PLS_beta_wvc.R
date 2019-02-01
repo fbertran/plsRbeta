@@ -1,4 +1,4 @@
-PLS_beta_wvc <- function(dataY,dataX,nt=2,dataPredictY=dataX,modele="pls",family=NULL,scaleX=TRUE,scaleY=NULL,keepcoeffs=FALSE,keepstd.coeffs=FALSE,tol_Xi=10^(-12),weights,method="logistic",link=NULL,link.phi=NULL,type="ML") {
+PLS_beta_wvc <- function(dataY,dataX,nt=2,dataPredictY=dataX,modele="pls",family=NULL,scaleX=TRUE,scaleY=NULL,keepcoeffs=FALSE,keepstd.coeffs=FALSE,tol_Xi=10^(-12),weights,method="logistic",link=NULL,link.phi=NULL,type="ML",verbose=TRUE){
 
 ##################################################
 #                                                #
@@ -6,25 +6,25 @@ PLS_beta_wvc <- function(dataY,dataX,nt=2,dataPredictY=dataX,modele="pls",family
 #                                                #
 ##################################################
 
-cat("____************************************************____\n")
-if(any(apply(is.na(dataX),MARGIN=2,"all"))){return(vector("list",0)); cat("One of the columns of dataX is completely filled with missing data"); stop()}
-if(any(apply(is.na(dataX),MARGIN=1,"all"))){return(vector("list",0)); cat("One of the rows of dataX is completely filled with missing data"); stop()}
+if(verbose){cat("____************************************************____\n")}
+if(any(apply(is.na(dataX),MARGIN=2,"all"))){return(vector("list",0)); if(verbose){cat("One of the columns of dataX is completely filled with missing data")}; stop()}
+if(any(apply(is.na(dataX),MARGIN=1,"all"))){return(vector("list",0)); if(verbose){cat("One of the rows of dataX is completely filled with missing data")}; stop()}
 if(identical(dataPredictY,dataX)){PredYisdataX <- TRUE} else {PredYisdataX <- FALSE}
 if(!PredYisdataX){
-if(any(apply(is.na(dataPredictY),MARGIN=2,"all"))){return(vector("list",0)); cat("One of the columns of dataPredictY is completely filled with missing data"); stop()}
-if(any(apply(is.na(dataPredictY),MARGIN=1,"all"))){return(vector("list",0)); cat("One of the rows of dataPredictY is completely filled with missing data"); stop()}
+if(any(apply(is.na(dataPredictY),MARGIN=2,"all"))){return(vector("list",0)); if(verbose){cat("One of the columns of dataPredictY is completely filled with missing data")}; stop()}
+if(any(apply(is.na(dataPredictY),MARGIN=1,"all"))){return(vector("list",0)); if(verbose){cat("One of the rows of dataPredictY is completely filled with missing data")}; stop()}
 }
 if(missing(weights)){NoWeights=TRUE} else {if(all(weights==rep(1,length(dataY)))){NoWeights=TRUE} else {NoWeights=FALSE}}
 if(any(is.na(dataX))) {na.miss.X <- TRUE} else na.miss.X <- FALSE
 if(any(is.na(dataY))) {na.miss.Y <- TRUE} else na.miss.Y <- FALSE
 if(any(is.na(dataPredictY))) {na.miss.PredictY <- TRUE} else {na.miss.PredictY <- FALSE}
-if(na.miss.X|na.miss.Y){naive=TRUE; cat(paste("Only naive DoF can be used with missing data\n",sep="")); if(!NoWeights){cat(paste("Weights cannot be used with missing data\n",sep=""))}}
-if(!NoWeights){naive=TRUE; cat(paste("Only naive DoF can be used with weighted PLS\n",sep=""))}
+if(na.miss.X|na.miss.Y){naive=TRUE; if(verbose){cat(paste("Only naive DoF can be used with missing data\n",sep=""))}; if(!NoWeights){if(verbose){cat(paste("Weights cannot be used with missing data\n",sep=""))}}}
+if(!NoWeights){naive=TRUE; if(verbose){cat(paste("Only naive DoF can be used with weighted PLS\n",sep=""))}}
 
 
 if (!is.data.frame(dataX)) {dataX <- data.frame(dataX)}
 if (is.null(modele) & !is.null(family)) {modele<-"pls-glm-family"}
-if (!(modele %in% c("pls","pls-glm-logistic","pls-glm-family","pls-glm-Gamma","pls-glm-gaussian","pls-glm-inverse.gaussian","pls-glm-poisson","pls-glm-polr","pls-beta"))) {print(modele);stop("'modele' not recognized")}
+if (!(modele %in% c("pls","pls-glm-logistic","pls-glm-family","pls-glm-Gamma","pls-glm-gaussian","pls-glm-inverse.gaussian","pls-glm-poisson","pls-glm-polr","pls-beta"))) {if(verbose){cat(modele,"\n\n")};stop("'modele' not recognized")}
 if (!(modele %in% "pls-glm-family") & !is.null(family)) {stop("Set 'modele=pls-glm-family' to use the family option")}
 if (modele=="pls") {family<-NULL}
 if (modele=="pls-beta") {family<-NULL}
@@ -41,10 +41,10 @@ if (!is.null(family)) {
 }
 if (is.null(link)){link<-"logit"} else {if(!(link %in% c("logit", "probit", "cloglog", "cauchit", "log", "loglog")) & !is(link,"link-glm")) {link<-"logit"}}
 
-    if (modele %in% c("pls-glm-family","pls-glm-Gamma","pls-glm-gaussian","pls-glm-inverse.gaussian","pls-glm-logistic","pls-glm-poisson")) {print(family)}
-    if (modele %in% c("pls-glm-polr")) {cat("\nModel:", modele, "\n");cat("Method:", method, "\n\n")}
-    if (modele=="pls-beta") {cat("\nModel:", modele, "\n\n");cat("Link:", link, "\n\n");cat("Link.phi:", link.phi, "\n\n");cat("Type:", type, "\n\n")}
-    if (modele=="pls") {cat("\nModel:", modele, "\n\n")}
+    if (modele %in% c("pls-glm-family","pls-glm-Gamma","pls-glm-gaussian","pls-glm-inverse.gaussian","pls-glm-logistic","pls-glm-poisson")) {if(verbose){cat(family,"\n\n")}}
+    if (modele %in% c("pls-glm-polr")) {if(verbose){cat("\nModel:", modele, "\n");cat("Method:", method, "\n\n")}}
+    if (modele=="pls-beta") {if(verbose){cat("\nModel:", modele, "\n\n");cat("Link:", link, "\n\n");cat("Link.phi:", link.phi, "\n\n");cat("Type:", type, "\n\n")}}
+    if (modele=="pls") {if(verbose){cat("\nModel:", modele, "\n\n")}}
 
 scaleY <- NULL
 if (is.null(scaleY)) {
@@ -134,11 +134,11 @@ temptest <- sqrt(colSums(res$residXX^2, na.rm=TRUE))
 if(any(temptest<tol_Xi)) {
 break_nt <- TRUE
 if (is.null(names(which(temptest<tol_Xi)))) {
-cat(paste("Warning : ",paste(names(which(temptest<tol_Xi)),sep="",collapse=" ")," < 10^{-12}\n",sep=""))
+  if(verbose){cat(paste("Warning : ",paste(names(which(temptest<tol_Xi)),sep="",collapse=" ")," < 10^{-12}\n",sep=""))}
 } else {
-cat(paste("Warning : ",paste((which(temptest<tol_Xi)),sep="",collapse=" ")," < 10^{-12}\n",sep=""))
+  if(verbose){cat(paste("Warning : ",paste((which(temptest<tol_Xi)),sep="",collapse=" ")," < 10^{-12}\n",sep=""))}
 }
-cat(paste("Warning only ",res$computed_nt," components could thus be extracted\n",sep=""))
+if(verbose){cat(paste("Warning only ",res$computed_nt," components could thus be extracted\n",sep=""))}
 break
 }
 
@@ -211,8 +211,8 @@ for (jj in 1:(res$nc)) {
 }
 if(break_nt_betareg){
 res$computed_nt <- kk-1
-cat(paste("Error in betareg found\n",sep=""))
-cat(paste("Warning only ",res$computed_nt," components were thus extracted\n",sep=""))
+if(verbose){cat(paste("Error in betareg found\n",sep=""))}
+if(verbose){cat(paste("Warning only ",res$computed_nt," components were thus extracted\n",sep=""))}
 break}
 XXwotNA[!XXNA] <- 0
 rm(jj,tts)}
@@ -238,8 +238,8 @@ if (na.miss.X & !na.miss.Y) {
 for (ii in 1:res$nr) {
 if(rcond(t(cbind(res$pp,temppp)[XXNA[ii,],,drop=FALSE])%*%cbind(res$pp,temppp)[XXNA[ii,],,drop=FALSE])<tol_Xi) {
 break_nt <- TRUE; res$computed_nt <- kk-1
-cat(paste("Warning : reciprocal condition number of t(cbind(res$pp,temppp)[XXNA[",ii,",],,drop=FALSE])%*%cbind(res$pp,temppp)[XXNA[",ii,",],,drop=FALSE] < 10^{-12}\n",sep=""))
-cat(paste("Warning only ",res$computed_nt," components could thus be extracted\n",sep=""))
+if(verbose){cat(paste("Warning : reciprocal condition number of t(cbind(res$pp,temppp)[XXNA[",ii,",],,drop=FALSE])%*%cbind(res$pp,temppp)[XXNA[",ii,",],,drop=FALSE] < 10^{-12}\n",sep=""))}
+if(verbose){cat(paste("Warning only ",res$computed_nt," components could thus be extracted\n",sep=""))}
 break
 }
 }
@@ -252,8 +252,8 @@ if (na.miss.PredictY & !na.miss.Y) {
 for (ii in 1:nrow(PredictYwotNA)) {
 if(rcond(t(cbind(res$pp,temppp)[PredictYNA[ii,],,drop=FALSE])%*%cbind(res$pp,temppp)[PredictYNA[ii,],,drop=FALSE])<tol_Xi) {
 break_nt <- TRUE; res$computed_nt <- kk-1
-cat(paste("Warning : reciprocal condition number of t(cbind(res$pp,temppp)[PredictYNA[",ii,",,drop=FALSE],])%*%cbind(res$pp,temppp)[PredictYNA[",ii,",,drop=FALSE],] < 10^{-12}\n",sep=""))
-cat(paste("Warning only ",res$computed_nt," components could thus be extracted\n",sep=""))
+if(verbose){cat(paste("Warning : reciprocal condition number of t(cbind(res$pp,temppp)[PredictYNA[",ii,",,drop=FALSE],])%*%cbind(res$pp,temppp)[PredictYNA[",ii,",,drop=FALSE],] < 10^{-12}\n",sep=""))}
+if(verbose){cat(paste("Warning only ",res$computed_nt," components could thus be extracted\n",sep=""))}
 break
 }
 }
@@ -269,20 +269,20 @@ if (kk==1) {
 coeftempconstbeta <- try(coef(betareg::betareg(YwotNA~1,hessian=TRUE,model=TRUE,link=link,phi=FALSE,link.phi=link.phi,type=type)),silent=TRUE)
 if(!is.numeric(coeftempconstbeta)){
 res$computed_nt <- kk-1
-cat(paste("Error in betareg found\n",sep=""))
-cat(paste("Warning only ",res$computed_nt," components were thus extracted\n",sep=""))
+if(verbose){cat(paste("Error in betareg found\n",sep=""))}
+if(verbose){cat(paste("Warning only ",res$computed_nt," components were thus extracted\n",sep=""))}
 break}
 rm(coeftempconstbeta)
 }
 coeftempregbeta <- try(coef(betareg::betareg(YwotNA~tt,hessian=TRUE,model=TRUE,link=link,phi=FALSE,link.phi=link.phi,type=type)),silent=TRUE)
 if(!is.numeric(coeftempregbeta)){
 res$computed_nt <- kk-1
-cat(paste("Error in betareg found\n",sep=""))
-cat(paste("Warning only ",res$computed_nt," components were thus extracted\n",sep=""))
+if(verbose){cat(paste("Error in betareg found\n",sep=""))}
+if(verbose){cat(paste("Warning only ",res$computed_nt," components were thus extracted\n",sep=""))}
 break}
-rm(tt,envir=parent.frame(n=sys.nframe()))
+suppressWarnings(rm(tt,envir=parent.frame(n=sys.nframe())))
 rm(tt)
-rm(YwotNA,envir=parent.frame(n=sys.nframe()))
+suppressWarnings(rm(YwotNA,envir=parent.frame(n=sys.nframe())))
 rm(coeftempregbeta)
 
 
@@ -582,7 +582,7 @@ if (na.miss.X & !na.miss.Y) {
 
 
 if (kk==1) {
-cat("____There are some NAs in X but not in Y____\n")
+  if(verbose){cat("____There are some NAs in X but not in Y____\n")}
 }
 
 ##############################################
@@ -651,7 +651,7 @@ res$Yresidus <- dataY-res$YChapeau
 
 else {
 if (kk==1) {
-cat("____There are some NAs both in X and Y____\n")
+  if(verbose){cat("____There are some NAs both in X and Y____\n")}
 }
 }
 }
@@ -730,7 +730,7 @@ rm(tempConstante)
 }
 
 if(res$computed_nt==0){
-cat("No component could be extracted please check the data for NA only lines or columns\n"); stop()
+  if(verbose){cat("No component could be extracted please check the data for NA only lines or columns\n")}; stop()
 }
 
 
@@ -742,7 +742,7 @@ cat("No component could be extracted please check the data for NA only lines or 
 
 if (!(na.miss.PredictY | na.miss.Y)) {
 if(kk==1){
-cat("____Predicting X without NA neither in X nor in Y____\n")
+  if(verbose){cat("____Predicting X without NA neither in X nor in Y____\n")}
 }
 res$ttPredictY <- PredictYwotNA%*%res$wwetoile 
 colnames(res$ttPredictY) <- paste("tt",1:kk,sep="")
@@ -750,7 +750,7 @@ colnames(res$ttPredictY) <- paste("tt",1:kk,sep="")
 else {
 if (na.miss.PredictY & !na.miss.Y) {
 if(kk==1){
-cat("____Predicting X with NA in X and not in Y____\n")
+  if(verbose){cat("____Predicting X with NA in X and not in Y____\n")}
 }
 res$ttPredictY <- NULL
 
@@ -762,7 +762,7 @@ colnames(res$ttPredictY) <- paste("tt",1:kk,sep="")
 }
 else {
 if(kk==1){
-cat("____There are some NAs both in X and Y____\n")
+  if(verbose){cat("____There are some NAs both in X and Y____\n")}
 }
 }
 }
@@ -845,7 +845,7 @@ res$listValsPhisPredictY <- cbind(res$listValsPhisPredictY,predict(tempregbeta,n
 }
 
 
-cat("____Component____",kk,"____\n")
+if(verbose){cat("____Component____",kk,"____\n")}
 }
 
 
@@ -858,8 +858,8 @@ cat("____Component____",kk,"____\n")
 ##############################################
 
 
-cat("****________________________________________________****\n")
-cat("\n")
+if(verbose){cat("****________________________________________________****\n")}
+if(verbose){cat("\n")}
 #if(res$computed_nt>0 & modele=="pls-beta") {rm(jj,tt,tts,XXwotNA,YwotNA,envir=parent.frame(n=sys.nframe()))}
 
 if(modele %in% "pls-beta"){

@@ -1,0 +1,113 @@
+---
+title: "Partial Least Squares Regression for Beta Regression Models"
+author: "Frédéric Bertrand"
+output: github_document
+---
+
+[![CRAN status](https://www.r-pkg.org/badges/version/plsRbeta)](https://cran.r-project.org/package=plsRbeta)
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%",
+  dpi=300,fig.width=7,
+  fig.keep="all"
+)
+```
+
+# plsRbeta
+
+The goal of plsRbeta is to provide Partial least squares Regression for (weighted) beta regression models and k-fold cross-validation of such models using various criteria. It allows for missing data in the explanatory variables. Bootstrap confidence intervals constructions are also available. (Bertrand 2013,  <http://journal-sfds.fr/article/view/215>).
+
+## Installation
+
+You can install the released version of plsRbeta from [CRAN](https://CRAN.R-project.org) with:
+
+```{r, eval = FALSE}
+install.packages("plsRbeta")
+```
+
+You can install the development version of plsRbeta from [github](https://github.com) with:
+
+```{r, eval = FALSE}
+devtools::install_github("fbertran/plsRbeta")
+```
+
+## Example
+
+### Using a model matrix
+Fit a plsRbeta model using a model matrix.
+
+```{r exampleXY, cache=TRUE}
+data("GasolineYield",package="betareg")
+yGasolineYield <- GasolineYield$yield
+XGasolineYield <- GasolineYield[,2:5]
+library(plsRbeta)
+modpls <- plsRbeta(yGasolineYield,XGasolineYield,nt=3,modele="pls-beta")
+print(modpls)
+```
+
+Additionnal values can be retrieved from the fitted model.
+```{r exampleXY2}
+modpls$pp
+modpls$Coeffs
+modpls$Std.Coeffs
+modpls$InfCrit
+modpls$PredictY[1,]
+rm("modpls")
+```
+
+###Formula support
+
+Fit a plsRbeta model using formula support.
+```{r exampleformula, cache=TRUE}
+data("GasolineYield",package="betareg")
+modpls <- plsRbeta(yield~.,data=GasolineYield,nt=3,modele="pls-beta", verbose=FALSE)
+print(modpls)
+```
+
+Additionnal values can be retrieved from the fitted model.
+```{r exampleformula2}
+modpls$pp
+modpls$Coeffs
+modpls$Std.Coeffs
+modpls$InfCrit
+modpls$PredictY[1,]
+```
+
+###Information criteria and cross validation
+
+```{r cv, cache=TRUE}
+data("GasolineYield",package="betareg")
+set.seed(1)
+bbb <- PLS_beta_kfoldcv_formula(yield~.,data=GasolineYield,nt=3,modele="pls-beta",verbose=FALSE)
+kfolds2CVinfos_beta(bbb)
+```
+
+###Bootstrap of the coefficients
+
+Computing bootstrap distributions
+```{r boot, warning=FALSE, cache=TRUE}
+data("GasolineYield",package="betareg")
+set.seed(1)
+GazYield.boot <- bootplsbeta(modpls, sim="ordinary", stype="i", R=250)
+```
+
+Boxplots of the bootstrap distributions
+```{r bootboxplots}
+plsRglm::boxplots.bootpls(GazYield.boot)
+```
+
+Confidence intervals for the coefficients of the model based on the bootstrap distributions
+```{r bootconfint, warning=FALSE}
+plsRglm::confints.bootpls(GazYield.boot)
+```
+
+Plot of the confidence intervals for the coefficients of the model based on the bootstrap distributions
+```{r bootplotconfint, warning=FALSE}
+plsRglm::plots.confints.bootpls(plsRglm::confints.bootpls(GazYield.boot))
+```

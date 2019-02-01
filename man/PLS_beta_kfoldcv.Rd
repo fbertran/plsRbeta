@@ -2,14 +2,14 @@
 \alias{PLS_beta_kfoldcv}
 \title{Partial least squares regression beta models with kfold cross validation}
 \description{
-This function implements kfold cross validation on complete or incomplete datasets for partial least squares regression generalized linear models
+This function implements kfold cross validation on complete or incomplete datasets for partial least squares beta regression models
 }
 \usage{
 PLS_beta_kfoldcv(dataY, dataX, nt = 2, limQ2set = 0.0975, modele = "pls", 
 family = NULL, K = nrow(dataX), NK = 1, grouplist = NULL, random = FALSE, 
 scaleX = TRUE, scaleY = NULL, keepcoeffs = FALSE, keepfolds = FALSE, 
 keepdataY = TRUE, keepMclassed=FALSE, tol_Xi = 10^(-12), weights, 
-method,link=NULL,link.phi=NULL,type="ML")
+method,link=NULL,link.phi=NULL,type="ML",verbose=TRUE)
 }
 \arguments{
   \item{dataY}{response (training) dataset}
@@ -34,6 +34,7 @@ method,link=NULL,link.phi=NULL,type="ML")
   \item{link}{character specification of the link function in the mean model (mu). Currently, "\code{logit}", "\code{probit}", "\code{cloglog}", "\code{cauchit}", "\code{log}", "\code{loglog}" are supported. Alternatively, an object of class "\code{link-glm}" can be supplied.}
   \item{link.phi}{character specification of the link function in the precision model (phi). Currently, "\code{identity}", "\code{log}", "\code{sqrt}" are supported. The default is "\code{log}" unless \code{formula} is of type \code{y~x} where the default is "\code{identity}" (for backward compatibility). Alternatively, an object of class "\code{link-glm}" can be supplied.}
   \item{type}{character specification of the type of estimator. Currently, maximum likelihood ("\code{ML}"), ML with bias correction ("\code{BC}"), and ML with bias reduction ("\code{BR}") are supported.}
+  \item{verbose}{should info messages be displayed ?}
 }
 \details{
 Predicts 1 group with the \code{K-1} other groups. Leave one out cross validation is thus obtained for \code{K==nrow(dataX)}.

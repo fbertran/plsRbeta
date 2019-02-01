@@ -4,7 +4,7 @@ import(betareg)
 import(MASS)
 import(Formula)
 import(boot)
-import(plsdof)
+#import(plsdof)
 import(plsRglm)
 
 importFrom("methods", "is")

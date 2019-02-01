@@ -1,7 +1,7 @@
 \name{kfolds2Chisqind}
 \alias{kfolds2Chisqind}
-\title{Computes individual Predicted Chisquare for kfold cross validated partial least squares regression models.}
-\description{This function computes individual Predicted Chisquare for kfold cross validated partial least squares regression models.}
+\title{Computes individual Predicted Chisquare for kfold cross validated partial least squares beta regression models.}
+\description{This function computes individual Predicted Chisquare for kfold cross validated partial least squares beta regression models.}
 \usage{
 kfolds2Chisqind(pls_kfolds)
 }

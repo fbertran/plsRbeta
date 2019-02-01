@@ -1,18 +1,20 @@
 Package: plsRbeta
-Version: 0.2.3
-Date: 2018-08-27
+Version: 0.2.5
+Date: 2019-02-01
 Depends: R (>= 2.4.0)
-Imports: mvtnorm, boot, Formula, plsdof, MASS, plsRglm, betareg, methods
+Imports: mvtnorm, boot, Formula, MASS, plsRglm, betareg, methods
 Enhances: 
-Suggests: pls
+Suggests: pls, plsdof
 Title: Partial Least Squares Regression for Beta Regression Models
 Authors@R: c(
 	person(given = "Frederic", family= "Bertrand", role = c("cre", "aut"), email = "frederic.bertrand@math.unistra.fr", comment = c(ORCID = "0000-0002-0837-8281")),
 	person(given = "Myriam", family= "Maumy-Bertrand", role = c("aut"), email = "myriam.maumy-bertrand@math.unistra.fr", comment = c(ORCID = "0000-0002-4615-1512")))
 Author: Frederic Bertrand [cre, aut] (<https://orcid.org/0000-0002-0837-8281>), Myriam Maumy-Bertrand [aut] (<https://orcid.org/0000-0002-4615-1512>)
 Maintainer: Frederic Bertrand <frederic.bertrand@math.unistra.fr>
-Description: Provides Partial least squares Regression for (weighted) beta regression models and k-fold cross-validation of such models using various criteria. It allows for missing data in the explanatory variables. Bootstrap confidence intervals constructions are also available.
+Description: Provides Partial least squares Regression for (weighted) beta regression models and k-fold cross-validation of such models using various criteria. It allows for missing data in the explanatory variables. Bootstrap confidence intervals constructions are also available. (Bertrand 2013,  <http://journal-sfds.fr/article/view/215>)
 License: GPL-3
-Encoding: latin1
-URL: http://www-irma.u-strasbg.fr/~fbertran/
+Encoding: UTF-8
 Classification/MSC: 62J12, 62J99
+URL: http://www-irma.u-strasbg.fr/~fbertran/, https://github.com/fbertran/plsRbeta
+BugReports: https://github.com/fbertran/plsRbeta/issues
+RoxygenNote: 6.1.1

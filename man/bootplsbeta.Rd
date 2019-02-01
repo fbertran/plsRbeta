@@ -1,31 +1,27 @@
 \name{bootplsbeta}
 \alias{bootplsbeta}
-\title{Non-parametric Bootstrap for PLS generalized linear models}
+\title{Non-parametric Bootstrap for PLS beta regression models}
 \description{
-Provides a wrapper for the bootstrap function \code{boot} from the \code{boot} R package.\cr Implements non-parametric bootstrap for PLS generalized linear models by case resampling.
+Provides a wrapper for the bootstrap function \code{boot} from the \code{boot} R package.\cr Implements non-parametric bootstrap for PLS beta regression models by case resampling.
 }
 \usage{
 bootplsbeta(object, typeboot="plsmodel", R=250, statistic=coefs.plsRbeta, 
 sim="ordinary", stype="i", ...)
 }
 \arguments{
-  \item{object}{ ~~Explain \code{object} here~~ }
-  \item{typeboot}{ ~~Explain \code{typeboot} here~~ }
-  \item{R}{ ~~Explain \code{R} here~~ }
-  \item{statistic}{ ~~Explain \code{statistic} here~~ }
-  \item{sim}{ ~~Explain \code{sim} here~~ }
-  \item{stype}{ ~~Explain \code{stype} here~~ }
-  \item{\dots}{ ~~Explain \code{\dots} here~~ }
+  \item{object}{An object of class \code{plsRbetamodel} to bootstrap}
+  \item{typeboot}{The type of bootstrap. Either (Y,X) boostrap (\code{typeboot="plsmodel"}) or (Y,T) bootstrap (\code{typeboot="fmodel_np"}). Defaults to (Y,T) resampling.}
+  \item{R}{The number of bootstrap replicates. Usually this will be a single positive integer. For importance resampling, some resamples may use one set of weights and others use a different set of weights. In this case \code{R} would be a vector of integers where each component gives the number of resamples from each of the rows of weights.}
+  \item{statistic}{A function which when applied to data returns a vector containing the statistic(s) of interest. \code{statistic} must take at least two arguments. The first argument passed will always be the original data. The second will be a vector of indices, frequencies or weights which define the bootstrap sample. Further, if predictions are required, then a third argument is required which would be a vector of the random indices used to generate the bootstrap predictions. Any further arguments can be passed to statistic through the \code{...} argument.}
+  \item{sim}{A character string indicating the type of simulation required. Possible values are  \code{"ordinary"} (the default), \code{"balanced"}, \code{"permutation"}, or \code{"antithetic"}.}
+  \item{stype}{A character string indicating what the second argument of \code{statistic} represents. Possible values of stype are \code{"i"} (indices - the default), \code{"f"} (frequencies), or \code{"w"} (weights).}
+  \item{\dots}{Other named arguments for \code{statistic} which are passed unchanged each time it is called. Any such arguments to \code{statistic} should follow the arguments which \code{statistic} is required to have for the simulation. Beware of partial matching to arguments of \code{boot} listed above.}
 }
 \details{
-  ~~ More details than the description above ~~
+More details on bootstrap techniques are available in the help of the \code{\link[boot:boot]{boot}} function.
 }
 \value{
-  ~Describe the value returned
-  If it is a LIST, use
-  \item{comp1 }{Description of 'comp1'}
-  \item{comp2 }{Description of 'comp2'}
-  ...
+  An object of class \code{"boot"}. See the Value part of the help of the function \code{\link[boot:boot]{boot}}.
 }
 \references{
 \enc{Frédéric}{Fr\'ed\'eric} Bertrand, Nicolas Meyer, \enc{Michèle}{Mich\`ele} Beau-Faller, Karim El Bayed, Izzie-Jacques Namer, Myriam Maumy-Bertrand (2013). \enc{Régression}{R\'egression} \enc{Bêta}{B\^eta} PLS. \emph{Journal de la \enc{Société}{Soci\'et'e} Française de Statistique}, \bold{154}(3):143-159.
@@ -34,8 +30,6 @@ sim="ordinary", stype="i", ...)
 \author{\enc{Frédéric}{Fr\'ed\'eric} Bertrand\cr
 \email{frederic.bertrand@math.unistra.fr}\cr
 \url{http://www-irma.u-strasbg.fr/~fbertran/}
-}
-\note{ ~~some notes~~ 
 }
 \seealso{\code{\link[boot:boot]{boot}}}
 \examples{\donttest{

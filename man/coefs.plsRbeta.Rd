@@ -1,34 +1,26 @@
 \name{coefs.plsRbeta}
 \alias{coefs.plsRbeta}
-\title{Coefficients for bootstrap computations}
+\title{Coefficients function for bootstrap techniques}
 \description{
-  ~~ A (1-5 lines) description of what the function does. ~~
+Returns the coefficients of a \code{"plsRbeta"} model.
 }
 \usage{
 coefs.plsRbeta(dataset, ind, nt, modele, family=NULL, method="logistic", 
-link=NULL, link.phi=NULL, type="ML")
+link=NULL, link.phi=NULL, type="ML",verbose=TRUE)
 }
 \arguments{
-  \item{dataset}{ ~~Explain \code{dataset} here~~ }
-  \item{ind}{ ~~Explain \code{ind} here~~ }
-  \item{nt}{ ~~Explain \code{nt} here~~ }
+  \item{dataset}{dataset to resample}
+  \item{ind}{indices for resampling}
+  \item{nt}{number of components to use}
   \item{modele}{name of the PLS glm or PLS beta model to be fitted (\code{"pls"}, \code{"pls-glm-Gamma"}, \code{"pls-glm-gaussian"}, \code{"pls-glm-inverse.gaussian"}, \code{"pls-glm-logistic"}, \code{"pls-glm-poisson"}, \code{"pls-glm-polr"}, \code{"pls-beta"}). Use \code{"modele=pls-glm-family"} to enable the \code{family} option.}
-  \item{family}{ ~~Explain \code{family} here~~ }
-  \item{method}{ ~~Explain \code{method} here~~ }
-  \item{link}{ ~~Explain \code{link} here~~ }
-  \item{link.phi}{ ~~Explain \code{link.phi} here~~ }
-  \item{type}{ ~~Explain \code{type} here~~ }
+  \item{family}{family to use if GLM model, see \link{plsRbeta}}
+  \item{method}{method for beta regression}
+  \item{link}{link for beta regression}
+  \item{link.phi}{link.phi for beta regression}
+  \item{type}{type of estimates}
+  \item{verbose}{should info messages be displayed ?}
 }
-\details{
-  ~~ More details than the description above ~~
-}
-\value{
-  ~Describe the value returned
-  If it is a LIST, use
-  \item{comp1 }{Description of 'comp1'}
-  \item{comp2 }{Description of 'comp2'}
-  ...
-}
+\value{Coefficients' Estimates on a sample.}
 \references{
 \enc{Frédéric}{Fr\'ed\'eric} Bertrand, Nicolas Meyer, \enc{Michèle}{Mich\`ele} Beau-Faller, Karim El Bayed, Izzie-Jacques Namer, Myriam Maumy-Bertrand (2013). \enc{Régression}{R\'egression} \enc{Bêta}{B\^eta} PLS. \emph{Journal de la \enc{Société}{Soci\'et'e} Française de Statistique}, \bold{154}(3):143-159.
 \url{http://publications-sfds.math.cnrs.fr/index.php/J-SFdS/article/view/215}
@@ -37,10 +29,10 @@ link=NULL, link.phi=NULL, type="ML")
 \email{frederic.bertrand@math.unistra.fr}\cr
 \url{http://www-irma.u-strasbg.fr/~fbertran/}
 }
-\note{ ~~some notes~~ 
-}
-\seealso{ ~~objects to See Also as \code{\link{help}}, ~~~ }
-\examples{
+\seealso{See also \code{\link{bootplsbeta}}.}
+\examples{\donttest{
 data("GasolineYield",package="betareg")
+modpls <- coefs.plsRbeta(GasolineYield[,-6],1:32,nt=3,modele="pls-beta")
+}
 }
 \keyword{models}

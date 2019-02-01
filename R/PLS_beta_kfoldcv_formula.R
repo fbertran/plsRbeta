@@ -1,4 +1,4 @@
-PLS_beta_kfoldcv_formula <- function(formula,data=NULL,nt=2,limQ2set=.0975,modele="pls", family=NULL, K=nrow(dataX), NK=1, grouplist=NULL, random=FALSE, scaleX=TRUE, scaleY=NULL, keepcoeffs=FALSE, keepfolds=FALSE, keepdataY=TRUE, keepMclassed=FALSE, tol_Xi=10^(-12),weights,subset,start=NULL,etastart,mustart,offset,method,control=list(),contrasts=NULL,sparse=FALSE,sparseStop=TRUE,naive=FALSE,link=NULL,link.phi=NULL,type="ML") {
+PLS_beta_kfoldcv_formula <- function(formula,data=NULL,nt=2,limQ2set=.0975,modele="pls", family=NULL, K=nrow(dataX), NK=1, grouplist=NULL, random=FALSE, scaleX=TRUE, scaleY=NULL, keepcoeffs=FALSE, keepfolds=FALSE, keepdataY=TRUE, keepMclassed=FALSE, tol_Xi=10^(-12),weights,subset,start=NULL,etastart,mustart,offset,method,control=list(),contrasts=NULL,sparse=FALSE,sparseStop=TRUE,naive=FALSE,link=NULL,link.phi=NULL,type="ML",verbose=TRUE) {
 
     if (missing(weights)) {NoWeights <- TRUE} else {NoWeights <- FALSE}  
     if (missing(data)) {data <- environment(formula)}
@@ -99,8 +99,8 @@ dataZ <- if (!is.empty.model(mtZ)) model.matrix(mtZ, mf) else matrix(, NROW(data
     res <- NULL
     res$nr <- nrow(dataX)
         if (K > res$nr) {
-            cat(paste("K cannot be > than nrow(dataX) =",res$nr,"\n"))
-            cat(paste("K is set to", nrow(dataX), "\n"))
+          if(verbose){cat(paste("K cannot be > than nrow(dataX) =",res$nr,"\n"))}
+          if(verbose){cat(paste("K is set to", nrow(dataX), "\n"))}
             K <- res$nr
             random = FALSE
         }
@@ -134,10 +134,10 @@ if(match("method",names(call), 0L)==0L){method<-"logistic"} else {if(!(call$meth
         if (is.language(call$family)) {call$family <- eval(call$family)}
     }
 if (is.null(link)){link<-"logit"} else {if(!(link %in% c("logit", "probit", "cloglog", "cauchit", "log", "loglog")) & !is(link,"link-glm")) {link<-"logit"}}
-    if (modele %in% c("pls-glm-family","pls-glm-Gamma","pls-glm-gaussian","pls-glm-inverse.gaussian","pls-glm-logistic","pls-glm-poisson")) {print(family)}
-    if (modele %in% c("pls-glm-polr")) {cat("\nModel:", modele, "\n");cat("Method:", method, "\n\n")}
-    if (modele=="pls-beta") {cat("\nModel:", modele, "\n\n");cat("Link:", link, "\n\n");cat("Link.phi:", link.phi, "\n\n");cat("Type:", type, "\n\n")}
-    if (modele=="pls") {cat("\nModel:", modele, "\n\n")}
+    if (modele %in% c("pls-glm-family","pls-glm-Gamma","pls-glm-gaussian","pls-glm-inverse.gaussian","pls-glm-logistic","pls-glm-poisson")) {if(verbose){cat(family,"\n\n")}}
+    if (modele %in% c("pls-glm-polr")) {if(verbose){cat("\nModel:", modele, "\n");cat("Method:", method, "\n\n")}}
+    if (modele=="pls-beta") {if(verbose){cat("\nModel:", modele, "\n\n");cat("Link:", link, "\n\n");cat("Link.phi:", link.phi, "\n\n");cat("Type:", type, "\n\n")}}
+    if (modele=="pls") {if(verbose){cat("\nModel:", modele, "\n\n")}}
 
 
     if (as.character(call["tol_Xi"])=="NULL") {call$tol_Xi <- 10^(-12)}
@@ -219,12 +219,12 @@ if (!is.data.frame(dataX)) {dataX <- data.frame(dataX)}
         return(comp)
     }
     for (nnkk in 1:NK) {
-            cat(paste("NK:", nnkk, "\n"))
+      if(verbose){cat(paste("NK:", nnkk, "\n"))}
         if (K == res$nr) {
-            cat("Leave One Out\n")
+          if(verbose){cat("Leave One Out\n")}
             random = FALSE
         }
-            cat(paste("Number of groups :", K, "\n"))
+      if(verbose){cat(paste("Number of groups :", K, "\n"))}
         if (!is.list(grouplist)) {
             if (random == TRUE) {
                 randsample = sample(1:res$nr, replace = FALSE)
@@ -261,7 +261,7 @@ if (!is.data.frame(dataX)) {dataX <- data.frame(dataX)}
             else folds = c(folds, list(as.vector(unlist(groups[-ii]))))
             if (K == 1) {
                 mf2 <- match.call(expand.dots = FALSE)
-                m2 <- match(c("nt","modele","family","scaleX","scaleY","keepcoeffs","tol_Xi","weights","subset","start","etastart","mustart","offset","control","method","contrasts","sparse","sparseStop","naive","link","link.phi","type"), names(mf2), 0L)
+                m2 <- match(c("nt","modele","family","scaleX","scaleY","keepcoeffs","tol_Xi","weights","subset","start","etastart","mustart","offset","control","method","contrasts","sparse","sparseStop","naive","link","link.phi","type","verbose"), names(mf2), 0L)
                 mf2 <- mf2[c(1L, m2)]
                 mf2[[1L]] <- as.name("PLS_beta_wvc")
                 mf2$family <- family
@@ -284,9 +284,9 @@ if(match("method",names(call), 0L)==0L){mf2$method<-"logistic"} else {if(!(call$
                 if (modele=="pls-beta") {respls_kfolds_phi[[nnkk]][[ii]] = temptemp$valsPredictPhis}
                 }
             else {
-                  cat(paste(ii,"\n"))
+              if(verbose){cat(paste(ii,"\n"))}
                   mf2 <- match.call(expand.dots = FALSE)
-                  m2 <- match(c("nt","modele","family","scaleX","scaleY","keepcoeffs","tol_Xi","weights","subset","start","etastart","mustart","offset","control","method","contrasts","sparse","sparseStop","naive","link","link.phi","type"), names(mf2), 0L)
+                  m2 <- match(c("nt","modele","family","scaleX","scaleY","keepcoeffs","tol_Xi","weights","subset","start","etastart","mustart","offset","control","method","contrasts","sparse","sparseStop","naive","link","link.phi","type","verbose"), names(mf2), 0L)
                   mf2 <- mf2[c(1L, m2)]
                   mf2[[1L]] <- as.name("PLS_beta_wvc")
                   mf2$family <- family

@@ -7,13 +7,14 @@ if(!is.null(callplsRbeta$family)){family <- eval(callplsRbeta$family)} else {fam
 if(!is.null(callplsRbeta$link)){link <- eval(callplsRbeta$link)} else {link <- "logit"}
 if(!is.null(callplsRbeta$link.phi)){link.phi <- eval(callplsRbeta$link.phi)} else {link.phi <- NULL}
 if(!is.null(callplsRbeta$type)){type <- eval(callplsRbeta$type)} else {type <- "ML"}
+if(!is.null(callplsRbeta$verbose)){verbose <- eval(callplsRbeta$verbose)} else {verbose <- TRUE}
 if(typeboot=="plsmodel"){
-return(tilt.boot(data=dataset, statistic=if(!(sim=="permutation")){coefs.plsRbeta} else {permcoefs.plsRbeta}, sim=sim, stype=stype, R=R, nt=nt, modele=modele, family=family, link=link, link.phi=link.phi, type=type))
+return(tilt.boot(data=dataset, statistic=if(!(sim=="permutation")){coefs.plsRbeta} else {permcoefs.plsRbeta}, sim=sim, stype=stype, R=R, nt=nt, modele=modele, family=family, link=link, link.phi=link.phi, type=type, verbose=verbose))
 }
 if(typeboot=="fmodel_np"){
-return(tilt.boot(data=dataset, statistic=if(!(sim=="permutation")){coefs.plsRbeta} else {permcoefs.plsRbeta}, sim=sim, stype=stype, R=R, nt=nt, modele=modele, family=family, link=link, link.phi=link.phi, type=type))
+return(tilt.boot(data=dataset, statistic=if(!(sim=="permutation")){coefs.plsRbeta} else {permcoefs.plsRbeta}, sim=sim, stype=stype, R=R, nt=nt, modele=modele, family=family, link=link, link.phi=link.phi, type=type, verbose=verbose))
 }
 if(typeboot=="fmodel_par"){
-return(tilt.boot(data=dataset, statistic=if(!(sim=="permutation")){coefs.plsRbeta} else {permcoefs.plsRbeta}, sim=sim, stype=stype, R=R, nt=nt, modele=modele, family=family, link=link, link.phi=link.phi, type=type))
+return(tilt.boot(data=dataset, statistic=if(!(sim=="permutation")){coefs.plsRbeta} else {permcoefs.plsRbeta}, sim=sim, stype=stype, R=R, nt=nt, modele=modele, family=family, link=link, link.phi=link.phi, type=type, verbose=verbose))
 }
 }

@@ -1,15 +1,15 @@
 \name{PLS_beta}
 \alias{PLS_beta}
-\title{Partial least squares Regression generalized linear models}
+\title{Partial least squares beta regression models}
 \description{
-This function implements Partial least squares Regression generalized linear models complete or incomplete datasets.
+This function implements Partial least squares beta regression models on complete or incomplete datasets.
 }
 \usage{
 PLS_beta(dataY, dataX, nt = 2, limQ2set = 0.0975, dataPredictY = dataX, 
 modele = "pls", family = NULL, typeVC = "none", EstimXNA = FALSE, 
 scaleX = TRUE, scaleY = NULL, pvals.expli = FALSE, alpha.pvals.expli = 0.05, 
 MClassed = FALSE, tol_Xi = 10^(-12), weights, method, sparse = FALSE,
-sparseStop=TRUE,naive=FALSE,link=NULL,link.phi=NULL,type="ML")
+sparseStop=TRUE,naive=FALSE,link=NULL,link.phi=NULL,type="ML",verbose=TRUE)
 }
 \arguments{
   \item{dataY}{response (training) dataset}
@@ -42,6 +42,7 @@ sparseStop=TRUE,naive=FALSE,link=NULL,link.phi=NULL,type="ML")
   \item{link}{character specification of the link function in the mean model (mu). Currently, "\code{logit}", "\code{probit}", "\code{cloglog}", "\code{cauchit}", "\code{log}", "\code{loglog}" are supported. Alternatively, an object of class "\code{link-glm}" can be supplied.}
   \item{link.phi}{character specification of the link function in the precision model (phi). Currently, "\code{identity}", "\code{log}", "\code{sqrt}" are supported. The default is "\code{log}" unless \code{formula} is of type \code{y~x} where the default is "\code{identity}" (for backward compatibility). Alternatively, an object of class "\code{link-glm}" can be supplied.}
   \item{type}{character specification of the type of estimator. Currently, maximum likelihood ("\code{ML}"), ML with bias correction ("\code{BC}"), and ML with bias reduction ("\code{BR}") are supported.}
+  \item{verbose}{should info messages be displayed ?}
 }
 \details{
 There are seven different predefined models with predefined link functions available :
@@ -87,7 +88,6 @@ data("GasolineYield",package="betareg")
 yGasolineYield <- GasolineYield$yield
 XGasolineYield <- GasolineYield[,2:5]
 modpls <- PLS_beta(yGasolineYield,XGasolineYield,nt=3,modele="pls-beta")
-modpls$uscores
 modpls$pp
 modpls$Coeffs
 modpls$Std.Coeffs

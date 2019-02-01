@@ -2,7 +2,7 @@
 \alias{PLS_beta_kfoldcv_formula}
 \title{Partial least squares regression beta models with kfold cross validation}
 \description{
-This function implements kfold cross validation on complete or incomplete datasets for partial least squares regression generalized linear models (formula specification of the model).
+This function implements kfold cross validation on complete or incomplete datasets for partial least squares beta regression models (formula specification of the model).
 }
 \usage{
 PLS_beta_kfoldcv_formula(formula,data=NULL,nt=2,limQ2set=.0975,
@@ -11,7 +11,7 @@ random=FALSE, scaleX=TRUE, scaleY=NULL, keepcoeffs=FALSE,
 keepfolds=FALSE, keepdataY=TRUE, keepMclassed=FALSE, tol_Xi=10^(-12),
 weights,subset,start=NULL,etastart,mustart,offset,method,control= list(),
 contrasts=NULL,sparse=FALSE,sparseStop=TRUE,naive=FALSE,link=NULL,
-link.phi=NULL,type="ML")
+link.phi=NULL,type="ML",verbose=TRUE)
 }
 \arguments{
   \item{formula}{an object of class "\code{\link{formula}}" (or one that can be coerced to that class): a symbolic description of the model to be fitted. The details of model specification are given under 'Details'.}
@@ -48,6 +48,7 @@ link.phi=NULL,type="ML")
   \item{link}{character specification of the link function in the mean model (mu). Currently, "\code{logit}", "\code{probit}", "\code{cloglog}", "\code{cauchit}", "\code{log}", "\code{loglog}" are supported. Alternatively, an object of class "\code{link-glm}" can be supplied.}
   \item{link.phi}{character specification of the link function in the precision model (phi). Currently, "\code{identity}", "\code{log}", "\code{sqrt}" are supported. The default is "\code{log}" unless \code{formula} is of type \code{y~x} where the default is "\code{identity}" (for backward compatibility). Alternatively, an object of class "\code{link-glm}" can be supplied.}
   \item{type}{character specification of the type of estimator. Currently, maximum likelihood ("\code{ML}"), ML with bias correction ("\code{BC}"), and ML with bias reduction ("\code{BR}") are supported.}
+  \item{verbose}{should info messages be displayed ?}
 }
 \details{
 Predicts 1 group with the \code{K-1} other groups. Leave one out cross validation is thus obtained for \code{K==nrow(dataX)}.

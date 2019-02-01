@@ -1,11 +1,11 @@
-PLS_beta_kfoldcv <- function(dataY,dataX,nt=2,limQ2set=.0975,modele="pls", family=NULL, K=nrow(dataX), NK=1, grouplist=NULL, random=FALSE, scaleX=TRUE, scaleY=NULL, keepcoeffs=FALSE, keepfolds=FALSE, keepdataY=TRUE, keepMclassed=FALSE, tol_Xi=10^(-12),weights,method,link=NULL,link.phi=NULL,type="ML") {
+PLS_beta_kfoldcv <- function(dataY,dataX,nt=2,limQ2set=.0975,modele="pls", family=NULL, K=nrow(dataX), NK=1, grouplist=NULL, random=FALSE, scaleX=TRUE, scaleY=NULL, keepcoeffs=FALSE, keepfolds=FALSE, keepdataY=TRUE, keepMclassed=FALSE, tol_Xi=10^(-12),weights,method,link=NULL,link.phi=NULL,type="ML",verbose=TRUE) {
 
     if (missing(weights)) {NoWeights <- TRUE} else {NoWeights <- FALSE}
     res <- NULL
     res$nr <- nrow(dataX)
         if (K > res$nr) {
-            cat(paste("K cannot be > than nrow(dataX) =",res$nr,"\n"))
-            cat(paste("K is set to", nrow(dataX), "\n"))
+          if(verbose){cat(paste("K cannot be > than nrow(dataX) =",res$nr,"\n"))}
+          if(verbose){cat(paste("K is set to", nrow(dataX), "\n"))}
             K <- res$nr
             random = FALSE
         }
@@ -29,10 +29,10 @@ PLS_beta_kfoldcv <- function(dataY,dataX,nt=2,limQ2set=.0975,modele="pls", famil
     }
     if (missing(method)){method<-"logistic"}
     if (is.null(link)){link<-"logit"} else {if(!(link %in% c("logit", "probit", "cloglog", "cauchit", "log", "loglog")) & !is(link,"link-glm")) {link<-"logit"}}
-    if (modele=="pls") {cat("\nModel:", modele, "\n\n")}
-    if (modele %in% c("pls-glm-family","pls-glm-Gamma","pls-glm-gaussian","pls-glm-inverse.gaussian","pls-glm-logistic","pls-glm-poisson")) {print(family)}
-    if (modele %in% c("pls-glm-polr")) {cat("\nModel:", modele, "\n");cat("Method:", method, "\n\n")}
-    if (modele=="pls-beta") {cat("\nModel:", modele, "\n\n");cat("Link:", link, "\n\n");cat("Link.phi:", link.phi, "\n\n");cat("Type:", type, "\n\n")}
+    if (modele=="pls") {if(verbose){cat("\nModel:", modele, "\n\n")}}
+    if (modele %in% c("pls-glm-family","pls-glm-Gamma","pls-glm-gaussian","pls-glm-inverse.gaussian","pls-glm-logistic","pls-glm-poisson")) {if(verbose){if(verbose){cat(family,"\n\n")}}}
+    if (modele %in% c("pls-glm-polr")) {if(verbose){cat("\nModel:", modele, "\n");cat("Method:", method, "\n\n")}}
+    if (modele=="pls-beta") {if(verbose){cat("\nModel:", modele, "\n\n");cat("Link:", link, "\n\n");cat("Link.phi:", link.phi, "\n\n");cat("Type:", type, "\n\n")}}
 
     if (as.character(call["tol_Xi"])=="NULL") {call$tol_Xi <- 10^(-12)}
     if (as.character(call["modele"])=="NULL") {call$modele <- "pls"}
@@ -100,12 +100,12 @@ PLS_beta_kfoldcv <- function(dataY,dataX,nt=2,limQ2set=.0975,modele="pls", famil
         return(comp)
     }
     for (nnkk in 1:NK) {
-            cat(paste("NK:", nnkk, "\n"))
+      if(verbose){cat(paste("NK:", nnkk, "\n"))}
         if (K == res$nr) {
-            cat("Leave One Out\n")
+          if(verbose){cat("Leave One Out\n")}
             random = FALSE
         }
-            cat(paste("Number of groups :", K, "\n"))
+      if(verbose){cat(paste("Number of groups :", K, "\n"))}
         if (!is.list(grouplist)) {
             if (random == TRUE) {
                 randsample = sample(1:res$nr, replace = FALSE)
@@ -142,22 +142,22 @@ PLS_beta_kfoldcv <- function(dataY,dataX,nt=2,limQ2set=.0975,modele="pls", famil
             else folds = c(folds, list(as.vector(unlist(groups[-ii]))))
             if (K == 1) {
                 if(NoWeights){
-                temptemp <- PLS_beta_wvc(dataY=dataY, dataX=dataX, nt=nt, dataPredictY=dataX, modele=modele,family=family,scaleX=scaleX,scaleY=scaleY,keepcoeffs=keepcoeffs,tol_Xi=tol_Xi,method=method,link=link,link.phi=link.phi,type=type)
+                temptemp <- PLS_beta_wvc(dataY=dataY, dataX=dataX, nt=nt, dataPredictY=dataX, modele=modele,family=family,scaleX=scaleX,scaleY=scaleY,keepcoeffs=keepcoeffs,tol_Xi=tol_Xi,method=method,link=link,link.phi=link.phi,type=type,verbose=verbose)
                 respls_kfolds[[nnkk]][[ii]] <- temptemp$valsPredict
                 } else {
-                temptemp <- PLS_beta_wvc(dataY=dataY, dataX=dataX, nt=nt, dataPredictY=dataX, modele=modele,family=family,scaleX=scaleX,scaleY=scaleY,keepcoeffs=keepcoeffs,tol_Xi=tol_Xi,,weights=weights,method=method,link=link,link.phi=link.phi,type=type)
+                temptemp <- PLS_beta_wvc(dataY=dataY, dataX=dataX, nt=nt, dataPredictY=dataX, modele=modele,family=family,scaleX=scaleX,scaleY=scaleY,keepcoeffs=keepcoeffs,tol_Xi=tol_Xi,,weights=weights,method=method,link=link,link.phi=link.phi,type=type,verbose=verbose)
                 respls_kfolds[[nnkk]][[ii]] <- temptemp$valsPredict; attr(respls_kfolds[[nnkk]],"XWeights")=weights; attr(respls_kfolds[[nnkk]],"YWeights")=NULL}             
                 if (keepdataY) {dataY_kfolds[[nnkk]][[ii]] = NULL}
                 if (keepcoeffs) {coeffskfolds[[nnkk]][[ii]] = temptemp$coeffs}
                 if (modele=="pls-beta") {respls_kfolds_phi[[nnkk]][[ii]] = temptemp$valsPredictPhis}
                 }
             else {
-                  cat(paste(ii,"\n"))
+              if(verbose){cat(paste(ii,"\n"))}
                   if(NoWeights){
-                  temptemp <- PLS_beta_wvc(dataY=dataY[-nofolds], dataX=dataX[-nofolds,], nt=nt, dataPredictY=dataX[nofolds,], modele=modele,family=family,scaleX=scaleX,scaleY=scaleY,keepcoeffs=keepcoeffs,tol_Xi=tol_Xi,method=method,link=link,link.phi=link.phi,type=type)
+                  temptemp <- PLS_beta_wvc(dataY=dataY[-nofolds], dataX=dataX[-nofolds,], nt=nt, dataPredictY=dataX[nofolds,], modele=modele,family=family,scaleX=scaleX,scaleY=scaleY,keepcoeffs=keepcoeffs,tol_Xi=tol_Xi,method=method,link=link,link.phi=link.phi,type=type,verbose=verbose)
                   respls_kfolds[[nnkk]][[ii]] <- temptemp$valsPredict
                   } else {
-                  temptemp <- PLS_beta_wvc(dataY=dataY[-nofolds], dataX=dataX[-nofolds,], nt=nt, dataPredictY=dataX[nofolds,], modele=modele,family=family,scaleX=scaleX,scaleY=scaleY,keepcoeffs=keepcoeffs,tol_Xi=tol_Xi,weights=weights[-nofolds],method=method,link=link,link.phi=link.phi,type=type) 
+                  temptemp <- PLS_beta_wvc(dataY=dataY[-nofolds], dataX=dataX[-nofolds,], nt=nt, dataPredictY=dataX[nofolds,], modele=modele,family=family,scaleX=scaleX,scaleY=scaleY,keepcoeffs=keepcoeffs,tol_Xi=tol_Xi,weights=weights[-nofolds],method=method,link=link,link.phi=link.phi,type=type,verbose=verbose) 
                 respls_kfolds[[nnkk]][[ii]] <- temptemp$valsPredict; attr(respls_kfolds[[nnkk]][[ii]],"XWeights")=weights[-nofolds]; attr(respls_kfolds[[nnkk]][[ii]],"YWeights")=weights[nofolds]}
                   if (keepdataY) {dataY_kfolds[[nnkk]][[ii]] = dataY[nofolds]}
                   if (keepcoeffs) {coeffs_kfolds[[nnkk]][[ii]] = temptemp$coeffs}

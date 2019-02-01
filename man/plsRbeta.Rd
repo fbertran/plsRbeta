@@ -2,7 +2,7 @@
 \alias{plsRbeta}
 \alias{plsRbetamodel.default}
 \alias{plsRbetamodel.formula}
-\title{Partial least squares Regression generalized linear models}
+\title{Partial least squares Regression beta regression models}
 \description{
 This function implements Partial least squares Regression generalized linear models complete or incomplete datasets.
 }
@@ -12,13 +12,14 @@ plsRbeta(x, \dots)
 dataPredictY=dataX,modele="pls",family=NULL,typeVC="none",EstimXNA=FALSE,
 scaleX=TRUE,scaleY=NULL,pvals.expli=FALSE,alpha.pvals.expli=.05,
 MClassed=FALSE,tol_Xi=10^(-12),weights,method,sparse=FALSE,sparseStop=TRUE,
-naive=FALSE,link=NULL,link.phi=NULL,type="ML")
+naive=FALSE,link=NULL,link.phi=NULL,type="ML",verbose=TRUE)
 \method{plsRbetamodel}{formula}(formula,data=NULL,nt=2,limQ2set=.0975,
 dataPredictY,modele="pls",family=NULL,typeVC="none",EstimXNA=FALSE,
 scaleX=TRUE,scaleY=NULL,pvals.expli=FALSE,alpha.pvals.expli=.05,
 MClassed=FALSE,tol_Xi=10^(-12),weights,subset,start=NULL,etastart,
 mustart,offset,method="glm.fit",control= list(),contrasts=NULL,
-sparse=FALSE,sparseStop=TRUE,naive=FALSE,link=NULL,link.phi=NULL,type="ML")
+sparse=FALSE,sparseStop=TRUE,naive=FALSE,link=NULL,link.phi=NULL,type="ML",
+verbose=TRUE)
 }
 \arguments{
   \item{x}{a formula or a response (training) dataset}
@@ -61,6 +62,7 @@ sparse=FALSE,sparseStop=TRUE,naive=FALSE,link=NULL,link.phi=NULL,type="ML")
   \item{link}{character specification of the link function in the mean model (mu). Currently, "\code{logit}", "\code{probit}", "\code{cloglog}", "\code{cauchit}", "\code{log}", "\code{loglog}" are supported. Alternatively, an object of class "\code{link-glm}" can be supplied.}
   \item{link.phi}{character specification of the link function in the precision model (phi). Currently, "\code{identity}", "\code{log}", "\code{sqrt}" are supported. The default is "\code{log}" unless \code{formula} is of type \code{y~x} where the default is "\code{identity}" (for backward compatibility). Alternatively, an object of class "\code{link-glm}" can be supplied.}
   \item{type}{character specification of the type of estimator. Currently, maximum likelihood ("\code{ML}"), ML with bias correction ("\code{BC}"), and ML with bias reduction ("\code{BR}") are supported.}
+  \item{verbose}{should info messages be displayed ?}
   \item{\dots}{arguments to pass to \code{plsRmodel.default} or to \code{plsRmodel.formula}}
 }
 \details{
@@ -114,7 +116,6 @@ Use \code{plsRbeta} instead.
 
 data("GasolineYield",package="betareg")
 modpls <- plsRbeta(yield~.,data=GasolineYield,nt=3,modele="pls-beta")
-modpls$uscores
 modpls$pp
 modpls$Coeffs
 modpls$Std.Coeffs
@@ -126,7 +127,6 @@ data("GasolineYield",package="betareg")
 yGasolineYield <- GasolineYield$yield
 XGasolineYield <- GasolineYield[,2:5]
 modpls <- plsRbeta(yGasolineYield,XGasolineYield,nt=3,modele="pls-beta")
-modpls$uscores
 modpls$pp
 modpls$Coeffs
 modpls$Std.Coeffs

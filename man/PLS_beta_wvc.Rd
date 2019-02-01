@@ -8,7 +8,7 @@ Light version of \code{PLS_beta} for cross validation purposes either on complet
 PLS_beta_wvc(dataY, dataX, nt = 2, dataPredictY = dataX, modele = "pls", 
 family = NULL, scaleX = TRUE, scaleY = NULL, keepcoeffs = FALSE, 
 keepstd.coeffs=FALSE, tol_Xi = 10^(-12), weights, method = "logistic",
-link=NULL,link.phi=NULL,type="ML")
+link=NULL,link.phi=NULL,type="ML",verbose=TRUE)
 }
 \arguments{
   \item{dataY}{response (training) dataset}
@@ -27,6 +27,7 @@ link=NULL,link.phi=NULL,type="ML")
   \item{link}{character specification of the link function in the mean model (mu). Currently, "\code{logit}", "\code{probit}", "\code{cloglog}", "\code{cauchit}", "\code{log}", "\code{loglog}" are supported. Alternatively, an object of class "\code{link-glm}" can be supplied.}
   \item{link.phi}{character specification of the link function in the precision model (phi). Currently, "\code{identity}", "\code{log}", "\code{sqrt}" are supported. The default is "\code{log}" unless \code{formula} is of type \code{y~x} where the default is "\code{identity}" (for backward compatibility). Alternatively, an object of class "\code{link-glm}" can be supplied.}
   \item{type}{character specification of the type of estimator. Currently, maximum likelihood ("\code{ML}"), ML with bias correction ("\code{BC}"), and ML with bias reduction ("\code{BR}") are supported.}
+  \item{verbose}{should info messages be displayed ?}
 }
 \details{
 This function is called by \code{\link{PLS_glm_kfoldcv_formula}} in order to perform cross validation either on complete or incomplete datasets.

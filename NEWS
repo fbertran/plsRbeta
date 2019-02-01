@@ -1,5 +1,8 @@
 This file documents software changes.
 
+0.2.5 Verbose option added.
+0.2.4 Pkgdown website. Completed package help.
+0.2.3 Minor fixes.
 0.2.2 Update to export S3 methods to pass CRAN check.
 0.2.1 Update to pass CRAN check.
 0.2.0 Update on CRAN request.
