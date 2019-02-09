@@ -23,6 +23,8 @@ knitr::opts_chunk$set(
 
 The goal of plsRbeta is to provide Partial least squares Regression for (weighted) beta regression models (Bertrand 2013,  <http://journal-sfds.fr/article/view/215>) and k-fold cross-validation of such models using various criteria. It allows for missing data in the explanatory variables. Bootstrap confidence intervals constructions are also available.
 
+This website and these examples were created by F. Bertrand and M. Maumy-Bertrand.
+
 ## Installation
 
 You can install the released version of plsRbeta from [CRAN](https://CRAN.R-project.org) with:

@@ -3,8 +3,8 @@
         "caseSensitive" : false,
         "filePatterns" : [
         ],
-        "path" : "~/GitHub/plsRbeta/man",
-        "query" : "uscores",
+        "path" : "~/GitHub/plsRbeta/R",
+        "query" : "dof",
         "regex" : false
     }
 }
