@@ -1,4 +1,4 @@
-PLS_beta_wvc <- function(dataY,dataX,nt=2,dataPredictY=dataX,modele="pls",family=NULL,scaleX=TRUE,scaleY=NULL,keepcoeffs=FALSE,keepstd.coeffs=FALSE,tol_Xi=10^(-12),weights,method="logistic",link=NULL,link.phi=NULL,type="ML",verbose=TRUE){
+PLS_beta_wvc <- function(dataY,dataX,nt=2,dataPredictY=dataX,modele="pls",family=NULL,scaleX=TRUE,scaleY=NULL,keepcoeffs=FALSE,keepstd.coeffs=FALSE,tol_Xi=10^(-12),weights,method="logistic",link=NULL,link.phi=NULL,type="ML",usegpu=FALSE) {
 
 ##################################################
 #                                                #
@@ -225,7 +225,7 @@ rm(jj,tts)}
 ##############################################
 
 tempwwnorm <- tempww/sqrt(drop(crossprod(tempww)))
-
+if(!usegpu){
 temptt <- XXwotNA%*%tempwwnorm/(XXNA%*%(tempwwnorm^2))
 
 temppp <- rep(0,res$nc)
@@ -245,8 +245,29 @@ break
 }
 rm(ii)
 if(break_nt) {break}
-}
+}}
+else{
+temptt <- gputools::gpuMatMult(XXwotNA,tempwwnorm)/gputools::gpuMatMult(XXNA%*%(tempwwnorm^2))
 
+temppp <- rep(0,res$nc)
+for (jj in 1:(res$nc)) {
+     temppp[jj] <- crossprod(temptt,XXwotNA[,jj])/drop(crossprod(XXNA[,jj],temptt^2))
+}
+res$residXX <- XXwotNA-temptt%*%temppp
+
+if (na.miss.X & !na.miss.Y) {
+for (ii in 1:res$nr) {
+if(rcond(gputools::gpuMatMult(t(cbind(res$pp,temppp)[XXNA[ii,],,drop=FALSE]),cbind(res$pp,temppp)[XXNA[ii,],,drop=FALSE]))<tol_Xi) {
+break_nt <- TRUE; res$computed_nt <- kk-1
+if(verbose){cat(paste("Warning : reciprocal condition number of t(cbind(res$pp,temppp)[XXNA[",ii,",],,drop=FALSE])%*%cbind(res$pp,temppp)[XXNA[",ii,",],,drop=FALSE] < 10^{-12}\n",sep=""))}
+if(verbose){cat(paste("Warning only ",res$computed_nt," components could thus be extracted\n",sep=""))}
+break
+}
+}
+rm(ii)
+if(break_nt) {break}
+}}
+if(!usegpu){
 if(!PredYisdataX){
 if (na.miss.PredictY & !na.miss.Y) {
 for (ii in 1:nrow(PredictYwotNA)) {
@@ -260,7 +281,22 @@ break
 rm(ii)
 if(break_nt) {break}
 }
+}}
+else{
+if(!PredYisdataX){
+if (na.miss.PredictY & !na.miss.Y) {
+for (ii in 1:nrow(PredictYwotNA)) {
+if(rcond(gputools::gpuMatMult(t(cbind(res$pp,temppp)[PredictYNA[ii,],,drop=FALSE]),cbind(res$pp,temppp)[PredictYNA[ii,],,drop=FALSE]))<tol_Xi) {
+break_nt <- TRUE; res$computed_nt <- kk-1
+if(verbose){cat(paste("Warning : reciprocal condition number of t(cbind(res$pp,temppp)[PredictYNA[",ii,",,drop=FALSE],])%*%cbind(res$pp,temppp)[PredictYNA[",ii,",,drop=FALSE],] < 10^{-12}\n",sep=""))}
+if(verbose){cat(paste("Warning only ",res$computed_nt," components could thus be extracted\n",sep=""))}
+break
 }
+}
+rm(ii)
+if(break_nt) {break}
+}
+}}
 
 #assign("YwotNA", YwotNA, envir=parent.frame(n=sys.nframe()))
 tt<-cbind(res$tt,temptt)
@@ -322,12 +358,20 @@ tempCoeffConstante <- 0
 res$CoeffCFull <- cbind(res$CoeffCFull,c(tempCoeffC,rep(NA,nt-kk)))
 }
 }
-
+if(!usegpu){
 res$wwetoile <- (res$wwnorm)%*%solve(t(res$pp)%*%res$wwnorm)
 res$CoeffC <- diag(res$CoeffCFull)
 res$CoeffConstante <- tempCoeffConstante
 res$Std.Coeffs <- rbind(tempCoeffConstante,res$wwetoile%*%res$CoeffC)
 rownames(res$Std.Coeffs) <- c("Intercept",colnames(ExpliX))
+}
+else{
+res$wwetoile <- gputools::gpuMatMult((res$wwnorm),solve(gputools::gpuMatMult(t(res$pp),res$wwnorm)))
+res$CoeffC <- diag(res$CoeffCFull)
+res$CoeffConstante <- tempCoeffConstante
+res$Std.Coeffs <- rbind(tempCoeffConstante,gputools::gpuMatMult(res$wwetoile,res$CoeffC))
+rownames(res$Std.Coeffs) <- c("Intercept",colnames(ExpliX))
+}
 }
 
 
@@ -373,13 +417,20 @@ res$CoeffConstante <- cbind(res$CoeffConstante,tempCoeffConstante)
 tempCoeffC <- tempCoeffC[-1]
 }
 }
-
+if(!usegpu){
 res$wwetoile <- (res$wwnorm)%*%solve(t(res$pp)%*%res$wwnorm)
 res$CoeffC <- tempCoeffC
 res$Std.Coeffs <- rbind(tempCoeffConstante,res$wwetoile%*%res$CoeffC)
 rownames(res$Std.Coeffs) <- c("Intercept",colnames(ExpliX))
 }
 
+else{
+res$wwetoile <- gputools::gpuMatMult((res$wwnorm),solve(gputools::gpuMatMult(t(res$pp),res$wwnorm)))
+res$CoeffC <- tempCoeffC
+res$Std.Coeffs <- rbind(tempCoeffConstante,gputools::gpuMatMult(res$wwetoile,res$CoeffC))
+rownames(res$Std.Coeffs) <- c("Intercept",colnames(ExpliX))
+}
+}
 
 ##############################################
 ######           PLS-GLM-POLR           ######
@@ -421,13 +472,19 @@ res$CoeffCFull <- cbind(res$CoeffCFull,c(tempCoeffConstante,tempCoeffC,rep(NA,nt
 res$CoeffConstante <- cbind(res$CoeffConstante,tempCoeffConstante)
 }
 }
-
+if(!usegpu){
 res$wwetoile <- (res$wwnorm)%*%solve(t(res$pp)%*%res$wwnorm)
 res$CoeffC <- tempCoeffC
 res$Std.Coeffs <- as.matrix(rbind(as.matrix(tempCoeffConstante),res$wwetoile%*%res$CoeffC))
 rownames(res$Std.Coeffs) <- c(names(tempregpolr$zeta),colnames(ExpliX))
 }
-
+else{
+res$wwetoile <- gputools::gpuMatMult((res$wwnorm),solve(gputools::gpuMatMult(t(res$pp),res$wwnorm)))
+res$CoeffC <- tempCoeffC
+res$Std.Coeffs <- as.matrix(rbind(as.matrix(tempCoeffConstante),gputools::gpuMatMult(res$wwetoile,res$CoeffC)))
+rownames(res$Std.Coeffs) <- c(names(tempregpolr$zeta),colnames(ExpliX))
+}
+}
 
 ##############################################
 ######              PLS-BETA            ######
@@ -478,11 +535,19 @@ res$CoeffConstante <- cbind(res$CoeffConstante,tempCoeffConstante)
 tempCoeffC <- tempCoeffC[-1]
 }
 }
-
+if(!usegpu){
 res$wwetoile <- (res$wwnorm)%*%solve(t(res$pp)%*%res$wwnorm)
 res$CoeffC <- tempCoeffC
 res$Std.Coeffs <- rbind(tempCoeffConstante,res$wwetoile%*%res$CoeffC)
 rownames(res$Std.Coeffs) <- c("Intercept",colnames(ExpliX))
+}
+
+else{
+res$wwetoile <- gputools::gpuMatMult((res$wwnorm),solve(gputools::gpuMatMult(t(res$pp),res$wwnorm)))
+res$CoeffC <- tempCoeffC
+res$Std.Coeffs <- rbind(tempCoeffConstante,gputools::gpuMatMult(res$wwetoile,res$CoeffC))
+rownames(res$Std.Coeffs) <- c("Intercept",colnames(ExpliX))
+}
 }
 
 
@@ -511,6 +576,7 @@ if (!(na.miss.X | na.miss.Y)) {
 ######                PLS               ######
 ##############################################
 if (modele == "pls") {
+if(!usegpu){
 res$residYChapeau <- res$tt%*%tempCoeffC
 
 
@@ -519,6 +585,16 @@ tempConstante <- attr(res$RepY,"scaled:center")-sum(tempCoeffs*attr(res$ExpliX,"
 res$Coeffs <- rbind(tempConstante,tempCoeffs)
 
 res$YChapeau <- attr(res$RepY,"scaled:center")+attr(res$RepY,"scaled:scale")*res$tt%*%res$CoeffC             
+}
+else{
+res$residYChapeau <- gputools::gpuMatMult(res$tt,tempCoeffC)
+
+tempCoeffs <- gputools::gpuMatMult(res$wwetoile,res$CoeffC*attr(res$RepY,"scaled:scale"))/attr(res$ExpliX,"scaled:scale")
+tempConstante <- attr(res$RepY,"scaled:center")-sum(tempCoeffs*attr(res$ExpliX,"scaled:center"))
+res$Coeffs <- rbind(tempConstante,tempCoeffs)
+
+res$YChapeau <- attr(res$RepY,"scaled:center")+gputools::gpuMatMult(attr(res$RepY,"scaled:scale")*res$tt,res$CoeffC) 
+}
 res$Yresidus <- dataY-res$YChapeau
 }
 ##############################################
@@ -530,11 +606,16 @@ res$Yresidus <- dataY-res$YChapeau
 if (modele %in% c("pls-glm-logistic","pls-glm-family","pls-glm-Gamma","pls-glm-gaussian","pls-glm-inverse.gaussian","pls-glm-poisson")) {
 res$residYChapeau <- tempregglm$linear.predictors
 
-
+if(!usegpu){
 tempCoeffs <- res$wwetoile%*%res$CoeffC*attr(res$RepY,"scaled:scale")/attr(res$ExpliX,"scaled:scale")
 tempConstante <- attr(res$RepY,"scaled:center")-sum(tempCoeffs*attr(res$ExpliX,"scaled:center"))+attr(res$RepY,"scaled:scale")*res$Std.Coeffs[1]
 res$Coeffs <- rbind(tempConstante,tempCoeffs)
-
+}
+else{
+tempCoeffs <- gputools::gpuMatMult(res$wwetoile,res$CoeffC*attr(res$RepY,"scaled:scale"))/attr(res$ExpliX,"scaled:scale")
+tempConstante <- attr(res$RepY,"scaled:center")-sum(tempCoeffs*attr(res$ExpliX,"scaled:center"))+attr(res$RepY,"scaled:scale")*res$Std.Coeffs[1]
+res$Coeffs <- rbind(tempConstante,tempCoeffs)
+}
 res$YChapeau <- tempregglm$fitted.values          
 res$Yresidus <- dataY-res$YChapeau
 }
@@ -544,10 +625,18 @@ res$Yresidus <- dataY-res$YChapeau
 ######              PLS-POLR             ######
 ##############################################
 if (modele %in% c("pls-glm-polr")) {
+if(!usegpu){
 tempCoeffs <- res$wwetoile%*%res$CoeffC*attr(res$RepY,"scaled:scale")/attr(res$ExpliX,"scaled:scale")
 tempConstante <- attr(res$RepY,"scaled:center")-sum(tempCoeffs*attr(res$ExpliX,"scaled:center"))+attr(res$RepY,"scaled:scale")* tempCoeffConstante
 res$Coeffs <- rbind(as.matrix(tempConstante),tempCoeffs)
 rownames(res$Coeffs) <- rownames(res$Std.Coeffs)
+}
+else{
+tempCoeffs <- gputools::gpuMatMult(res$wwetoile,res$CoeffC*attr(res$RepY,"scaled:scale"))/attr(res$ExpliX,"scaled:scale")
+tempConstante <- attr(res$RepY,"scaled:center")-sum(tempCoeffs*attr(res$ExpliX,"scaled:center"))+attr(res$RepY,"scaled:scale")* tempCoeffConstante
+res$Coeffs <- rbind(as.matrix(tempConstante),tempCoeffs)
+rownames(res$Coeffs) <- rownames(res$Std.Coeffs)
+}
 }
 
 
@@ -557,11 +646,16 @@ rownames(res$Coeffs) <- rownames(res$Std.Coeffs)
 if (modele %in% c("pls-beta")) {
 res$residYChapeau <- predict(tempregbeta,type="link")
 res$predphis <- predict(tempregbeta,type="precision")
-
+if(!usegpu){
 tempCoeffs <- res$wwetoile%*%res$CoeffC*attr(res$RepY,"scaled:scale")/attr(res$ExpliX,"scaled:scale")
 tempConstante <- attr(res$RepY,"scaled:center")-sum(tempCoeffs*attr(res$ExpliX,"scaled:center"))+attr(res$RepY,"scaled:scale")*res$Std.Coeffs[1]
 res$Coeffs <- rbind(tempConstante,tempCoeffs)
-
+}
+else{
+tempCoeffs <- gputools::gpuMatMult(res$wwetoile,res$CoeffC*attr(res$RepY,"scaled:scale"))/attr(res$ExpliX,"scaled:scale")
+tempConstante <- attr(res$RepY,"scaled:center")-sum(tempCoeffs*attr(res$ExpliX,"scaled:center"))+attr(res$RepY,"scaled:scale")*res$Std.Coeffs[1]
+res$Coeffs <- rbind(tempConstante,tempCoeffs)
+}
 res$YChapeau <- predict(tempregbeta,type="response")          
 res$Yresidus <- dataY-res$YChapeau
 }
@@ -589,14 +683,24 @@ if (kk==1) {
 ######                PLS               ######
 ##############################################
 if (modele == "pls") {
+if(!usegpu){
 res$residYChapeau <- res$tt%*%tempCoeffC
-
 
 tempCoeffs <- res$wwetoile%*%res$CoeffC*attr(res$RepY,"scaled:scale")/attr(res$ExpliX,"scaled:scale")
 tempConstante <- attr(res$RepY,"scaled:center")-sum(tempCoeffs*attr(res$ExpliX,"scaled:center"))
 res$Coeffs <- rbind(tempConstante,tempCoeffs)
 
-res$YChapeau <- attr(res$RepY,"scaled:center")+attr(res$RepY,"scaled:scale")*res$tt%*%res$CoeffC            
+res$YChapeau <- attr(res$RepY,"scaled:center")+attr(res$RepY,"scaled:scale")*res$tt%*%res$CoeffC 
+}
+else{
+res$residYChapeau <- gputools::gpuMatMult(res$tt,tempCoeffC)
+
+tempCoeffs <- gputools::gpuMatMult(res$wwetoile,res$CoeffC*attr(res$RepY,"scaled:scale"))/attr(res$ExpliX,"scaled:scale")
+tempConstante <- attr(res$RepY,"scaled:center")-sum(tempCoeffs*attr(res$ExpliX,"scaled:center"))
+res$Coeffs <- rbind(tempConstante,tempCoeffs)
+
+res$YChapeau <- attr(res$RepY,"scaled:center")+gputools::gpuMatMult(attr(res$RepY,"scaled:scale")*res$tt,res$CoeffC) 
+}           
 res$Yresidus <- dataY-res$YChapeau
 }
 ##############################################
@@ -609,10 +713,16 @@ res$Yresidus <- dataY-res$YChapeau
 if (modele %in% c("pls-glm-logistic","pls-glm-family","pls-glm-Gamma","pls-glm-gaussian","pls-glm-inverse.gaussian","pls-glm-poisson")) {
 res$residYChapeau <- tempregglm$linear.predictors
 
-
+if(!usegpu){
 tempCoeffs <- res$wwetoile%*%res$CoeffC*attr(res$RepY,"scaled:scale")/attr(res$ExpliX,"scaled:scale")
 tempConstante <- attr(res$RepY,"scaled:center")-sum(tempCoeffs*attr(res$ExpliX,"scaled:center"))
 res$Coeffs <- rbind(tempConstante,tempCoeffs)
+}
+else{
+tempCoeffs <- gputools::gpuMatMult(res$wwetoile,res$CoeffC*attr(res$RepY,"scaled:scale"))/attr(res$ExpliX,"scaled:scale")
+tempConstante <- attr(res$RepY,"scaled:center")-sum(tempCoeffs*attr(res$ExpliX,"scaled:center"))
+res$Coeffs <- rbind(tempConstante,tempCoeffs)
+}
 
 res$YChapeau <- tempregglm$fitted.values                      
 res$Yresidus <- dataY-res$YChapeau
