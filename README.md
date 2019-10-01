@@ -5,6 +5,7 @@ output: github_document
 ---
 
 [![CRAN status](https://www.r-pkg.org/badges/version/plsRbeta)](https://cran.r-project.org/package=plsRbeta)
+[![DOI](https://zenodo.org/badge/18454088.svg)](https://zenodo.org/badge/latestdoi/18454088)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
