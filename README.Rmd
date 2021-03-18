@@ -1,12 +1,3 @@
----
-title: "Partial Least Squares Regression for Beta Regression Models"
-author: "Frédéric Bertrand"
-output: github_document
----
-
-[![CRAN status](https://www.r-pkg.org/badges/version/plsRbeta)](https://cran.r-project.org/package=plsRbeta)
-[![DOI](https://zenodo.org/badge/18454088.svg)](https://zenodo.org/badge/latestdoi/18454088)
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r setup, include = FALSE}
@@ -20,7 +11,21 @@ knitr::opts_chunk$set(
 )
 ```
 
-# plsRbeta
+# plsRbeta <img src="man/figures/logo.png" align="right" width="200"/>
+
+# Partial Least Squares Regression for Beta Regression Models
+## Frédéric Bertrand and Myriam Maumy-Bertrand
+
+<!-- badges: start -->
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-green.svg)](https://lifecycle.r-lib.org/articles/stages.html)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![R-CMD-check](https://github.com/fbertran/plsRbeta/workflows/R-CMD-check/badge.svg)](https://github.com/fbertran/plsRbeta/actions)
+[![Codecov test coverage](https://codecov.io/gh/fbertran/plsRbeta/branch/master/graph/badge.svg)](https://codecov.io/gh/fbertran/plsRbeta?branch=master)
+[![CRAN status](https://www.r-pkg.org/badges/version/plsRbeta)](https://cran.r-project.org/package=plsRbeta)
+[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/plsRbeta)](https://cran.r-project.org/package=plsRbeta)
+[![GitHub Repo stars](https://img.shields.io/github/stars/fbertran/plsRbeta?style=social)](https://github.com/fbertran/plsRbeta)
+[![DOI](https://zenodo.org/badge/18454088.svg)](https://zenodo.org/badge/latestdoi/18454088)
+<!-- badges: end -->
 
 The goal of plsRbeta is to provide Partial least squares Regression for (weighted) beta regression models (Bertrand 2013,  <http://journal-sfds.fr/article/view/215>) and k-fold cross-validation of such models using various criteria. It allows for missing data in the explanatory variables. Bootstrap confidence intervals constructions are also available.
 

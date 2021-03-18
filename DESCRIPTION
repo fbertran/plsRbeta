@@ -1,6 +1,6 @@
 Package: plsRbeta
-Version: 0.2.5
-Date: 2019-02-01
+Version: 0.2.6
+Date: 2021-03-17
 Depends: R (>= 2.4.0)
 Imports: mvtnorm, boot, Formula, MASS, plsRglm, betareg, methods
 Enhances: 
@@ -15,6 +15,6 @@ Description: Provides Partial least squares Regression for (weighted) beta regre
 License: GPL-3
 Encoding: UTF-8
 Classification/MSC: 62J12, 62J99
-URL: http://www-irma.u-strasbg.fr/~fbertran/, https://github.com/fbertran/plsRbeta
-BugReports: https://github.com/fbertran/plsRbeta/issues
-RoxygenNote: 6.1.1
+URL: https://fbertran.github.io/plsRbeta/, https://github.com/fbertran/plsRbeta/
+BugReports: https://github.com/fbertran/plsRbeta/issues/
+RoxygenNote: 7.1.1

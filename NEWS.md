@@ -1,3 +1,7 @@
+# plsRbeta 0.2.6
+
+* Roxygen the package, add badges and update pkgdown site.
+
 # plsRbeta 0.2.5
 
 * Verbose option added.

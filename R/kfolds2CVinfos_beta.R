@@ -1,3 +1,41 @@
+#' Extracts and computes information criteria and fits statistics for kfold
+#' cross validated partial least squares beta regression models
+#' 
+#' This function extracts and computes information criteria and fits statistics
+#' for kfold cross validated partial least squares beta regression models for
+#' both formula or classic specifications of the model.
+#' 
+#' The Mclassed option should only set to \code{TRUE} if the response is
+#' binary.
+#' 
+#' @param pls_kfolds an object computed using \code{\link{PLS_beta_kfoldcv}}
+#' @param MClassed should number of miss classed be computed
+#' @return \item{list}{table of fit statistics for first group partition}
+#' \item{list()}{\dots{}} \item{list}{table of fit statistics for last group
+#' partition}
+#' @author Frédéric Bertrand\cr
+#' \email{frederic.bertrand@@math.unistra.fr}\cr
+#' \url{http://www-irma.u-strasbg.fr/~fbertran/}
+#' @seealso \code{\link[plsRglm]{kfolds2coeff}},
+#' \code{\link[plsRglm]{kfolds2Pressind}}, \code{\link[plsRglm]{kfolds2Press}},
+#' \code{\link[plsRglm]{kfolds2Mclassedind}} and
+#' \code{\link[plsRglm]{kfolds2Mclassed}} to extract and transforms results
+#' from kfold cross validation.
+#' @references Frédéric Bertrand, Nicolas Meyer,
+#' Michèle Beau-Faller, Karim El Bayed, Izzie-Jacques Namer,
+#' Myriam Maumy-Bertrand (2013). Régression Bêta
+#' PLS. \emph{Journal de la Société Française de Statistique},
+#' \bold{154}(3):143-159.
+#' \url{http://publications-sfds.math.cnrs.fr/index.php/J-SFdS/article/view/215}
+#' @keywords models regression
+#' @examples
+#' 
+#' \dontrun{
+#' data("GasolineYield",package="betareg")
+#' bbb <- PLS_beta_kfoldcv_formula(yield~.,data=GasolineYield,nt=3,modele="pls-beta")
+#' kfolds2CVinfos_beta(bbb)
+#' }
+#' 
 kfolds2CVinfos_beta <- function(pls_kfolds,MClassed=FALSE) {
 if(!(match("dataY",names(pls_kfolds$call), 0L)==0L)){
 (mf <- pls_kfolds$call)

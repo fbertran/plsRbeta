@@ -8,21 +8,36 @@
 
 <title>Light version of PLS\_beta for cross validation purposes — PLS_beta_wvc • plsRbeta</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,10 +45,12 @@
 
 
 
-<meta property="og:title" content="Light version of PLS\_beta for cross validation purposes — PLS_beta_wvc" />
 
-<meta property="og:description" content="Light version of PLS_beta for cross validation purposes either on complete or incomplete datasets." />
-<meta name="twitter:card" content="summary" />
+<meta property="og:title" content="Light version of PLS\_beta for cross validation purposes — PLS_beta_wvc" />
+<meta property="og:description" content="Light version of PLS_beta for cross validation purposes either on
+complete or incomplete datasets." />
+<meta property="og:image" content="/logo.png" />
+
 
 
 
@@ -47,9 +64,10 @@
 <![endif]-->
 
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -63,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plsRbeta</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.6</span>
       </span>
     </div>
 
@@ -71,7 +89,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -82,11 +100,10 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/fbertran/plsRbeta">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/fbertran/plsRbeta/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -97,27 +114,42 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Light version of PLS\_beta for cross validation purposes</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/fbertran/plsRbeta/blob/master/R/PLS_beta_wvc.R'><code>R/PLS_beta_wvc.R</code></a></small>
     <div class="hidden name"><code>PLS_beta_wvc.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    
-    <p>Light version of <code>PLS_beta</code> for cross validation purposes either on complete or incomplete datasets.</p>
-    
+    <p>Light version of <code>PLS_beta</code> for cross validation purposes either on
+complete or incomplete datasets.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>PLS_beta_wvc</span>(<span class='no'>dataY</span>, <span class='no'>dataX</span>, <span class='kw'>nt</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>dataPredictY</span> <span class='kw'>=</span> <span class='no'>dataX</span>, <span class='kw'>modele</span> <span class='kw'>=</span> <span class='st'>"pls"</span>,
-<span class='kw'>family</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scaleX</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>scaleY</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keepcoeffs</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-<span class='kw'>keepstd.coeffs</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>tol_Xi</span> <span class='kw'>=</span> <span class='fl'>10</span>^(-<span class='fl'>12</span>), <span class='no'>weights</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"logistic"</span>,
-<span class='kw'>link</span><span class='kw'>=</span><span class='kw'>NULL</span>,<span class='kw'>link.phi</span><span class='kw'>=</span><span class='kw'>NULL</span>,<span class='kw'>type</span><span class='kw'>=</span><span class='st'>"ML"</span>,<span class='kw'>verbose</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>PLS_beta_wvc</span><span class='op'>(</span>
+  <span class='va'>dataY</span>,
+  <span class='va'>dataX</span>,
+  nt <span class='op'>=</span> <span class='fl'>2</span>,
+  dataPredictY <span class='op'>=</span> <span class='va'>dataX</span>,
+  modele <span class='op'>=</span> <span class='st'>"pls"</span>,
+  family <span class='op'>=</span> <span class='cn'>NULL</span>,
+  scaleX <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  scaleY <span class='op'>=</span> <span class='cn'>NULL</span>,
+  keepcoeffs <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  keepstd.coeffs <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  tol_Xi <span class='op'>=</span> <span class='fl'>10</span><span class='op'>^</span><span class='op'>(</span><span class='op'>-</span><span class='fl'>12</span><span class='op'>)</span>,
+  <span class='va'>weights</span>,
+  method <span class='op'>=</span> <span class='st'>"logistic"</span>,
+  link <span class='op'>=</span> <span class='cn'>NULL</span>,
+  link.phi <span class='op'>=</span> <span class='cn'>NULL</span>,
+  type <span class='op'>=</span> <span class='st'>"ML"</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -139,105 +171,182 @@
     </tr>
     <tr>
       <th>modele</th>
-      <td><p>name of the PLS glm or PLS beta model to be fitted (<code>"pls"</code>, <code>"pls-glm-Gamma"</code>, <code>"pls-glm-gaussian"</code>, <code>"pls-glm-inverse.gaussian"</code>, <code>"pls-glm-logistic"</code>, <code>"pls-glm-poisson"</code>, <code>"pls-glm-polr"</code>, <code>"pls-beta"</code>). Use <code>"modele=pls-glm-family"</code> to enable the <code>family</code> option.</p></td>
+      <td><p>name of the PLS glm or PLS beta model to be fitted
+(<code>"pls"</code>, <code>"pls-glm-Gamma"</code>, <code>"pls-glm-gaussian"</code>,
+<code>"pls-glm-inverse.gaussian"</code>, <code>"pls-glm-logistic"</code>,
+<code>"pls-glm-poisson"</code>, <code>"pls-glm-polr"</code>, <code>"pls-beta"</code>). Use
+<code>"modele=pls-glm-family"</code> to enable the <code>family</code> option.</p></td>
     </tr>
     <tr>
       <th>family</th>
-      <td><p>a description of the error distribution and link function to be used in the model. This can be a character string naming a family function, a family function or the result of a call to a family function. (See <code><a href='https://www.rdocumentation.org/packages/stats/topics/family'>family</a></code> for details of family functions.) To use the family option, please set <code>modele="pls-glm-family"</code>. User defined families can also be defined. See details.</p></td>
+      <td><p>a description of the error distribution and link function to
+be used in the model. This can be a character string naming a family
+function, a family function or the result of a call to a family function.
+(See <code><a href='https://rdrr.io/r/stats/family.html'>family</a></code> for details of family functions.) To use
+the family option, please set <code>modele="pls-glm-family"</code>. User defined
+families can also be defined. See details.</p></td>
     </tr>
     <tr>
       <th>scaleX</th>
-      <td><p>scale the predictor(s) : must be set to TRUE for <code>modele="pls"</code> and should be for glms pls.</p></td>
+      <td><p>scale the predictor(s) : must be set to TRUE for
+<code>modele="pls"</code> and should be for glms pls.</p></td>
     </tr>
     <tr>
       <th>scaleY</th>
-      <td><p>scale the response : Yes/No. Ignored since non always possible for glm responses.</p></td>
+      <td><p>scale the response : Yes/No. Ignored since non always possible
+for glm responses.</p></td>
     </tr>
     <tr>
       <th>keepcoeffs</th>
-      <td><p>whether the coefficients of the linear fit on link scale of unstandardized eXplanatory variables should be returned or not.</p></td>
+      <td><p>whether the coefficients of the linear fit on link scale
+of unstandardized eXplanatory variables should be returned or not.</p></td>
     </tr>
     <tr>
       <th>keepstd.coeffs</th>
-      <td><p>whether the coefficients of the linear fit on link scale of standardized eXplanatory variables should be returned or not.</p></td>
+      <td><p>whether the coefficients of the linear fit on link
+scale of standardized eXplanatory variables should be returned or not.</p></td>
     </tr>
     <tr>
       <th>tol_Xi</th>
-      <td><p>minimal value for Norm2(Xi) and \(\mathrm{det}(pp' \times pp)\) if there is any missing value in the <code>dataX</code>. It defaults to \(10^{-12}\)</p></td>
+      <td><p>minimal value for Norm2(Xi) and \(\mathrm{det}(pp' \times
+pp)\) if there is any missing value in the <code>dataX</code>. It
+defaults to \(10^{-12}\)</p></td>
     </tr>
     <tr>
       <th>weights</th>
-      <td><p>an optional vector of 'prior weights' to be used in the fitting process. Should be <code>NULL</code> or a numeric vector.</p></td>
+      <td><p>an optional vector of 'prior weights' to be used in the
+fitting process. Should be <code>NULL</code> or a numeric vector.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>logistic, probit, complementary log-log or cauchit (corresponding to a Cauchy latent variable).</p></td>
+      <td><p>logistic, probit, complementary log-log or cauchit
+(corresponding to a Cauchy latent variable).</p></td>
     </tr>
     <tr>
       <th>link</th>
-      <td><p>character specification of the link function in the mean model (mu). Currently, "<code>logit</code>", "<code>probit</code>", "<code>cloglog</code>", "<code>cauchit</code>", "<code>log</code>", "<code>loglog</code>" are supported. Alternatively, an object of class "<code>link-glm</code>" can be supplied.</p></td>
+      <td><p>character specification of the link function in the mean model
+(mu). Currently, "<code>logit</code>", "<code>probit</code>", "<code>cloglog</code>",
+"<code>cauchit</code>", "<code>log</code>", "<code>loglog</code>" are supported.
+Alternatively, an object of class "<code>link-glm</code>" can be supplied.</p></td>
     </tr>
     <tr>
       <th>link.phi</th>
-      <td><p>character specification of the link function in the precision model (phi). Currently, "<code>identity</code>", "<code>log</code>", "<code>sqrt</code>" are supported. The default is "<code>log</code>" unless <code>formula</code> is of type <code>y~x</code> where the default is "<code>identity</code>" (for backward compatibility). Alternatively, an object of class "<code>link-glm</code>" can be supplied.</p></td>
+      <td><p>character specification of the link function in the
+precision model (phi). Currently, "<code>identity</code>", "<code>log</code>",
+"<code>sqrt</code>" are supported. The default is "<code>log</code>" unless
+<code>formula</code> is of type <code>y~x</code> where the default is "<code>identity</code>"
+(for backward compatibility). Alternatively, an object of class
+"<code>link-glm</code>" can be supplied.</p></td>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>character specification of the type of estimator. Currently, maximum likelihood ("<code>ML</code>"), ML with bias correction ("<code>BC</code>"), and ML with bias reduction ("<code>BR</code>") are supported.</p></td>
+      <td><p>character specification of the type of estimator. Currently,
+maximum likelihood ("<code>ML</code>"), ML with bias correction ("<code>BC</code>"), and
+ML with bias reduction ("<code>BR</code>") are supported.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
       <td><p>should info messages be displayed ?</p></td>
     </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function is called by <code>PLS_glm_kfoldcv_formula</code> in order to perform cross validation either on complete or incomplete datasets.</p>
-<p>There are seven different predefined models with predefined link functions available :</p><dl class='dl-horizontal'>
-<dt><code>"pls"</code></dt><dd><p>ordinary pls models</p></dd>
-<dt><code>"pls-glm-Gamma"</code></dt><dd><p>glm gaussian with inverse link pls models</p></dd>
-<dt><code>"pls-glm-gaussian"</code></dt><dd><p>glm gaussian with identity link pls models</p></dd>
-<dt><code>"pls-glm-inverse-gamma"</code></dt><dd><p>glm binomial with square inverse link pls models</p></dd>
-<dt><code>"pls-glm-logistic"</code></dt><dd><p>glm binomial with logit link pls models</p></dd>
-<dt><code>"pls-glm-poisson"</code></dt><dd><p>glm poisson with log link pls models</p></dd>
-<dt><code>"pls-glm-polr"</code></dt><dd><p>glm polr with logit link pls models</p></dd>
-</dl><p>Using the <code>"family="</code> option and setting <code>"modele=pls-glm-family"</code> allows changing the family and link function the same way as for the <code><a href='https://www.rdocumentation.org/packages/stats/topics/glm'>glm</a></code> function. As a consequence user-specified families can also be used.</p><dl class='dl-horizontal'>
-<dt>The <code>gaussian</code> family</dt><dd><p>accepts the links (as names) <code>identity</code>, <code>log</code> and <code>inverse</code>.</p></dd>
-<dt>The <code>binomial</code> family</dt><dd><p>accepts the links <code>logit</code>, <code>probit</code>, <code>cauchit</code>, (corresponding to logistic, normal and Cauchy CDFs respectively) <code>log</code> and <code>cloglog</code> (complementary log-log).</p></dd> 
-<dt>The <code>Gamma</code> family</dt><dd><p>accepts the links <code>inverse</code>, <code>identity</code> and <code>log</code>.</p></dd>
-<dt>The <code>poisson</code> family</dt><dd><p>accepts the links <code>log</code>, <code>identity</code>, and <code>sqrt</code>.</p></dd>
-<dt>The <code>inverse.gaussian</code> family</dt><dd><p>accepts the links <code>1/mu^2</code>, <code>inverse</code>, <code>identity</code> and <code>log</code>.</p></dd>
-<dt>The <code>quasi</code> family</dt><dd><p>accepts the links <code>logit</code>, <code>probit</code>, <code>cloglog</code>, <code>identity</code>, <code>inverse</code>, <code>log</code>, <code>1/mu^2</code> and <code>sqrt</code>.</p></dd>
-<dt>The function <code>power</code></dt><dd><p>can be used to create a power link function.</p></dd> 
-</dl>
-    <p>Non-NULL weights can be used to indicate that different observations have different dispersions (with the values in weights being inversely proportional to the dispersions); or equivalently, when the elements of weights are positive integers w_i, that each response y_i is the mean of w_i unit-weight observations.</p>
-    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p></p>
-<dt>valsPredict</dt><dd><p><code>nrow(dataPredictY) * nt</code> matrix of the predicted values</p></dd>
-  <dt><code>coeffs</code></dt><dd><p>If the coefficients of the eXplanatory variables were requested:<br />
-        i.e. <code>keepcoeffs=TRUE</code>.<br />
-        <code>ncol(dataX) * 1</code> matrix of the coefficients of the the eXplanatory variables</p></dd>
-
     
+
+<dt>valsPredict</dt><dd><p><code>nrow(dataPredictY) * nt</code> matrix of the
+predicted values</p></dd> <dt>list("coeffs")</dt><dd><p>If the coefficients of the
+eXplanatory variables were requested:<br /> i.e. <code>keepcoeffs=TRUE</code>.<br />
+<code>ncol(dataX) * 1</code> matrix of the coefficients of the the eXplanatory
+variables</p></dd>
+
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This function is called by <code>PLS_glm_kfoldcv_formula</code> in order to
+perform cross validation either on complete or incomplete datasets.</p>
+<p>There are seven different predefined models with predefined link functions
+available :</p><dl>
+<dt>list("\"pls\"")</dt><dd><p>ordinary pls models</p></dd>
+<dt>list("\"pls-glm-Gamma\"")</dt><dd><p>glm gaussian with inverse link pls models</p></dd>
+<dt>list("\"pls-glm-gaussian\"")</dt><dd><p>glm gaussian with identity link pls
+models</p></dd> <dt>list("\"pls-glm-inverse-gamma\"")</dt><dd><p>glm binomial with square
+inverse link pls models</p></dd> <dt>list("\"pls-glm-logistic\"")</dt><dd><p>glm binomial
+with logit link pls models</p></dd> <dt>list("\"pls-glm-poisson\"")</dt><dd><p>glm poisson
+with log link pls models</p></dd> <dt>list("\"pls-glm-polr\"")</dt><dd><p>glm polr with
+logit link pls models</p></dd> 
+</dl><p>Using the <code>"family="</code> option and setting
+<code>"modele=pls-glm-family"</code> allows changing the family and link function
+the same way as for the <code><a href='https://rdrr.io/r/stats/glm.html'>glm</a></code> function. As a consequence
+user-specified families can also be used.</p><dl>
+<dt>The </dt><dd><p>accepts
+the links (as names) <code>identity</code>, <code>log</code> and
+<code>inverse</code>.</p></dd><dt>list("gaussian")</dt><dd><p>accepts the links (as names)
+<code>identity</code>, <code>log</code> and <code>inverse</code>.</p></dd><dt> family</dt><dd><p>accepts the
+links (as names) <code>identity</code>, <code>log</code> and <code>inverse</code>.</p></dd> <dt>The
+</dt><dd><p>accepts the links <code>logit</code>, <code>probit</code>, <code>cauchit</code>,
+(corresponding to logistic, normal and Cauchy CDFs respectively) <code>log</code>
+and <code>cloglog</code> (complementary log-log).</p></dd><dt>list("binomial")</dt><dd><p>accepts
+the links <code>logit</code>, <code>probit</code>, <code>cauchit</code>, (corresponding to
+logistic, normal and Cauchy CDFs respectively) <code>log</code> and <code>cloglog</code>
+(complementary log-log).</p></dd><dt> family</dt><dd><p>accepts the links <code>logit</code>,
+<code>probit</code>, <code>cauchit</code>, (corresponding to logistic, normal and Cauchy
+CDFs respectively) <code>log</code> and <code>cloglog</code> (complementary log-log).</p></dd>
+<dt>The </dt><dd><p>accepts the links <code>inverse</code>, <code>identity</code> and
+<code>log</code>.</p></dd><dt>list("Gamma")</dt><dd><p>accepts the links <code>inverse</code>,
+<code>identity</code> and <code>log</code>.</p></dd><dt> family</dt><dd><p>accepts the links
+<code>inverse</code>, <code>identity</code> and <code>log</code>.</p></dd> <dt>The </dt><dd><p>accepts the
+links <code>log</code>, <code>identity</code>, and
+<code>sqrt</code>.</p></dd><dt>list("poisson")</dt><dd><p>accepts the links <code>log</code>,
+<code>identity</code>, and <code>sqrt</code>.</p></dd><dt> family</dt><dd><p>accepts the links
+<code>log</code>, <code>identity</code>, and <code>sqrt</code>.</p></dd> <dt>The </dt><dd><p>accepts the links
+<code>1/mu^2</code>, <code>inverse</code>, <code>identity</code> and
+<code>log</code>.</p></dd><dt>list("inverse.gaussian")</dt><dd><p>accepts the links <code>1/mu^2</code>,
+<code>inverse</code>, <code>identity</code> and <code>log</code>.</p></dd><dt> family</dt><dd><p>accepts the
+links <code>1/mu^2</code>, <code>inverse</code>, <code>identity</code> and <code>log</code>.</p></dd>
+<dt>The </dt><dd><p>accepts the links <code>logit</code>, <code>probit</code>, <code>cloglog</code>,
+<code>identity</code>, <code>inverse</code>, <code>log</code>, <code>1/mu^2</code> and
+<code>sqrt</code>.</p></dd><dt>list("quasi")</dt><dd><p>accepts the links <code>logit</code>,
+<code>probit</code>, <code>cloglog</code>, <code>identity</code>, <code>inverse</code>, <code>log</code>,
+<code>1/mu^2</code> and <code>sqrt</code>.</p></dd><dt> family</dt><dd><p>accepts the links
+<code>logit</code>, <code>probit</code>, <code>cloglog</code>, <code>identity</code>,
+<code>inverse</code>, <code>log</code>, <code>1/mu^2</code> and <code>sqrt</code>.</p></dd> <dt>The
+function </dt><dd><p>can be used to create a power link
+function.</p></dd><dt>list("power")</dt><dd><p>can be used to create a power link function.</p></dd>
+
+</dl>
+
+<p>Non-NULL weights can be used to indicate that different observations have
+different dispersions (with the values in weights being inversely
+proportional to the dispersions); or equivalently, when the elements of
+weights are positive integers w_i, that each response y_i is the mean of w_i
+unit-weight observations.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Frédéric Bertrand, Nicolas Meyer, Michèle Beau-Faller, Karim El Bayed, Izzie-Jacques Namer, Myriam Maumy-Bertrand (2013). Régression Bêta PLS. <em>Journal de la Société Française de Statistique</em>, <b>154</b>(3):143-159.
+    <p>Frédéric Bertrand, Nicolas Meyer,
+Michèle Beau-Faller, Karim El Bayed, Izzie-Jacques Namer,
+Myriam Maumy-Bertrand (2013). Régression Bêta
+PLS. <em>Journal de la Société Française de Statistique</em>,
+<b>154</b>(3):143-159.
 <a href='http://publications-sfds.math.cnrs.fr/index.php/J-SFdS/article/view/215'>http://publications-sfds.math.cnrs.fr/index.php/J-SFdS/article/view/215</a></p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='PLS_beta.html'>PLS_beta</a></code> for more detailed results, <code><a href='PLS_beta_kfoldcv.html'>PLS_beta_kfoldcv</a></code> for cross validating models and <code>PLS_lm_wvc</code> for the same function dedicated to plsR models</p></div>
-    
+    <div class='dont-index'><p><code><a href='PLS_beta.html'>PLS_beta</a></code> for more detailed results,
+<code><a href='PLS_beta_kfoldcv.html'>PLS_beta_kfoldcv</a></code> for cross validating models and
+<code>PLS_lm_wvc</code> for the same function dedicated to plsR models</p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Frédéric Bertrand<br />
+<a href='mailto:frederic.bertrand@math.unistra.fr'>frederic.bertrand@math.unistra.fr</a><br />
+<a href='http://www-irma.u-strasbg.fr/~fbertran/'>http://www-irma.u-strasbg.fr/~fbertran/</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='st'>"GasolineYield"</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>"betareg"</span>)
-<span class='no'>yGasolineYield</span> <span class='kw'>&lt;-</span> <span class='no'>GasolineYield</span>$<span class='no'>yield</span>
-<span class='no'>XGasolineYield</span> <span class='kw'>&lt;-</span> <span class='no'>GasolineYield</span>[,<span class='fl'>2</span>:<span class='fl'>5</span>]
-<span class='no'>modpls</span> <span class='kw'>&lt;-</span> <span class='fu'>PLS_beta_wvc</span>(<span class='no'>yGasolineYield</span>,<span class='no'>XGasolineYield</span>,<span class='kw'>nt</span><span class='kw'>=</span><span class='fl'>3</span>,<span class='kw'>modele</span><span class='kw'>=</span><span class='st'>"pls-beta"</span>)</div><div class='output co'>#&gt; ____************************************************____
+
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"GasolineYield"</span>,package<span class='op'>=</span><span class='st'>"betareg"</span><span class='op'>)</span>
+<span class='va'>yGasolineYield</span> <span class='op'>&lt;-</span> <span class='va'>GasolineYield</span><span class='op'>$</span><span class='va'>yield</span>
+<span class='va'>XGasolineYield</span> <span class='op'>&lt;-</span> <span class='va'>GasolineYield</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
+<span class='va'>modpls</span> <span class='op'>&lt;-</span> <span class='fu'>PLS_beta_wvc</span><span class='op'>(</span><span class='va'>yGasolineYield</span>,<span class='va'>XGasolineYield</span>,nt<span class='op'>=</span><span class='fl'>3</span>,modele<span class='op'>=</span><span class='st'>"pls-beta"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ____************************************************____
 #&gt; 
 #&gt; Model: pls-beta 
 #&gt; 
@@ -252,7 +361,8 @@
 #&gt; ____Component____ 2 ____
 #&gt; ____Component____ 3 ____
 #&gt; ****________________________________________________****
-#&gt; </div><div class='input'><span class='no'>modpls</span></div><div class='output co'>#&gt; $valsPredict
+#&gt; </div><div class='input'><span class='va'>modpls</span>
+</div><div class='output co'>#&gt; $valsPredict
 #&gt;          [,1]       [,2]       [,3]
 #&gt; 1  0.18187561 0.11903943 0.10952240
 #&gt; 2  0.28144600 0.21696140 0.20261811
@@ -321,30 +431,18 @@
 #&gt; 30 89.08427 199.6073 231.1112
 #&gt; 31 89.08427 199.6073 231.1112
 #&gt; 32 89.08427 199.6073 231.1112
-#&gt; </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rm'>rm</a></span>(<span class='st'>"modpls"</span>)</div></pre>
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span><span class='op'>(</span><span class='st'>"modpls"</span><span class='op'>)</span>
+
+
+</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#details">Details</a></li>
-
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#references">References</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Frédéric Bertrand<br />
-<a href='mailto:frederic.bertrand@math.unistra.fr'>frederic.bertrand@math.unistra.fr</a><br />
-<a href='http://www-irma.u-strasbg.fr/~fbertran/'>http://www-irma.u-strasbg.fr/~fbertran/</a></p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -352,13 +450,16 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

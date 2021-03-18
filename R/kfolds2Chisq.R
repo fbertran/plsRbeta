@@ -1,3 +1,42 @@
+#' Computes Predicted Chisquare for kfold cross validated partial least squares
+#' beta regression models.
+#' 
+#' This function computes Predicted Chisquare for kfold cross validated partial
+#' least squares beta regression models.
+#' 
+#' 
+#' @param pls_kfolds a kfold cross validated partial least squares regression
+#' glm model
+#' @return \item{list}{Total Predicted Chisquare vs number of components for
+#' the first group partition} \item{list()}{\dots{}} \item{list}{Total
+#' Predicted Chisquare vs number of components for the last group partition}
+#' @note Use \code{\link{PLS_beta_kfoldcv}} to create kfold cross validated
+#' partial least squares regression glm and beta models.
+#' @author Frédéric Bertrand\cr
+#' \email{frederic.bertrand@@math.unistra.fr}\cr
+#' \url{http://www-irma.u-strasbg.fr/~fbertran/}
+#' @seealso \code{\link[plsRglm]{kfolds2coeff}},
+#' \code{\link[plsRglm]{kfolds2Press}}, \code{\link[plsRglm]{kfolds2Pressind}},
+#' \code{\link{kfolds2Chisqind}}, \code{\link[plsRglm]{kfolds2Mclassedind}} and
+#' \code{\link[plsRglm]{kfolds2Mclassed}} to extract and transforms results
+#' from kfold cross validation.
+#' @references Frédéric Bertrand, Nicolas Meyer,
+#' Michèle Beau-Faller, Karim El Bayed, Izzie-Jacques Namer,
+#' Myriam Maumy-Bertrand (2013). Régression Bêta
+#' PLS. \emph{Journal de la Société Française de Statistique},
+#' \bold{154}(3):143-159.
+#' \url{http://publications-sfds.math.cnrs.fr/index.php/J-SFdS/article/view/215}
+#' @keywords models regression
+#' @examples
+#' 
+#' \dontrun{
+#' data("GasolineYield",package="betareg")
+#' yGasolineYield <- GasolineYield$yield
+#' XGasolineYield <- GasolineYield[,2:5]
+#' bbb <- PLS_beta_kfoldcv(yGasolineYield,XGasolineYield,nt=3,modele="pls-beta")
+#' kfolds2Chisq(bbb)
+#' }
+#' 
 kfolds2Chisq <- function(pls_kfolds) {
     if (!is.null(pls_kfolds$call$family)) {
         if (is.character(pls_kfolds$call$family)) {pls_kfolds$call$family <- get(pls_kfolds$call$family, mode = "function", envir = parent.frame())}
