@@ -1,6 +1,6 @@
 Package: plsRbeta
-Version: 0.2.6
-Date: 2021-03-17
+Version: 0.2.7
+Date: 2021-03-18
 Depends: R (>= 2.4.0)
 Imports: mvtnorm, boot, Formula, MASS, plsRglm, betareg, methods
 Enhances: 
