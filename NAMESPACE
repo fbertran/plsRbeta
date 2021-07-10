@@ -19,8 +19,10 @@ importFrom("stats", "AIC", "Gamma", "as.formula", "binomial", "coef",
 # functions
 export(bootplsbeta                )
 export(coefs.plsRbeta             ) 
+export(coefs.plsRbetanp           ) 
 export(kfolds2CVinfos_beta        ) 
 export(permcoefs.plsRbeta         ) 
+export(permcoefs.plsRbetanp       ) 
 export(PLS_beta                   ) 
 export(PLS_beta_formula           ) 
 export(PLS_beta_kfoldcv           ) 

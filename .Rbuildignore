@@ -25,3 +25,4 @@ NEWS
 ^fullrespdf*$
 ^inst/animation*$
 ^\.github$
+^technote*$

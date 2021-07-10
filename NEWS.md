@@ -1,3 +1,8 @@
+# plsRbeta 0.2.8
+
+* Bootstrap function can be specified. A bootstrap function for raw coefficients is provided.
+* Added the technical note for User2021 to the pkgdown website of the package.
+
 # plsRbeta 0.2.7
 
 * package help page.
