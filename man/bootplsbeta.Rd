@@ -8,9 +8,10 @@ bootplsbeta(
   object,
   typeboot = "plsmodel",
   R = 250,
-  statistic = coefs.plsRbeta,
+  statistic = NULL,
   sim = "ordinary",
   stype = "i",
+  stabvalue = 1e+06,
   ...
 )
 }
@@ -44,6 +45,9 @@ Possible values are \code{"ordinary"} (the default), \code{"balanced"},
 \code{statistic} represents. Possible values of stype are \code{"i"}
 (indices - the default), \code{"f"} (frequencies), or \code{"w"} (weights).}
 
+\item{stabvalue}{A value to hard threshold bootstrap estimates computed from
+atypical resamplings.}
+
 \item{\dots}{Other named arguments for \code{statistic} which are passed
 unchanged each time it is called. Any such arguments to \code{statistic}
 should follow the arguments which \code{statistic} is required to have for
@@ -67,14 +71,42 @@ More details on bootstrap techniques are available in the help of the
 \donttest{
 data("GasolineYield",package="betareg")
 
-GazYield.boot <- bootplsbeta(plsRbeta(yield~.,data=GasolineYield,nt=3,
-modele="pls-beta"), sim="ordinary", stype="i", R=250)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), type = c("norm","basic","perc","bca"), index=1)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), type = c("norm","basic","perc","bca"), index=2)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), type = c("norm","basic","perc","bca"), index=3)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), type = c("norm","basic","perc","bca"), index=4)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), type = c("norm","basic","perc","bca"), index=5)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), type = c("norm","basic","perc","bca"), index=6)
+# Std coefficients
+modplsbeta <- plsRbeta(yield~.,data=GasolineYield,nt=3, modele="pls-beta")
+GazYield.boot <- bootplsbeta(modplsbeta, sim="ordinary", stype="i", R=250)
+boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+type = c("norm","basic","perc","bca"), index=1)
+boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+type = c("norm","basic","perc","bca"), index=2)
+boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+type = c("norm","basic","perc","bca"), index=3)
+boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+type = c("norm","basic","perc","bca"), index=4)
+boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+type = c("norm","basic","perc","bca"), index=5)
+boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+type = c("norm","basic","perc","bca"), index=6)
+
+plsRglm::boxplots.bootpls(GazYield.boot)
+plsRglm::confints.bootpls(GazYield.boot)
+plsRglm::plots.confints.bootpls(plsRglm::confints.bootpls(GazYield.boot))
+
+#Raw coefficients
+modplsbeta <- plsRbeta(yield~.,data=GasolineYield,nt=3, modele="pls-beta")
+GazYield.boot.raw <- bootplsbeta(modplsbeta, sim="ordinary", stype="i", 
+R=250, statistic=coefs.plsRbeta.raw)
+boot::boot.ci(GazYield.boot.raw, conf = c(0.90,0.95), 
+type = c("norm","basic","perc","bca"), index=1)
+boot::boot.ci(GazYield.boot.raw, conf = c(0.90,0.95), 
+type = c("norm","basic","perc","bca"), index=2)
+boot::boot.ci(GazYield.boot.raw, conf = c(0.90,0.95), 
+type = c("norm","basic","perc","bca"), index=3)
+boot::boot.ci(GazYield.boot.raw, conf = c(0.90,0.95), 
+type = c("norm","basic","perc","bca"), index=4)
+boot::boot.ci(GazYield.boot.raw, conf = c(0.90,0.95), 
+type = c("norm","basic","perc","bca"), index=5)
+boot::boot.ci(GazYield.boot.raw, conf = c(0.90,0.95), 
+type = c("norm","basic","perc","bca"), index=6)
 
 plsRglm::boxplots.bootpls(GazYield.boot)
 plsRglm::confints.bootpls(GazYield.boot)
@@ -89,12 +121,18 @@ plot(GazYield.boot, index=2,jack=TRUE)
 
 GazYield.boot <- bootplsbeta(plsRbeta(yield~.,data=GasolineYield,nt=3,
 modele="pls-beta"), sim="balanced", stype="i", R=250)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), type = c("norm","basic","perc","bca"), index=1)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), type = c("norm","basic","perc","bca"), index=2)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), type = c("norm","basic","perc","bca"), index=3)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), type = c("norm","basic","perc","bca"), index=4)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), type = c("norm","basic","perc","bca"), index=5)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), type = c("norm","basic","perc","bca"), index=6)
+boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+type = c("norm","basic","perc","bca"), index=1)
+boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+type = c("norm","basic","perc","bca"), index=2)
+boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+type = c("norm","basic","perc","bca"), index=3)
+boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+type = c("norm","basic","perc","bca"), index=4)
+boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+type = c("norm","basic","perc","bca"), index=5)
+boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+type = c("norm","basic","perc","bca"), index=6)
 
 
 plsRglm::boxplots.bootpls(GazYield.boot)
@@ -112,12 +150,18 @@ plot(GazYield.boot,jack=TRUE)
 
 GazYield.boot <- bootplsbeta(plsRbeta(yield~.,data=GasolineYield,nt=3,
 modele="pls-beta"), sim="permutation", stype="i", R=250)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), type = c("norm","basic","perc"), index=1)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), type = c("norm","basic","perc"), index=2)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), type = c("norm","basic","perc"), index=3)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), type = c("norm","basic","perc"), index=4)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), type = c("norm","basic","perc"), index=5)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), type = c("norm","basic","perc"), index=6)
+boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+type = c("norm","basic","perc"), index=1)
+boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+type = c("norm","basic","perc"), index=2)
+boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+type = c("norm","basic","perc"), index=3)
+boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+type = c("norm","basic","perc"), index=4)
+boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+type = c("norm","basic","perc"), index=5)
+boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+type = c("norm","basic","perc"), index=6)
 plsRglm::boxplots.bootpls(GazYield.boot)
 plot(GazYield.boot)
 }

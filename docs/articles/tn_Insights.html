@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plsRbeta</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.8</span>
       </span>
     </div>
 
@@ -61,9 +61,6 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/Insights.html">Partial Least Squares Regression for Beta Regression Models</a>
-    </li>
-    <li>
       <a href="../articles/tn_Insights.html">Partial Least Squares Regression for Beta Regression Models</a>
     </li>
   </ul>
@@ -94,10 +91,12 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Partial Least Squares Regression for Beta Regression Models</h1>
             <h3 class="subtitle">The plsRbeta package</h3>
-                        <h4 class="author">Frédéric Bertrand, Université de technologie de Troyes, orcid_id: 0000-0002-0837-8281</h4>
-                        <h4 class="author">Myriam Maumy, Université de technologie de Troyes, orcid_id: 0000-0002-4615-1512</h4>
-            
-            <h4 class="date">2021-07-11</h4>
+                        <h4 class="author">Frédéric Bertrand and Myriam Maumy-Bertrand</h4>
+            <address class="author_afil">
+      IRMA, labex IRMIA, Université de Strasbourg and CNRS. LIST3N, Université de technologie de Troyes.<br><a class="author_email" href="mailto:#"></a><a href="mailto:frederic.bertrand@utt.fr" class="email">frederic.bertrand@utt.fr</a>
+      </address>
+                  
+            <h4 class="date">2021-07-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/fbertran/plsRbeta/blob/master/vignettes/tn_Insights.Rmd"><code>vignettes/tn_Insights.Rmd</code></a></small>
       <div class="hidden name"><code>tn_Insights.Rmd</code></div>
@@ -106,8 +105,7 @@
 
     
     
-<p><img src="logo.png" align="right" width="200"></p>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><div id="abstract" class="section level2">
+<div id="abstract" class="section level2">
 <h2 class="hasAnchor">
 <a href="#abstract" class="anchor"></a>Abstract</h2>
 <p>Many variables of interest, such as experimental results, yields or economic indicators, are naturally expressed as rates, proportions or indices whose values are necessarily between zero and one or more generally two fixed values known in advance. Beta regression allows us to model these data with a great deal of flexibility, since the density functions of the Beta laws can take on a wide variety of forms. However, like all usual regression models, it cannot be applied directly when the predictors present multicollinearity problems or worse when they are more numerous than the observations. These situations are frequently encountered in chemistry, medicine, economics or marketing. To circumvent this difficulty, we formulate an extension of PLS regression for Beta regression models. This, along with several tools such as cross-validation and bootstrap techniques, is available for the <code>R</code> language in the <code>plsRbeta</code> library.</p>
@@ -826,78 +824,77 @@ c^{(b)}=(T^{(b)}{}'T^{(b)})^{-1}T^{(b)}{}'Y^{(b)} \quad \mbox{and} \quad b^{(b)}
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://fbertran.github.io/plsRglm/">plsRglm</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://fbertran.github.io/plsRbeta/">plsRbeta</a></span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">TxTum</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="st">"MET_rev_edt.txt"</span>,sep<span class="op">=</span><span class="st">"\t"</span>,header<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">TxTum</span><span class="op">)</span>
 
 <span class="va">TxTum.mod.bootBR6</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bootplsbeta.html">bootplsbeta</a></span><span class="op">(</span><span class="fu"><a href="../reference/plsRbeta.html">plsRbeta</a></span><span class="op">(</span>formula<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="va">CELTUMCO</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span><span class="op">~</span><span class="va">.</span>,data<span class="op">=</span><span class="va">TxTum</span>,nt<span class="op">=</span><span class="fl">6</span>,modele<span class="op">=</span><span class="st">"pls-beta"</span>,type<span class="op">=</span><span class="st">"BR"</span><span class="op">)</span>, sim<span class="op">=</span><span class="st">"ordinary"</span>, stype<span class="op">=</span><span class="st">"i"</span>, R<span class="op">=</span><span class="fl">1000</span><span class="op">)</span>
-<span class="co">#save(TxTum.mod.bootBR6,file="TxTum.mod.bootBR6.RData")</span></code></pre></div>
+<span class="co">#save(TxTum.mod.bootBR6,file="TxTum.mod.bootBR6.Rdata")</span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"TxTum.mod.bootBR6.RData"</span><span class="op">)</span>
-<span class="va">temp.ci</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="https://fbertran.github.io/plsRglm/reference/confints.bootpls.html">confints.bootpls</a></span><span class="op">(</span><span class="va">TxTum.mod.bootBR6</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"TxTum.mod.bootBR6"</span><span class="op">)</span>
+<span class="va">temp.ci</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span><span class="op">(</span><span class="fu">plsRglm</span><span class="fu">::</span><span class="fu"><a href="https://fbertran.github.io/plsRglm/reference/confints.bootpls.html">confints.bootpls</a></span><span class="op">(</span><span class="va">TxTum.mod.bootBR6</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://fbertran.github.io/plsRglm/reference/boxplots.bootpls.html">boxplots.bootpls</a></span><span class="op">(</span><span class="va">TxTum.mod.bootBR6</span>,indices <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">temp.ci</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<img src="unnamed-chunk-4-1.png" alt="Figure 1. Boxplot of bootstrap distributions, 6 components BR." width="100%"><p class="caption">
+<img src="tn_Insights_files/figure-html/unnamed-chunk-4-1.png" alt="Figure 1. Boxplot of bootstrap distributions, 6 components BR." width="480"><p class="caption">
 Figure 1. Boxplot of bootstrap distributions, 6 components BR.
 </p>
 </div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://fbertran.github.io/plsRglm/reference/plots.confints.bootpls.html">plots.confints.bootpls</a></span><span class="op">(</span><span class="va">temp.ci</span>,prednames<span class="op">=</span><span class="cn">TRUE</span>,indices <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">temp.ci</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">plsRglm</span><span class="fu">::</span><span class="fu"><a href="https://fbertran.github.io/plsRglm/reference/plots.confints.bootpls.html">plots.confints.bootpls</a></span><span class="op">(</span><span class="va">temp.ci</span>,prednames<span class="op">=</span><span class="cn">TRUE</span>,indices <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">temp.ci</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<img src="unnamed-chunk-5-1.png" alt="Figure 2. Bootstrap 95% confidence intervals, 6 components BR." width="100%"><p class="caption">
+<img src="tn_Insights_files/figure-html/unnamed-chunk-5-1.png" alt="Figure 2. Bootstrap 95% confidence intervals, 6 components BR." width="480"><p class="caption">
 Figure 2. Bootstrap 95% confidence intervals, 6 components BR.
 </p>
 </div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ind_BCa_nt6BR</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">temp.ci</span><span class="op">[</span>,<span class="fl">7</span><span class="op">]</span><span class="op">&lt;</span><span class="fl">0</span><span class="op">&amp;</span><span class="va">temp.ci</span><span class="op">[</span>,<span class="fl">8</span><span class="op">]</span><span class="op">&lt;</span><span class="fl">0</span><span class="op">)</span><span class="op">|</span><span class="op">(</span><span class="va">temp.ci</span><span class="op">[</span>,<span class="fl">7</span><span class="op">]</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">&amp;</span><span class="va">temp.ci</span><span class="op">[</span>,<span class="fl">8</span><span class="op">]</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">temp.ci</span><span class="op">)</span><span class="op">[</span><span class="va">ind_BCa_nt6BR</span><span class="op">]</span></code></pre></div>
-<pre><code>##  [1] "P4"       "C3M"      "RB"       "FL7A"     "W2"       "W4"      
-##  [7] "MT4"      "HLA"      "HLD"      "HLB"      "EA3"      "EA2"     
-## [13] "EGF2"     "FL7B"     "VSFGFR3"  "VSTOP1"   "VSTOP2A"  "VSEGFR"  
-## [19] "AFRAEGFR" "SRXRA"    "SMT"      "SHL"      "SEB"</code></pre>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://fbertran.github.io/plsRglm/reference/plots.confints.bootpls.html">plots.confints.bootpls</a></span><span class="op">(</span><span class="va">temp.ci</span>,prednames<span class="op">=</span><span class="cn">TRUE</span>,indices <span class="op">=</span> <span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">temp.ci</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="va">ind_BCa_nt6BR</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,articlestyle<span class="op">=</span><span class="cn">FALSE</span>,legendpos<span class="op">=</span><span class="st">"topright"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">temp.ci</span><span class="op">)</span><span class="op">[</span><span class="va">ind_BCa_nt6BR</span><span class="op">]</span>
+<span class="co">#&gt;  [1] "P4"       "C3M"      "RB"       "FL7A"     "W2"       "W4"      </span>
+<span class="co">#&gt;  [7] "MT4"      "HLA"      "HLD"      "HLB"      "EA3"      "EA2"     </span>
+<span class="co">#&gt; [13] "EGF2"     "FL7B"     "VSFGFR3"  "VSTOP1"   "VSTOP2A"  "VSEGFR"  </span>
+<span class="co">#&gt; [19] "AFRAEGFR" "SRXRA"    "SMT"      "SHL"      "SEB"</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">plsRglm</span><span class="fu">::</span><span class="fu"><a href="https://fbertran.github.io/plsRglm/reference/plots.confints.bootpls.html">plots.confints.bootpls</a></span><span class="op">(</span><span class="va">temp.ci</span>,prednames<span class="op">=</span><span class="cn">TRUE</span>,indices <span class="op">=</span> <span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">temp.ci</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="va">ind_BCa_nt6BR</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,articlestyle<span class="op">=</span><span class="cn">FALSE</span>,legendpos<span class="op">=</span><span class="st">"topright"</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<img src="unnamed-chunk-7-1.png" alt="Figure 3. Bootstrap 95% confidence intervals, BCa significant variables, 6 components BR." width="100%"><p class="caption">
+<img src="tn_Insights_files/figure-html/unnamed-chunk-7-1.png" alt="Figure 3. Bootstrap 95% confidence intervals, BCa significant variables, 6 components BR." width="480"><p class="caption">
 Figure 3. Bootstrap 95% confidence intervals, BCa significant variables, 6 components BR.
 </p>
 </div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#TxTum &lt;- read.table("MET_rev_edt.txt",sep="\t",header=TRUE)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"TxTum.mod.bootBC1.RData"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"TxTum.mod.bootBC1"</span><span class="op">)</span>
 
-<span class="va">temp.ci</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://fbertran.github.io/plsRglm/reference/confints.bootpls.html">confints.bootpls</a></span><span class="op">(</span><span class="va">TxTum.mod.bootBC1</span><span class="op">)</span>
+<span class="va">temp.ci</span> <span class="op">&lt;-</span> <span class="fu">plsRglm</span><span class="fu">::</span><span class="fu"><a href="https://fbertran.github.io/plsRglm/reference/confints.bootpls.html">confints.bootpls</a></span><span class="op">(</span><span class="va">TxTum.mod.bootBC1</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"ind_BCa_nt1BC.Rdata"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"ind_BCa_nt2BC.Rdata"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"ind_BCa_nt3BC.Rdata"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"ind_BCa_nt4BC.Rdata"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"ind_BCa_nt5BC.Rdata"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"ind_BCa_nt6BC.Rdata"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"ind_BCa_nt1BR.Rdata"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"ind_BCa_nt2BR.Rdata"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"ind_BCa_nt3BR.Rdata"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"ind_BCa_nt4BR.Rdata"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"ind_BCa_nt5BR.Rdata"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"ind_BCa_nt6BR.Rdata"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"ind_BCa_nt1BC"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"ind_BCa_nt2BC"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"ind_BCa_nt3BC"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"ind_BCa_nt4BC"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"ind_BCa_nt5BC"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"ind_BCa_nt6BC"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"ind_BCa_nt1BR"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"ind_BCa_nt2BR"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"ind_BCa_nt3BR"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"ind_BCa_nt4BR"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"ind_BCa_nt5BR"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"ind_BCa_nt6BR"</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">temp.ci</span><span class="op">)</span><span class="op">[</span><span class="va">ind_BCa_nt1BC</span><span class="op">]</span></code></pre></div>
-<pre><code>##  [1] "P4"     "E1"     "RB"     "P53"    "HLA"    "EA2"    "F3B"    "VSEGFR"
-##  [9] "SHL"    "SEB"</code></pre>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">TxTum.mod.bootBC1</span><span class="op">$</span><span class="va">data</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">[</span><span class="op">]</span></code></pre></div>
-<pre><code>##  [1] "age"      "sexe"     "HISTOADK" "H2"       "P3"       "P4"      
-##  [7] "E1"       "P5"       "R10"      "C3M"      "P6"       "RB"      
-## [13] "FL7A"     "P53"      "W2"       "P2"       "P1"       "W4"      
-## [19] "MT1"      "MT2"      "MT4"      "MT3"      "HLA"      "HLD"     
-## [25] "HLC"      "HLB"      "EA1"      "EA3"      "EA2"      "EA4"     
-## [31] "EB1"      "EB2"      "EB3"      "EB4"      "EGF1"     "EGF2"    
-## [37] "EGF3"     "EGF4"     "EGF5"     "EGF6"     "FL7B"     "VSFGF7"  
-## [43] "F3A"      "F3B"      "VSFGFR3"  "F4"       "Q5"       "VSTOP1"  
-## [49] "VSTOP2A"  "VSEGFR"   "AFRAEGFR" "SRXRA"    "SMT"      "QMTAMPN" 
-## [55] "QMTDELN"  "SHL"      "SEA"      "SEB"      "QPCRFGF7"</code></pre>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">indics</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">ind_BCa_nt1BC</span>,
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">temp.ci</span><span class="op">)</span><span class="op">[</span><span class="va">ind_BCa_nt1BC</span><span class="op">]</span>
+<span class="co">#&gt;  [1] "P4"     "E1"     "RB"     "P53"    "HLA"    "EA2"    "F3B"    "VSEGFR"</span>
+<span class="co">#&gt;  [9] "SHL"    "SEB"</span>
+<span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">TxTum.mod.bootBC1</span><span class="op">$</span><span class="va">data</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">[</span><span class="op">]</span>
+<span class="co">#&gt;  [1] "age"      "sexe"     "HISTOADK" "H2"       "P3"       "P4"      </span>
+<span class="co">#&gt;  [7] "E1"       "P5"       "R10"      "C3M"      "P6"       "RB"      </span>
+<span class="co">#&gt; [13] "FL7A"     "P53"      "W2"       "P2"       "P1"       "W4"      </span>
+<span class="co">#&gt; [19] "MT1"      "MT2"      "MT4"      "MT3"      "HLA"      "HLD"     </span>
+<span class="co">#&gt; [25] "HLC"      "HLB"      "EA1"      "EA3"      "EA2"      "EA4"     </span>
+<span class="co">#&gt; [31] "EB1"      "EB2"      "EB3"      "EB4"      "EGF1"     "EGF2"    </span>
+<span class="co">#&gt; [37] "EGF3"     "EGF4"     "EGF5"     "EGF6"     "FL7B"     "VSFGF7"  </span>
+<span class="co">#&gt; [43] "F3A"      "F3B"      "VSFGFR3"  "F4"       "Q5"       "VSTOP1"  </span>
+<span class="co">#&gt; [49] "VSTOP2A"  "VSEGFR"   "AFRAEGFR" "SRXRA"    "SMT"      "QMTAMPN" </span>
+<span class="co">#&gt; [55] "QMTDELN"  "SHL"      "SEA"      "SEB"      "QPCRFGF7"</span>
+
+<span class="va">indics</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">ind_BCa_nt1BC</span>,
 <span class="va">ind_BCa_nt2BC</span>,
 <span class="va">ind_BCa_nt3BC</span>,
 <span class="va">ind_BCa_nt4BC</span>,
@@ -913,99 +910,97 @@ Figure 3. Bootstrap 95% confidence intervals, BCa significant variables, 6 compo
 <span class="va">nbpreds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op">(</span><span class="va">indics</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op">(</span><span class="va">indics</span><span class="op">[</span>,<span class="fl">7</span><span class="op">:</span><span class="fl">12</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">nbpreds</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1"</span>,<span class="st">"2"</span>,<span class="st">"3"</span>,<span class="st">"4"</span>,<span class="st">"5"</span>,<span class="st">"6"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">nbpreds</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"BC"</span>,<span class="st">"BR"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">nbpreds</span></code></pre></div>
-<pre><code>##     1 2  3  4  5  6
-## BC 10 7 11 15 23 24
-## BR  9 7  9 15 21 23</code></pre>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nbpreds</span>
+<span class="co">#&gt;     1 2  3  4  5  6</span>
+<span class="co">#&gt; BC 10 7 11 15 23 24</span>
+<span class="co">#&gt; BR  9 7  9 15 21 23</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">inone</span> <span class="op">&lt;-</span> <span class="va">indics</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="va">indics</span><span class="op">)</span><span class="op">&gt;</span><span class="fl">0</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">7</span>,<span class="fl">2</span>,<span class="fl">8</span>,<span class="fl">3</span>,<span class="fl">9</span>,<span class="fl">4</span>,<span class="fl">10</span>,<span class="fl">5</span>,<span class="fl">11</span>,<span class="fl">6</span>,<span class="fl">12</span><span class="op">)</span><span class="op">]</span>
 <span class="va">inone</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">inone</span>,<span class="fl">1</span>,<span class="va">as.numeric</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">inone</span><span class="op">)</span></code></pre></div>
-<pre><code>##  [1] "age"      "P4"       "E1"       "C3M"      "RB"       "FL7A"    
-##  [7] "P53"      "W2"       "P2"       "W4"       "MT4"      "HLA"     
-## [13] "HLD"      "HLB"      "EA3"      "EA2"      "EB4"      "EGF2"    
-## [19] "EGF3"     "EGF4"     "FL7B"     "F3B"      "VSFGFR3"  "VSTOP1"  
-## [25] "VSTOP2A"  "VSEGFR"   "AFRAEGFR" "SRXRA"    "SMT"      "SHL"     
-## [31] "SEA"      "SEB"</code></pre>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">inone</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"BC1"</span>,<span class="st">"BR1"</span>,<span class="st">"BC2"</span>,<span class="st">"BR2"</span>,<span class="st">"BC3"</span>,<span class="st">"BR3"</span>,<span class="st">"BC4"</span>,<span class="st">"BR4"</span>,<span class="st">"BC5"</span>,<span class="st">"BR5"</span>,<span class="st">"BC6"</span>,<span class="st">"BR6"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">inone</span><span class="op">)</span>
+<span class="co">#&gt;  [1] "age"      "P4"       "E1"       "C3M"      "RB"       "FL7A"    </span>
+<span class="co">#&gt;  [7] "P53"      "W2"       "P2"       "W4"       "MT4"      "HLA"     </span>
+<span class="co">#&gt; [13] "HLD"      "HLB"      "EA3"      "EA2"      "EB4"      "EGF2"    </span>
+<span class="co">#&gt; [19] "EGF3"     "EGF4"     "FL7B"     "F3B"      "VSFGFR3"  "VSTOP1"  </span>
+<span class="co">#&gt; [25] "VSTOP2A"  "VSEGFR"   "AFRAEGFR" "SRXRA"    "SMT"      "SHL"     </span>
+<span class="co">#&gt; [31] "SEA"      "SEB"</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">inone</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"BC1"</span>,<span class="st">"BR1"</span>,<span class="st">"BC2"</span>,<span class="st">"BR2"</span>,<span class="st">"BC3"</span>,<span class="st">"BR3"</span>,<span class="st">"BC4"</span>,<span class="st">"BR4"</span>,<span class="st">"BC5"</span>,<span class="st">"BR5"</span>,<span class="st">"BC6"</span>,<span class="st">"BR6"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">inone</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1 BC"</span>,<span class="st">"  BR"</span>,<span class="st">"2 BC"</span>,<span class="st">"  BR"</span>,<span class="st">"3 BC"</span>,<span class="st">"  BR"</span>,<span class="st">"4 BC"</span>,<span class="st">"  BR"</span>,<span class="st">"5 BC"</span>,<span class="st">"  BR"</span>,<span class="st">"6 BC"</span>,<span class="st">"  BR"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">inone</span></code></pre></div>
-<pre><code>##          1 BC   BR 2 BC   BR 3 BC   BR 4 BC   BR 5 BC   BR 6 BC   BR
-## age         0    0    0    0    0    0    1    1    0    0    0    0
-## P4          1    1    1    1    1    1    1    1    1    1    1    1
-## E1          1    1    1    1    1    1    1    1    0    0    0    0
-## C3M         0    0    0    0    0    0    1    1    1    1    1    1
-## RB          1    1    1    1    1    1    1    1    1    1    1    1
-## FL7A        0    0    1    1    1    0    1    1    1    1    1    1
-## P53         1    1    1    1    1    1    1    1    1    1    0    0
-## W2          0    0    0    0    0    0    0    0    1    1    1    1
-## P2          0    0    0    0    1    1    0    0    0    0    0    0
-## W4          0    0    0    0    0    0    1    1    1    1    1    1
-## MT4         0    0    0    0    0    0    0    0    1    0    1    1
-## HLA         1    0    0    0    1    1    1    1    1    1    1    1
-## HLD         0    0    0    0    1    1    1    1    1    1    1    1
-## HLB         0    0    0    0    0    0    0    0    1    1    1    1
-## EA3         0    0    0    0    0    0    0    0    1    1    1    1
-## EA2         1    1    1    1    1    1    1    1    1    1    1    1
-## EB4         0    1    0    0    0    0    0    0    0    0    0    0
-## EGF2        0    0    0    0    0    0    0    0    1    0    1    1
-## EGF3        0    0    0    0    0    0    0    0    0    0    1    0
-## EGF4        0    0    0    0    0    0    1    1    0    0    0    0
-## FL7B        0    0    0    0    0    0    0    0    1    1    1    1
-## F3B         1    1    0    0    0    0    0    0    0    0    0    0
-## VSFGFR3     0    0    0    0    0    0    0    0    1    1    1    1
-## VSTOP1      0    0    0    0    0    0    0    0    1    1    1    1
-## VSTOP2A     0    0    0    0    1    1    1    1    1    1    1    1
-## VSEGFR      1    1    0    0    0    0    1    1    1    1    1    1
-## AFRAEGFR    0    0    0    0    0    0    1    1    1    1    1    1
-## SRXRA       0    0    0    0    0    0    0    0    1    1    1    1
-## SMT         0    0    0    0    0    0    0    0    1    1    1    1
-## SHL         1    0    0    0    1    0    0    0    0    0    1    1
-## SEA         0    0    1    1    0    0    0    0    0    0    0    0
-## SEB         1    1    0    0    0    0    0    0    1    1    1    1</code></pre>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/biometry/bipartite">bipartite</a></span><span class="op">)</span></code></pre></div>
-<pre><code>## Le chargement a nécessité le package : vegan</code></pre>
-<pre><code>## Le chargement a nécessité le package : permute</code></pre>
-<pre><code>## Le chargement a nécessité le package : lattice</code></pre>
-<pre><code>## This is vegan 2.5-7</code></pre>
-<pre><code>## Le chargement a nécessité le package : sna</code></pre>
-<pre><code>## Le chargement a nécessité le package : statnet.common</code></pre>
-<pre><code>## 
-## Attachement du package : 'statnet.common'</code></pre>
-<pre><code>## The following object is masked from 'package:base':
-## 
-##     order</code></pre>
-<pre><code>## Le chargement a nécessité le package : network</code></pre>
-<pre><code>## network: Classes for Relational Data
-## Version 1.16.1 created on 2020-10-06.
-## copyright (c) 2005, Carter T. Butts, University of California-Irvine
-##                     Mark S. Handcock, University of California -- Los Angeles
-##                     David R. Hunter, Penn State University
-##                     Martina Morris, University of Washington
-##                     Skye Bender-deMoll, University of Washington
-##  For citation information, type citation("network").
-##  Type help("network-package") to get started.</code></pre>
-<pre><code>## sna: Tools for Social Network Analysis
-## Version 2.6 created on 2020-10-5.
-## copyright (c) 2005, Carter T. Butts, University of California-Irvine
-##  For citation information, type citation("sna").
-##  Type help(package="sna") to get started.</code></pre>
-<pre><code>##  This is bipartite 2.15.
-##  For latest changes see versionlog in ?"bipartite-package". For citation see: citation("bipartite").
-##  Have a nice time plotting and analysing two-mode networks.</code></pre>
-<pre><code>## 
-## Attachement du package : 'bipartite'</code></pre>
-<pre><code>## The following object is masked from 'package:vegan':
-## 
-##     nullmodel</code></pre>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">bipartite</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bipartite/man/visweb.html">visweb</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">inone</span><span class="op">)</span>,type<span class="op">=</span><span class="st">"None"</span>,labsize<span class="op">=</span><span class="fl">2</span>,square<span class="op">=</span><span class="st">"b"</span>,box.col<span class="op">=</span><span class="st">"grey25"</span>,pred.lablength<span class="op">=</span><span class="fl">7</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">inone</span>
+<span class="co">#&gt;          1 BC   BR 2 BC   BR 3 BC   BR 4 BC   BR 5 BC   BR 6 BC   BR</span>
+<span class="co">#&gt; age         0    0    0    0    0    0    1    1    0    0    0    0</span>
+<span class="co">#&gt; P4          1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class="co">#&gt; E1          1    1    1    1    1    1    1    1    0    0    0    0</span>
+<span class="co">#&gt; C3M         0    0    0    0    0    0    1    1    1    1    1    1</span>
+<span class="co">#&gt; RB          1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class="co">#&gt; FL7A        0    0    1    1    1    0    1    1    1    1    1    1</span>
+<span class="co">#&gt; P53         1    1    1    1    1    1    1    1    1    1    0    0</span>
+<span class="co">#&gt; W2          0    0    0    0    0    0    0    0    1    1    1    1</span>
+<span class="co">#&gt; P2          0    0    0    0    1    1    0    0    0    0    0    0</span>
+<span class="co">#&gt; W4          0    0    0    0    0    0    1    1    1    1    1    1</span>
+<span class="co">#&gt; MT4         0    0    0    0    0    0    0    0    1    0    1    1</span>
+<span class="co">#&gt; HLA         1    0    0    0    1    1    1    1    1    1    1    1</span>
+<span class="co">#&gt; HLD         0    0    0    0    1    1    1    1    1    1    1    1</span>
+<span class="co">#&gt; HLB         0    0    0    0    0    0    0    0    1    1    1    1</span>
+<span class="co">#&gt; EA3         0    0    0    0    0    0    0    0    1    1    1    1</span>
+<span class="co">#&gt; EA2         1    1    1    1    1    1    1    1    1    1    1    1</span>
+<span class="co">#&gt; EB4         0    1    0    0    0    0    0    0    0    0    0    0</span>
+<span class="co">#&gt; EGF2        0    0    0    0    0    0    0    0    1    0    1    1</span>
+<span class="co">#&gt; EGF3        0    0    0    0    0    0    0    0    0    0    1    0</span>
+<span class="co">#&gt; EGF4        0    0    0    0    0    0    1    1    0    0    0    0</span>
+<span class="co">#&gt; FL7B        0    0    0    0    0    0    0    0    1    1    1    1</span>
+<span class="co">#&gt; F3B         1    1    0    0    0    0    0    0    0    0    0    0</span>
+<span class="co">#&gt; VSFGFR3     0    0    0    0    0    0    0    0    1    1    1    1</span>
+<span class="co">#&gt; VSTOP1      0    0    0    0    0    0    0    0    1    1    1    1</span>
+<span class="co">#&gt; VSTOP2A     0    0    0    0    1    1    1    1    1    1    1    1</span>
+<span class="co">#&gt; VSEGFR      1    1    0    0    0    0    1    1    1    1    1    1</span>
+<span class="co">#&gt; AFRAEGFR    0    0    0    0    0    0    1    1    1    1    1    1</span>
+<span class="co">#&gt; SRXRA       0    0    0    0    0    0    0    0    1    1    1    1</span>
+<span class="co">#&gt; SMT         0    0    0    0    0    0    0    0    1    1    1    1</span>
+<span class="co">#&gt; SHL         1    0    0    0    1    0    0    0    0    0    1    1</span>
+<span class="co">#&gt; SEA         0    0    1    1    0    0    0    0    0    0    0    0</span>
+<span class="co">#&gt; SEB         1    1    0    0    0    0    0    0    1    1    1    1</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/biometry/bipartite">bipartite</a></span><span class="op">)</span>
+<span class="co">#&gt; Le chargement a nécessité le package : vegan</span>
+<span class="co">#&gt; Le chargement a nécessité le package : permute</span>
+<span class="co">#&gt; Le chargement a nécessité le package : lattice</span>
+<span class="co">#&gt; This is vegan 2.5-7</span>
+<span class="co">#&gt; Le chargement a nécessité le package : sna</span>
+<span class="co">#&gt; Le chargement a nécessité le package : statnet.common</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Attachement du package : 'statnet.common'</span>
+<span class="co">#&gt; The following object is masked from 'package:base':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     order</span>
+<span class="co">#&gt; Le chargement a nécessité le package : network</span>
+<span class="co">#&gt; network: Classes for Relational Data</span>
+<span class="co">#&gt; Version 1.16.1 created on 2020-10-06.</span>
+<span class="co">#&gt; copyright (c) 2005, Carter T. Butts, University of California-Irvine</span>
+<span class="co">#&gt;                     Mark S. Handcock, University of California -- Los Angeles</span>
+<span class="co">#&gt;                     David R. Hunter, Penn State University</span>
+<span class="co">#&gt;                     Martina Morris, University of Washington</span>
+<span class="co">#&gt;                     Skye Bender-deMoll, University of Washington</span>
+<span class="co">#&gt;  For citation information, type citation("network").</span>
+<span class="co">#&gt;  Type help("network-package") to get started.</span>
+<span class="co">#&gt; sna: Tools for Social Network Analysis</span>
+<span class="co">#&gt; Version 2.6 created on 2020-10-5.</span>
+<span class="co">#&gt; copyright (c) 2005, Carter T. Butts, University of California-Irvine</span>
+<span class="co">#&gt;  For citation information, type citation("sna").</span>
+<span class="co">#&gt;  Type help(package="sna") to get started.</span>
+<span class="co">#&gt;  This is bipartite 2.15.</span>
+<span class="co">#&gt;  For latest changes see versionlog in ?"bipartite-package". For citation see: citation("bipartite").</span>
+<span class="co">#&gt;  Have a nice time plotting and analysing two-mode networks.</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Attachement du package : 'bipartite'</span>
+<span class="co">#&gt; The following object is masked from 'package:vegan':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     nullmodel</span>
+<span class="fu">bipartite</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bipartite/man/visweb.html">visweb</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">inone</span><span class="op">)</span>,type<span class="op">=</span><span class="st">"None"</span>,labsize<span class="op">=</span><span class="fl">2</span>,square<span class="op">=</span><span class="st">"b"</span>,box.col<span class="op">=</span><span class="st">"grey25"</span>,pred.lablength<span class="op">=</span><span class="fl">7</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<img src="unnamed-chunk-12-1.png" alt="Figure 4. Selected variables using the bootstrap BCa technique." width="100%"><p class="caption">
+<img src="tn_Insights_files/figure-html/unnamed-chunk-12-1.png" alt="Figure 4. Selected variables using the bootstrap BCa technique." width="480"><p class="caption">
 Figure 4. Selected variables using the bootstrap BCa technique.
 </p>
 </div>
@@ -1137,172 +1132,172 @@ Figure 4. Selected variables using the bootstrap BCa technique.
 </tbody>
 </table>
 <p>We then construct bootstrap samples of size 250 of the predictor coefficients for a 3-component model with the bias reduction (BR) method. Figure 5 gives the whisker boxes of these distributions. Confidence intervals are then obtained for each of the predictors with the normal, basic, percentile or <span class="math inline">\(BC_a\)</span> techniques. In the end, we use the <span class="math inline">\(BC_a\)</span> technique, known for its good properties (Diciccio, 1996)<a href="#fn42" class="footnote-ref" id="fnref42"><sup>42</sup></a>, to select the significant variables at the 5 % threshold by retaining those for which the <span class="math inline">\(BC_a\)</span> confidence interval does not contain 0 as illustrated by Figure 6 for the case of the 3-component model with the BR bias reduction technique.</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">colon</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="st">"Colon_09112010_Simca_KE_filtre.txt"</span>,sep<span class="op">=</span><span class="st">"\t"</span>,dec<span class="op">=</span><span class="st">","</span>,header<span class="op">=</span><span class="cn">TRUE</span>,row.names<span class="op">=</span><span class="fl">1</span><span class="op">)</span>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">colon</span><span class="op">)</span>
 <span class="va">orig</span> <span class="op">&lt;-</span> <span class="va">colon</span></code></pre></div>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">modpls.boot3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bootplsbeta.html">bootplsbeta</a></span><span class="op">(</span><span class="fu"><a href="../reference/plsRbeta.html">plsRbeta</a></span><span class="op">(</span><span class="va">X..Cellules.tumorales</span><span class="op">~</span><span class="va">.</span>,data<span class="op">=</span><span class="va">colon</span>,nt<span class="op">=</span><span class="fl">3</span>,modele<span class="op">=</span><span class="st">"pls-beta"</span><span class="op">)</span>, sim<span class="op">=</span><span class="st">"ordinary"</span>, stype<span class="op">=</span><span class="st">"i"</span>, R<span class="op">=</span><span class="fl">250</span><span class="op">)</span>
 <span class="co">#save(modpls.boot3,file="modpls.boot_nt3.Rdata")</span></code></pre></div>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"modpls.boot_nt3.Rdata"</span><span class="op">)</span>
-<span class="va">temp.ci</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="https://fbertran.github.io/plsRglm/reference/confints.bootpls.html">confints.bootpls</a></span><span class="op">(</span><span class="va">modpls.boot3</span><span class="op">)</span><span class="op">)</span>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"modpls.boot_nt3"</span><span class="op">)</span>
+<span class="va">temp.ci</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span><span class="op">(</span><span class="fu">plsRglm</span><span class="fu">::</span><span class="fu"><a href="https://fbertran.github.io/plsRglm/reference/confints.bootpls.html">confints.bootpls</a></span><span class="op">(</span><span class="va">modpls.boot3</span><span class="op">)</span><span class="op">)</span>
 <span class="va">ind_BCa_nt3</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">temp.ci</span><span class="op">[</span>,<span class="fl">7</span><span class="op">]</span><span class="op">&lt;</span><span class="fl">0</span><span class="op">&amp;</span><span class="va">temp.ci</span><span class="op">[</span>,<span class="fl">8</span><span class="op">]</span><span class="op">&lt;</span><span class="fl">0</span><span class="op">)</span><span class="op">|</span><span class="op">(</span><span class="va">temp.ci</span><span class="op">[</span>,<span class="fl">7</span><span class="op">]</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">&amp;</span><span class="va">temp.ci</span><span class="op">[</span>,<span class="fl">8</span><span class="op">]</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">)</span>
 <span class="co">#save(ind_BCa_nt3,file="ind_BCa_nt3.Rdata")</span></code></pre></div>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://fbertran.github.io/plsRglm/reference/boxplots.bootpls.html">boxplots.bootpls</a></span><span class="op">(</span><span class="va">modpls.boot3</span>,indices <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">temp.ci</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<img src="unnamed-chunk-16-1.png" alt="Figure 5. Boxplots of the bootstrap distribution of the coefficients of the predictors, 3 components BR" width="100%"><p class="caption">
+<img src="tn_Insights_files/figure-html/unnamed-chunk-16-1.png" alt="Figure 5. Boxplots of the bootstrap distribution of the coefficients of the predictors, 3 components BR" width="480"><p class="caption">
 Figure 5. Boxplots of the bootstrap distribution of the coefficients of the predictors, 3 components BR
 </p>
 </div>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://fbertran.github.io/plsRglm/reference/plots.confints.bootpls.html">plots.confints.bootpls</a></span><span class="op">(</span><span class="va">temp.ci</span>,prednames<span class="op">=</span><span class="cn">TRUE</span>,indices <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">temp.ci</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">plsRglm</span><span class="fu">::</span><span class="fu"><a href="https://fbertran.github.io/plsRglm/reference/plots.confints.bootpls.html">plots.confints.bootpls</a></span><span class="op">(</span><span class="va">temp.ci</span>,prednames<span class="op">=</span><span class="cn">TRUE</span>,indices <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">temp.ci</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<img src="unnamed-chunk-17-1.png" alt="Figure 6. Bootstrap 95% confidence intervals, 3 components BR" width="100%"><p class="caption">
+<img src="tn_Insights_files/figure-html/unnamed-chunk-17-1.png" alt="Figure 6. Bootstrap 95% confidence intervals, 3 components BR" width="480"><p class="caption">
 Figure 6. Bootstrap 95% confidence intervals, 3 components BR
 </p>
 </div>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span>file<span class="op">=</span><span class="st">"ind_BCa_nt3.Rdata"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">temp.ci</span><span class="op">)</span><span class="op">[</span><span class="va">ind_BCa_nt3</span><span class="op">]</span></code></pre></div>
-<pre><code>##  [1] "Intercept"   "X4.68499947" "X4.67499971" "X4.65499973" "X4.63499975"
-##  [6] "X4.52499962" "X4.51499987" "X4.50499964" "X4.45499992" "X4.43499947"
-## [11] "X4.42499971" "X4.41499949" "X4.38499975" "X4.37499952" "X4.35499954"
-## [16] "X4.23499966" "X4.2249999"  "X4.19499969" "X4.18499994" "X4.1449995" 
-## [21] "X4.13499975" "X4.12499952" "X4.10499954" "X4.05499983" "X4.0449996" 
-## [26] "X4.00499964" "X3.99499965" "X3.98499966" "X3.94499969" "X3.85499978"
-## [31] "X3.84499979" "X3.8349998"  "X3.82499981" "X3.80499983" "X3.75499964"
-## [36] "X3.73499966" "X3.67499971" "X3.65499973" "X3.64499974" "X3.59499979"
-## [41] "X3.56499982" "X3.54499984" "X3.53499961" "X3.52499962" "X3.51499963"
-## [46] "X3.50499964" "X3.49499965" "X3.48499966" "X3.46499968" "X3.44499969"
-## [51] "X3.4349997"  "X3.42499971" "X3.41499972" "X3.40499973" "X3.39499974"
-## [56] "X3.38499975" "X3.37499976" "X3.36499977" "X3.35499978" "X3.32499981"
-## [61] "X3.31499982" "X3.30499983" "X3.27499962" "X3.26499963" "X3.24499965"
-## [66] "X2.92499971" "X2.91499972"</code></pre>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://fbertran.github.io/plsRglm/reference/plots.confints.bootpls.html">plots.confints.bootpls</a></span><span class="op">(</span><span class="va">temp.ci</span>,prednames<span class="op">=</span><span class="cn">TRUE</span>,indices <span class="op">=</span> <span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">temp.ci</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="va">ind_BCa_nt3</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,articlestyle<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span>file<span class="op">=</span><span class="st">"ind_BCa_nt3"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">temp.ci</span><span class="op">)</span><span class="op">[</span><span class="va">ind_BCa_nt3</span><span class="op">]</span>
+<span class="co">#&gt;  [1] "Intercept"   "X4.68499947" "X4.67499971" "X4.65499973" "X4.63499975"</span>
+<span class="co">#&gt;  [6] "X4.52499962" "X4.51499987" "X4.50499964" "X4.45499992" "X4.43499947"</span>
+<span class="co">#&gt; [11] "X4.42499971" "X4.41499949" "X4.38499975" "X4.37499952" "X4.35499954"</span>
+<span class="co">#&gt; [16] "X4.23499966" "X4.2249999"  "X4.19499969" "X4.18499994" "X4.1449995" </span>
+<span class="co">#&gt; [21] "X4.13499975" "X4.12499952" "X4.10499954" "X4.05499983" "X4.0449996" </span>
+<span class="co">#&gt; [26] "X4.00499964" "X3.99499965" "X3.98499966" "X3.94499969" "X3.85499978"</span>
+<span class="co">#&gt; [31] "X3.84499979" "X3.8349998"  "X3.82499981" "X3.80499983" "X3.75499964"</span>
+<span class="co">#&gt; [36] "X3.73499966" "X3.67499971" "X3.65499973" "X3.64499974" "X3.59499979"</span>
+<span class="co">#&gt; [41] "X3.56499982" "X3.54499984" "X3.53499961" "X3.52499962" "X3.51499963"</span>
+<span class="co">#&gt; [46] "X3.50499964" "X3.49499965" "X3.48499966" "X3.46499968" "X3.44499969"</span>
+<span class="co">#&gt; [51] "X3.4349997"  "X3.42499971" "X3.41499972" "X3.40499973" "X3.39499974"</span>
+<span class="co">#&gt; [56] "X3.38499975" "X3.37499976" "X3.36499977" "X3.35499978" "X3.32499981"</span>
+<span class="co">#&gt; [61] "X3.31499982" "X3.30499983" "X3.27499962" "X3.26499963" "X3.24499965"</span>
+<span class="co">#&gt; [66] "X2.92499971" "X2.91499972"</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">plsRglm</span><span class="fu">::</span><span class="fu"><a href="https://fbertran.github.io/plsRglm/reference/plots.confints.bootpls.html">plots.confints.bootpls</a></span><span class="op">(</span><span class="va">temp.ci</span>,prednames<span class="op">=</span><span class="cn">TRUE</span>,indices <span class="op">=</span> <span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">temp.ci</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="va">ind_BCa_nt3</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,articlestyle<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<img src="unnamed-chunk-19-1.png" alt="Figure 7. Bootstrap 95% confidence intervals, BCa significant variables, 3 components BR." width="100%"><p class="caption">
+<img src="tn_Insights_files/figure-html/unnamed-chunk-19-1.png" alt="Figure 7. Bootstrap 95% confidence intervals, BCa significant variables, 3 components BR." width="480"><p class="caption">
 Figure 7. Bootstrap 95% confidence intervals, BCa significant variables, 3 components BR.
 </p>
 </div>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://fbertran.github.io/plsRglm/reference/plots.confints.bootpls.html">plots.confints.bootpls</a></span><span class="op">(</span><span class="va">temp.ci</span>,prednames<span class="op">=</span><span class="cn">TRUE</span>,indices <span class="op">=</span> <span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">temp.ci</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="va">ind_BCa_nt3</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,articlestyle<span class="op">=</span><span class="cn">FALSE</span>,typeIC<span class="op">=</span><span class="st">"BCa"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">plsRglm</span><span class="fu">::</span><span class="fu"><a href="https://fbertran.github.io/plsRglm/reference/plots.confints.bootpls.html">plots.confints.bootpls</a></span><span class="op">(</span><span class="va">temp.ci</span>,prednames<span class="op">=</span><span class="cn">TRUE</span>,indices <span class="op">=</span> <span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">temp.ci</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="va">ind_BCa_nt3</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,articlestyle<span class="op">=</span><span class="cn">FALSE</span>,typeIC<span class="op">=</span><span class="st">"BCa"</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<img src="unnamed-chunk-20-1.png" alt="Figure 8. BCa Bootstrap 95% confidence intervals, BCa significant variables, 3 components BR." width="100%"><p class="caption">
+<img src="tn_Insights_files/figure-html/unnamed-chunk-20-1.png" alt="Figure 8. BCa Bootstrap 95% confidence intervals, BCa significant variables, 3 components BR." width="480"><p class="caption">
 Figure 8. BCa Bootstrap 95% confidence intervals, BCa significant variables, 3 components BR.
 </p>
 </div>
 <p>Finally, we fit a Beta PLS regression model constructed from the only 79 significant predictors for the <span class="math inline">\(BC_a\)</span> bootstrap technique. The selection of the number of components, not reproduced here due to lack of space, leads us to retain 2 of them.</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"ind_BCa_nt3.Rdata"</span><span class="op">)</span>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"ind_BCa_nt3"</span><span class="op">)</span>
 <span class="va">colon_sub4</span> <span class="op">&lt;-</span> <span class="va">colon</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">TRUE</span>,<span class="va">ind_BCa_nt3</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">]</span></code></pre></div>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">modpls_sub4</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plsRbeta.html">plsRbeta</a></span><span class="op">(</span><span class="va">X..Cellules.tumorales</span><span class="op">~</span><span class="va">.</span>,data<span class="op">=</span><span class="va">colon_sub4</span>,nt<span class="op">=</span><span class="fl">10</span>,modele<span class="op">=</span><span class="st">"pls-beta"</span><span class="op">)</span>
-<span class="co">#save(modpls_sub4,file="modpls_sub4.RData")</span></code></pre></div>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"modpls_sub4.Rdata"</span><span class="op">)</span>
-<span class="va">modpls_sub4</span></code></pre></div>
-<pre><code>## Number of required components:
-## [1] 10
-## Number of successfully computed components:
-## [1] 10
-## Coefficients:
-##                     [,1]
-## Intercept      1.5448748
-## X4.65499973   61.1773419
-## X4.6449995   306.0463140
-## X4.63499975 -284.4099752
-## X4.60499954  130.5717258
-## X4.59499979   20.9463141
-## X4.58499956 -281.2770768
-## X4.57499981 -144.3983544
-## X4.56499958  641.2859589
-## X4.55499983  942.5579964
-## X4.52499962   72.6143880
-## X4.51499987 -251.4256475
-## X4.50499964  -10.2039878
-## X4.43499947 -138.0766836
-## X4.42499971 -880.1560188
-## X4.38499975 -941.1056739
-## X4.37499952 -784.5708620
-## X4.35499954  -68.8364717
-## X4.2949996   109.1380862
-## X4.28499985  289.5456254
-## X4.27499962 -322.5710004
-## X4.26499987   71.6963047
-## X4.25499964  304.2135548
-## X4.20499992  481.8986709
-## X4.19499969  663.7076930
-## X4.18499994   79.9407749
-## X4.1449995   -27.1338795
-## X4.13499975   -0.6603306
-## X4.12499952    5.0923295
-## X4.11499977   -6.9928171
-## X4.10499954    7.3648246
-## X4.09499979   86.6345576
-## X4.05499983  -20.4373561
-## X4.0449996  -132.2956632
-## X4.00499964   -0.6487794
-## X3.99499965  -28.7700528
-## X3.98499966  -11.1008973
-## X3.85499978  201.1209855
-## X3.84499979 -112.9491585
-## X3.8349998  -112.0879668
-## X3.82499981 -176.4575677
-## X3.81499982 -499.4286464
-## X3.80499983   96.0999755
-## X3.7949996  -130.6062827
-## X3.76499963    2.2957805
-## X3.75499964   73.7212553
-## X3.73499966  110.5824104
-## X3.70499969   -9.6116865
-## X3.69499969    6.8740870
-## X3.66499972   -0.9445308
-## X3.65499973    7.7458993
-## X3.61499977    7.1671863
-## X3.59499979  -73.7235407
-## X3.56499982  -37.2007473
-## X3.54499984   27.1867459
-## X3.53499961    9.9491250
-## X3.52499962   -1.4676426
-## X3.51499963 -185.4622429
-## X3.50499964  201.8383573
-## X3.49499965 -390.4445054
-## X3.48499966 -141.9592003
-## X3.47499967 -134.0444094
-## X3.46499968 -141.0216380
-## X3.44499969  227.1789740
-## X3.4349997    -4.7983899
-## X3.42499971  -79.9664654
-## X3.41499972   26.0378859
-## X3.40499973    7.7258949
-## X3.37499976 -628.0508174
-## X3.36499977 -505.0750367
-## X3.35499978  140.4448861
-## X3.32499981  259.3811778
-## X3.31499982 -276.7503657
-## X3.30499983  491.7257390
-## X3.27499962   37.4180261
-## X3.26499963   28.6326050
-## X3.25499964   16.3911723
-## X3.24499965   37.8061066
-## X3.19499969  -32.7055621
-## X3.13499975  256.5034605
-## Information criteria and Fit statistics:
-##                   AIC        BIC Chi2_Pearson_Y     RSS_Y pseudo_R2_Y      R2_Y
-## Nb_Comp_0   -32.34558  -27.58152       76.77937 6.4449550          NA        NA
-## Nb_Comp_1  -129.57972 -122.43364       79.47275 2.2942689   0.7755421 0.6440210
-## Nb_Comp_2  -134.63789 -125.10979       72.20098 1.9728198   0.7991522 0.6938970
-## Nb_Comp_3  -142.69157 -130.78143       79.01884 1.8772302   0.8279202 0.7087287
-## Nb_Comp_4  -155.51742 -141.22526       84.08689 1.5340918   0.8558543 0.7619701
-## Nb_Comp_5  -164.67721 -148.00302       79.11247 1.3100325   0.8743807 0.7967352
-## Nb_Comp_6  -169.31896 -150.26274       75.81459 1.1376671   0.8794340 0.8234794
-## Nb_Comp_7  -171.85756 -150.41932       75.94769 1.1110661   0.8924862 0.8276068
-## Nb_Comp_8  -176.91620 -153.09593       71.83334 0.9526869   0.8974669 0.8521810
-## Nb_Comp_9  -186.16095 -159.95866       72.24187 0.8050430   0.9039681 0.8750894
-## Nb_Comp_10 -190.25562 -161.67130       71.24851 0.7212852   0.9063458 0.8880853</code></pre>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<span class="co">#save(modpls_sub4,file="modpls_sub4.Rdata")</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"modpls_sub4"</span><span class="op">)</span>
+<span class="va">modpls_sub4</span>
+<span class="co">#&gt; Number of required components:</span>
+<span class="co">#&gt; [1] 10</span>
+<span class="co">#&gt; Number of successfully computed components:</span>
+<span class="co">#&gt; [1] 10</span>
+<span class="co">#&gt; Coefficients:</span>
+<span class="co">#&gt;                     [,1]</span>
+<span class="co">#&gt; Intercept      1.5448748</span>
+<span class="co">#&gt; X4.65499973   61.1773419</span>
+<span class="co">#&gt; X4.6449995   306.0463140</span>
+<span class="co">#&gt; X4.63499975 -284.4099752</span>
+<span class="co">#&gt; X4.60499954  130.5717258</span>
+<span class="co">#&gt; X4.59499979   20.9463141</span>
+<span class="co">#&gt; X4.58499956 -281.2770768</span>
+<span class="co">#&gt; X4.57499981 -144.3983544</span>
+<span class="co">#&gt; X4.56499958  641.2859589</span>
+<span class="co">#&gt; X4.55499983  942.5579964</span>
+<span class="co">#&gt; X4.52499962   72.6143880</span>
+<span class="co">#&gt; X4.51499987 -251.4256475</span>
+<span class="co">#&gt; X4.50499964  -10.2039878</span>
+<span class="co">#&gt; X4.43499947 -138.0766836</span>
+<span class="co">#&gt; X4.42499971 -880.1560188</span>
+<span class="co">#&gt; X4.38499975 -941.1056739</span>
+<span class="co">#&gt; X4.37499952 -784.5708620</span>
+<span class="co">#&gt; X4.35499954  -68.8364717</span>
+<span class="co">#&gt; X4.2949996   109.1380862</span>
+<span class="co">#&gt; X4.28499985  289.5456254</span>
+<span class="co">#&gt; X4.27499962 -322.5710004</span>
+<span class="co">#&gt; X4.26499987   71.6963047</span>
+<span class="co">#&gt; X4.25499964  304.2135548</span>
+<span class="co">#&gt; X4.20499992  481.8986709</span>
+<span class="co">#&gt; X4.19499969  663.7076930</span>
+<span class="co">#&gt; X4.18499994   79.9407749</span>
+<span class="co">#&gt; X4.1449995   -27.1338795</span>
+<span class="co">#&gt; X4.13499975   -0.6603306</span>
+<span class="co">#&gt; X4.12499952    5.0923295</span>
+<span class="co">#&gt; X4.11499977   -6.9928171</span>
+<span class="co">#&gt; X4.10499954    7.3648246</span>
+<span class="co">#&gt; X4.09499979   86.6345576</span>
+<span class="co">#&gt; X4.05499983  -20.4373561</span>
+<span class="co">#&gt; X4.0449996  -132.2956632</span>
+<span class="co">#&gt; X4.00499964   -0.6487794</span>
+<span class="co">#&gt; X3.99499965  -28.7700528</span>
+<span class="co">#&gt; X3.98499966  -11.1008973</span>
+<span class="co">#&gt; X3.85499978  201.1209855</span>
+<span class="co">#&gt; X3.84499979 -112.9491585</span>
+<span class="co">#&gt; X3.8349998  -112.0879668</span>
+<span class="co">#&gt; X3.82499981 -176.4575677</span>
+<span class="co">#&gt; X3.81499982 -499.4286464</span>
+<span class="co">#&gt; X3.80499983   96.0999755</span>
+<span class="co">#&gt; X3.7949996  -130.6062827</span>
+<span class="co">#&gt; X3.76499963    2.2957805</span>
+<span class="co">#&gt; X3.75499964   73.7212553</span>
+<span class="co">#&gt; X3.73499966  110.5824104</span>
+<span class="co">#&gt; X3.70499969   -9.6116865</span>
+<span class="co">#&gt; X3.69499969    6.8740870</span>
+<span class="co">#&gt; X3.66499972   -0.9445308</span>
+<span class="co">#&gt; X3.65499973    7.7458993</span>
+<span class="co">#&gt; X3.61499977    7.1671863</span>
+<span class="co">#&gt; X3.59499979  -73.7235407</span>
+<span class="co">#&gt; X3.56499982  -37.2007473</span>
+<span class="co">#&gt; X3.54499984   27.1867459</span>
+<span class="co">#&gt; X3.53499961    9.9491250</span>
+<span class="co">#&gt; X3.52499962   -1.4676426</span>
+<span class="co">#&gt; X3.51499963 -185.4622429</span>
+<span class="co">#&gt; X3.50499964  201.8383573</span>
+<span class="co">#&gt; X3.49499965 -390.4445054</span>
+<span class="co">#&gt; X3.48499966 -141.9592003</span>
+<span class="co">#&gt; X3.47499967 -134.0444094</span>
+<span class="co">#&gt; X3.46499968 -141.0216380</span>
+<span class="co">#&gt; X3.44499969  227.1789740</span>
+<span class="co">#&gt; X3.4349997    -4.7983899</span>
+<span class="co">#&gt; X3.42499971  -79.9664654</span>
+<span class="co">#&gt; X3.41499972   26.0378859</span>
+<span class="co">#&gt; X3.40499973    7.7258949</span>
+<span class="co">#&gt; X3.37499976 -628.0508174</span>
+<span class="co">#&gt; X3.36499977 -505.0750367</span>
+<span class="co">#&gt; X3.35499978  140.4448861</span>
+<span class="co">#&gt; X3.32499981  259.3811778</span>
+<span class="co">#&gt; X3.31499982 -276.7503657</span>
+<span class="co">#&gt; X3.30499983  491.7257390</span>
+<span class="co">#&gt; X3.27499962   37.4180261</span>
+<span class="co">#&gt; X3.26499963   28.6326050</span>
+<span class="co">#&gt; X3.25499964   16.3911723</span>
+<span class="co">#&gt; X3.24499965   37.8061066</span>
+<span class="co">#&gt; X3.19499969  -32.7055621</span>
+<span class="co">#&gt; X3.13499975  256.5034605</span>
+<span class="co">#&gt; Information criteria and Fit statistics:</span>
+<span class="co">#&gt;                   AIC        BIC Chi2_Pearson_Y     RSS_Y pseudo_R2_Y      R2_Y</span>
+<span class="co">#&gt; Nb_Comp_0   -32.34558  -27.58152       76.77937 6.4449550          NA        NA</span>
+<span class="co">#&gt; Nb_Comp_1  -129.57972 -122.43364       79.47275 2.2942689   0.7755421 0.6440210</span>
+<span class="co">#&gt; Nb_Comp_2  -134.63789 -125.10979       72.20098 1.9728198   0.7991522 0.6938970</span>
+<span class="co">#&gt; Nb_Comp_3  -142.69157 -130.78143       79.01884 1.8772302   0.8279202 0.7087287</span>
+<span class="co">#&gt; Nb_Comp_4  -155.51742 -141.22526       84.08689 1.5340918   0.8558543 0.7619701</span>
+<span class="co">#&gt; Nb_Comp_5  -164.67721 -148.00302       79.11247 1.3100325   0.8743807 0.7967352</span>
+<span class="co">#&gt; Nb_Comp_6  -169.31896 -150.26274       75.81459 1.1376671   0.8794340 0.8234794</span>
+<span class="co">#&gt; Nb_Comp_7  -171.85756 -150.41932       75.94769 1.1110661   0.8924862 0.8276068</span>
+<span class="co">#&gt; Nb_Comp_8  -176.91620 -153.09593       71.83334 0.9526869   0.8974669 0.8521810</span>
+<span class="co">#&gt; Nb_Comp_9  -186.16095 -159.95866       72.24187 0.8050430   0.9039681 0.8750894</span>
+<span class="co">#&gt; Nb_Comp_10 -190.25562 -161.67130       71.24851 0.7212852   0.9063458 0.8880853</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Index plot</span>
 <span class="va">sfit</span> <span class="op">&lt;-</span> <span class="va">modpls_sub4</span><span class="op">$</span><span class="va">FinalModel</span>;
 <span class="va">rd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">resid</a></span><span class="op">(</span><span class="va">sfit</span>, type<span class="op">=</span><span class="st">"sweighted2"</span><span class="op">)</span>;
@@ -1310,12 +1305,12 @@ Figure 8. BCa Bootstrap 95% confidence intervals, BCa significant variables, 3 c
      main<span class="op">=</span><span class="st">"Index Plot"</span><span class="op">)</span>;
 <span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>h<span class="op">=</span><span class="fl">0</span>, lty<span class="op">=</span><span class="fl">3</span><span class="op">)</span>;</code></pre></div>
 <div class="figure">
-<img src="unnamed-chunk-24-1.png" alt="Figure 9. Residuals index plot." width="100%"><p class="caption">
+<img src="tn_Insights_files/figure-html/unnamed-chunk-24-1.png" alt="Figure 9. Residuals index plot." width="480"><p class="caption">
 Figure 9. Residuals index plot.
 </p>
 </div>
 <p>We note on Figure 10 that this model is validated by the use of a simulated envelope (Atkinson, 1981)<a href="#fn43" class="footnote-ref" id="fnref43"><sup>43</sup></a>. This one is constructed, as recommended by Atkinson, from 19 order statistics.</p>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">betareg</span><span class="op">)</span>
 <span class="co"># A Half-normal Plot with simulated envelop</span>
 <span class="va">phat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">sfit</span>, type<span class="op">=</span><span class="st">"response"</span><span class="op">)</span>;
@@ -1345,38 +1340,38 @@ Figure 9. Residuals index plot.
 <span class="op">}</span>
 
 <span class="va">qnval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">qnorm</a></span><span class="op">(</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">+</span><span class="va">n</span><span class="op">-</span><span class="fl">1</span><span class="op">/</span><span class="fl">8</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="va">n</span><span class="op">+</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>;</code></pre></div>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">qnval</span>, <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">rd</span><span class="op">)</span><span class="op">)</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">3.5</span><span class="op">)</span>, xlab<span class="op">=</span><span class="st">"Expected"</span>, ylab<span class="op">=</span><span class="st">"Observed"</span>,
      main<span class="op">=</span><span class="st">"Half-Normal Plot with Simulated Envelope"</span><span class="op">)</span>;
 <span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">qnval</span>, <span class="va">lower</span>, lty<span class="op">=</span><span class="fl">3</span><span class="op">)</span>;
 <span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">qnval</span>, <span class="va">upper</span>, lty<span class="op">=</span><span class="fl">3</span><span class="op">)</span>;
 <span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">qnval</span>, <span class="va">middle</span>, lty<span class="op">=</span><span class="fl">1</span>, lwd<span class="op">=</span><span class="fl">2</span><span class="op">)</span>;</code></pre></div>
 <div class="figure">
-<img src="unnamed-chunk-26-1.png" alt="Figure 10. Residuals and simulated envelop." width="100%"><p class="caption">
+<img src="tn_Insights_files/figure-html/simulated_envelope_submod4-1.png" alt="Figure 10. Residuals and simulated envelop." width="480"><p class="caption">
 Figure 10. Residuals and simulated envelop.
 </p>
 </div>
 <p>As we can see in Figure 11, the two components of the model formed by the only 79 significant predictors for the bootstrap technique <span class="math inline">\(BC_a\)</span> allow a clear linear separation between the healthy subjects, in dark green, and the sick subjects whose condition is all the more serious as the color approaches red. To allow a graphical evaluation of the predictive quality of the model, we represent the observed values as a function of the predicted values on the <span class="math inline">\(\textrm{logit}\)</span> scale, Figure 12, and on the original scale Figure 13. Note that, since the transition from one to the other of the two graphs is done by means of a continuous, bijective and increasing transformation of the axes, the Kendall correlation coefficient between the observed and predicted values will be identical for both scales. For both graphs, we measure an association in the sense of Kendall’s correlation coefficient between the observed values and the predicted values equal to <span class="math inline">\(0.72\)</span> for a <span class="math inline">\(p\)</span>-value of <span class="math inline">\(7.03*10^{-19}\)</span>, thus significant at the <span class="math inline">\(1\%\)</span> threshold.</p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">modpls_sub4</span><span class="op">$</span><span class="va">tt</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,<span class="va">modpls_sub4</span><span class="op">$</span><span class="va">tt</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>,col<span class="op">=</span><span class="fu">plotrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plotrix/man/color.scale.html">color.scale</a></span><span class="op">(</span><span class="va">colon</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span>,<span class="fl">0</span><span class="op">)</span>,pch<span class="op">=</span><span class="fl">16</span>,ylab<span class="op">=</span><span class="st">""</span>,xlab<span class="op">=</span><span class="st">""</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<img src="mod_sub4_nt2_12_beta-1.png" alt="Figure 11. Representation of individuals on the plane formed by the first two components." width="100%"><p class="caption">
+<img src="tn_Insights_files/figure-html/mod_sub4_nt2_12_beta-1.png" alt="Figure 11. Representation of individuals on the plane formed by the first two components." width="480"><p class="caption">
 Figure 11. Representation of individuals on the plane formed by the first two components.
 </p>
 </div>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">linkfun</span><span class="op">(</span><span class="va">modpls_sub4</span><span class="op">$</span><span class="va">ValsPredictY</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">linkfun</span><span class="op">(</span><span class="va">orig</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span>,xlab<span class="op">=</span><span class="st">"Valeurs prédites"</span>,ylab<span class="op">=</span><span class="st">"Valeurs observées"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,lwd<span class="op">=</span><span class="fl">2</span>,lty<span class="op">=</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<img src="unnamed-chunk-27-1.png" alt="Figure 12. Observed values versus predicted values on the logit scale." width="100%"><p class="caption">
+<img src="tn_Insights_files/figure-html/plot_logit_xpred_yorig_submod4-1.png" alt="Figure 12. Observed values versus predicted values on the logit scale." width="480"><p class="caption">
 Figure 12. Observed values versus predicted values on the logit scale.
 </p>
 </div>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">modpls_sub4</span><span class="op">$</span><span class="va">ValsPredictY</span>,<span class="va">orig</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>,ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,lwd<span class="op">=</span><span class="fl">2</span>,lty<span class="op">=</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<img src="plot_xpred_yorig_submod4-1.png" alt="Figure 13. Observed values versus predicted values on the original scale." width="100%"><p class="caption">
+<img src="tn_Insights_files/figure-html/plot_xpred_yorig_submod4-1.png" alt="Figure 13. Observed values versus predicted values on the original scale." width="480"><p class="caption">
 Figure 13. Observed values versus predicted values on the original scale.
 </p>
 </div>

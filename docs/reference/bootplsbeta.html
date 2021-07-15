@@ -82,7 +82,7 @@ regression models by case resampling." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plsRbeta</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.8</span>
       </span>
     </div>
 
@@ -96,6 +96,18 @@ regression models by case resampling." />
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/tn_Insights.html">Partial Least Squares Regression for Beta Regression Models</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -136,9 +148,10 @@ regression models by case resampling.</p>
   <span class='va'>object</span>,
   typeboot <span class='op'>=</span> <span class='st'>"plsmodel"</span>,
   R <span class='op'>=</span> <span class='fl'>250</span>,
-  statistic <span class='op'>=</span> <span class='va'>coefs.plsRbeta</span>,
+  statistic <span class='op'>=</span> <span class='cn'>NULL</span>,
   sim <span class='op'>=</span> <span class='st'>"ordinary"</span>,
   stype <span class='op'>=</span> <span class='st'>"i"</span>,
+  stabvalue <span class='op'>=</span> <span class='fl'>1e+06</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -187,6 +200,11 @@ Possible values are <code>"ordinary"</code> (the default), <code>"balanced"</cod
 (indices - the default), <code>"f"</code> (frequencies), or <code>"w"</code> (weights).</p></td>
     </tr>
     <tr>
+      <th>stabvalue</th>
+      <td><p>A value to hard threshold bootstrap estimates computed from
+atypical resamplings.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Other named arguments for <code>statistic</code> which are passed
 unchanged each time it is called. Any such arguments to <code>statistic</code>
@@ -225,8 +243,8 @@ PLS. <em>Journal de la Société Française de Statistique</em>,
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"GasolineYield"</span>,package<span class='op'>=</span><span class='st'>"betareg"</span><span class='op'>)</span>
 
-<span class='va'>GazYield.boot</span> <span class='op'>&lt;-</span> <span class='fu'>bootplsbeta</span><span class='op'>(</span><span class='fu'><a href='plsRbeta.html'>plsRbeta</a></span><span class='op'>(</span><span class='va'>yield</span><span class='op'>~</span><span class='va'>.</span>,data<span class='op'>=</span><span class='va'>GasolineYield</span>,nt<span class='op'>=</span><span class='fl'>3</span>,
-modele<span class='op'>=</span><span class='st'>"pls-beta"</span><span class='op'>)</span>, sim<span class='op'>=</span><span class='st'>"ordinary"</span>, stype<span class='op'>=</span><span class='st'>"i"</span>, R<span class='op'>=</span><span class='fl'>250</span><span class='op'>)</span>
+<span class='co'># Std coefficients</span>
+<span class='va'>modplsbeta</span> <span class='op'>&lt;-</span> <span class='fu'><a href='plsRbeta.html'>plsRbeta</a></span><span class='op'>(</span><span class='va'>yield</span><span class='op'>~</span><span class='va'>.</span>,data<span class='op'>=</span><span class='va'>GasolineYield</span>,nt<span class='op'>=</span><span class='fl'>3</span>, modele<span class='op'>=</span><span class='st'>"pls-beta"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; ____************************************************____
 #&gt; 
 #&gt; Model: pls-beta 
@@ -242,8 +260,8 @@ modele<span class='op'>=</span><span class='st'>"pls-beta"</span><span class='op
 #&gt; ____Component____ 3 ____
 #&gt; ____Predicting X without NA neither in X or Y____
 #&gt; ****________________________________________________****
-#&gt; 
-#&gt; ____************************************************____
+#&gt; </div><div class='input'><span class='va'>GazYield.boot</span> <span class='op'>&lt;-</span> <span class='fu'>bootplsbeta</span><span class='op'>(</span><span class='va'>modplsbeta</span>, sim<span class='op'>=</span><span class='st'>"ordinary"</span>, stype<span class='op'>=</span><span class='st'>"i"</span>, R<span class='op'>=</span><span class='fl'>250</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ____************************************************____
 #&gt; 
 #&gt; Model: pls-beta 
 #&gt; 
@@ -4072,7 +4090,8 @@ modele<span class='op'>=</span><span class='st'>"pls-beta"</span><span class='op
 #&gt; Warning : 6 14 &lt; 10^{-12}
 #&gt; Warning only 0 components could thus be extracted
 #&gt; ****________________________________________________****
-#&gt; </div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+#&gt; </div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, 
+type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 #&gt; Based on 157 bootstrap replicates
 #&gt; 
@@ -4091,7 +4110,8 @@ modele<span class='op'>=</span><span class='st'>"pls-beta"</span><span class='op
 #&gt; Calculations and Intervals on Original Scale
 #&gt; Some basic intervals may be unstable
 #&gt; Some percentile intervals may be unstable
-#&gt; Some BCa intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+#&gt; Some BCa intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, 
+type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 #&gt; Based on 157 bootstrap replicates
 #&gt; 
@@ -4111,7 +4131,8 @@ modele<span class='op'>=</span><span class='st'>"pls-beta"</span><span class='op
 #&gt; Some basic intervals may be unstable
 #&gt; Some percentile intervals may be unstable
 #&gt; Warning : BCa Intervals used Extreme Quantiles
-#&gt; Some BCa intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
+#&gt; Some BCa intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, 
+type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 #&gt; Based on 157 bootstrap replicates
 #&gt; 
@@ -4131,7 +4152,8 @@ modele<span class='op'>=</span><span class='st'>"pls-beta"</span><span class='op
 #&gt; Some basic intervals may be unstable
 #&gt; Some percentile intervals may be unstable
 #&gt; Warning : BCa Intervals used Extreme Quantiles
-#&gt; Some BCa intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span>
+#&gt; Some BCa intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, 
+type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 #&gt; Based on 157 bootstrap replicates
 #&gt; 
@@ -4151,7 +4173,8 @@ modele<span class='op'>=</span><span class='st'>"pls-beta"</span><span class='op
 #&gt; Some basic intervals may be unstable
 #&gt; Some percentile intervals may be unstable
 #&gt; Warning : BCa Intervals used Extreme Quantiles
-#&gt; Some BCa intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>5</span><span class='op'>)</span>
+#&gt; Some BCa intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, 
+type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>5</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 #&gt; Based on 157 bootstrap replicates
 #&gt; 
@@ -4171,7 +4194,8 @@ modele<span class='op'>=</span><span class='st'>"pls-beta"</span><span class='op
 #&gt; Some basic intervals may be unstable
 #&gt; Some percentile intervals may be unstable
 #&gt; Warning : BCa Intervals used Extreme Quantiles
-#&gt; Some BCa intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>6</span><span class='op'>)</span>
+#&gt; Some BCa intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, 
+type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>6</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 #&gt; Based on 157 bootstrap replicates
 #&gt; 
@@ -4229,11 +4253,80 @@ modele<span class='op'>=</span><span class='st'>"pls-beta"</span><span class='op
 #&gt; attr(,"typeBCa")
 #&gt; [1] TRUE</div><div class='input'><span class='fu'>plsRglm</span><span class='fu'>::</span><span class='fu'><a href='https://fbertran.github.io/plsRglm/reference/plots.confints.bootpls.html'>plots.confints.bootpls</a></span><span class='op'>(</span><span class='fu'>plsRglm</span><span class='fu'>::</span><span class='fu'><a href='https://fbertran.github.io/plsRglm/reference/confints.bootpls.html'>confints.bootpls</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='img'><img src='bootplsbeta-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'>#Raw coefficients</span>
+<span class='va'>modplsbeta</span> <span class='op'>&lt;-</span> <span class='fu'><a href='plsRbeta.html'>plsRbeta</a></span><span class='op'>(</span><span class='va'>yield</span><span class='op'>~</span><span class='va'>.</span>,data<span class='op'>=</span><span class='va'>GasolineYield</span>,nt<span class='op'>=</span><span class='fl'>3</span>, modele<span class='op'>=</span><span class='st'>"pls-beta"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ____************************************************____
+#&gt; 
+#&gt; Model: pls-beta 
+#&gt; 
+#&gt; Link: logit 
+#&gt; 
+#&gt; Link.phi: 
+#&gt; 
+#&gt; Type: ML 
+#&gt; 
+#&gt; ____Component____ 1 ____
+#&gt; ____Component____ 2 ____
+#&gt; ____Component____ 3 ____
+#&gt; ____Predicting X without NA neither in X or Y____
+#&gt; ****________________________________________________****
+#&gt; </div><div class='input'><span class='va'>GazYield.boot.raw</span> <span class='op'>&lt;-</span> <span class='fu'>bootplsbeta</span><span class='op'>(</span><span class='va'>modplsbeta</span>, sim<span class='op'>=</span><span class='st'>"ordinary"</span>, stype<span class='op'>=</span><span class='st'>"i"</span>, 
+R<span class='op'>=</span><span class='fl'>250</span>, statistic<span class='op'>=</span><span class='va'>coefs.plsRbeta.raw</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in bootplsbeta(modplsbeta, sim = "ordinary", stype = "i", R = 250,     statistic = coefs.plsRbeta.raw): objet 'coefs.plsRbeta.raw' introuvable</span></div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot.raw</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, 
+type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in boot::boot.ci(GazYield.boot.raw, conf = c(0.9, 0.95), type = c("norm",     "basic", "perc", "bca"), index = 1): objet 'GazYield.boot.raw' introuvable</span></div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot.raw</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, 
+type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in boot::boot.ci(GazYield.boot.raw, conf = c(0.9, 0.95), type = c("norm",     "basic", "perc", "bca"), index = 2): objet 'GazYield.boot.raw' introuvable</span></div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot.raw</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, 
+type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in boot::boot.ci(GazYield.boot.raw, conf = c(0.9, 0.95), type = c("norm",     "basic", "perc", "bca"), index = 3): objet 'GazYield.boot.raw' introuvable</span></div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot.raw</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, 
+type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in boot::boot.ci(GazYield.boot.raw, conf = c(0.9, 0.95), type = c("norm",     "basic", "perc", "bca"), index = 4): objet 'GazYield.boot.raw' introuvable</span></div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot.raw</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, 
+type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>5</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in boot::boot.ci(GazYield.boot.raw, conf = c(0.9, 0.95), type = c("norm",     "basic", "perc", "bca"), index = 5): objet 'GazYield.boot.raw' introuvable</span></div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot.raw</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, 
+type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>6</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in boot::boot.ci(GazYield.boot.raw, conf = c(0.9, 0.95), type = c("norm",     "basic", "perc", "bca"), index = 6): objet 'GazYield.boot.raw' introuvable</span></div><div class='input'>
+<span class='fu'>plsRglm</span><span class='fu'>::</span><span class='fu'><a href='https://fbertran.github.io/plsRglm/reference/boxplots.bootpls.html'>boxplots.bootpls</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span><span class='op'>)</span>
+</div><div class='img'><img src='bootplsbeta-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plsRglm</span><span class='fu'>::</span><span class='fu'><a href='https://fbertran.github.io/plsRglm/reference/confints.bootpls.html'>confints.bootpls</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt;                                                                        
+#&gt; Intercept -1.799629735 -1.30920073 -1.780519974 -1.31029054 -1.79506726
+#&gt; gravity    0.002113252  0.20073681  0.004613067  0.20822248 -0.03103480
+#&gt; pressure  -0.135787701  0.22878946 -0.091203569  0.33329190 -0.17339865
+#&gt; temp10    -0.504996888 -0.16562655 -0.525123801 -0.19369221 -0.36317977
+#&gt; temp       0.637052371  0.97334390  0.641023116  0.96403517  0.54350201
+#&gt; batch1    -0.095325515  0.10826855 -0.101544944  0.09480930 -0.03363621
+#&gt; batch2    -0.042069827  0.12093841 -0.071040826  0.11654462 -0.03371077
+#&gt; batch3    -0.055330427  0.15071509 -0.051196613  0.17942911 -0.04396841
+#&gt; batch4    -0.071364122  0.07850994 -0.099606995  0.11046859 -0.11101456
+#&gt; batch5    -0.050449330  0.08179578 -0.053011698  0.08760194 -0.02726668
+#&gt; batch6    -0.035283939  0.08952386 -0.036262067  0.09097618 -0.02298305
+#&gt; batch7    -0.132028748  0.09445557 -0.108434375  0.13160847 -0.19917819
+#&gt; batch8    -0.120731200  0.11376000 -0.098521452  0.14465746 -0.17118653
+#&gt; batch9    -0.066313825  0.02208069 -0.065059164  0.03180192 -0.06654228
+#&gt; batch10   -0.149286099  0.02433946 -0.139212258  0.03429226 -0.15184409
+#&gt;                                              
+#&gt; Intercept -1.32483782 -1.79354532 -1.30730983
+#&gt; gravity    0.17257461  0.01221851  0.23232124
+#&gt; pressure   0.25109682 -0.22904919  0.18496990
+#&gt; temp10    -0.03174818 -0.41159719 -0.14718495
+#&gt; temp       0.86651406  0.63836647  0.93938405
+#&gt; batch1     0.16271804 -0.12926642  0.11367030
+#&gt; batch2     0.15387468 -0.03116822  0.15415530
+#&gt; batch3     0.18665732 -0.10736579  0.12376681
+#&gt; batch4     0.09906102 -0.06973291  0.11707891
+#&gt; batch5     0.11334695 -0.05081559  0.07586462
+#&gt; batch6     0.10425520 -0.03062016  0.09897706
+#&gt; batch7     0.04086466 -0.16648770  0.04637802
+#&gt; batch8     0.07199238 -0.13511024  0.08831335
+#&gt; batch9     0.03031881 -0.08745327  0.01915315
+#&gt; batch10    0.02166042 -0.16578231  0.01533373
+#&gt; attr(,"typeBCa")
+#&gt; [1] TRUE</div><div class='input'><span class='fu'>plsRglm</span><span class='fu'>::</span><span class='fu'><a href='https://fbertran.github.io/plsRglm/reference/plots.confints.bootpls.html'>plots.confints.bootpls</a></span><span class='op'>(</span><span class='fu'>plsRglm</span><span class='fu'>::</span><span class='fu'><a href='https://fbertran.github.io/plsRglm/reference/confints.bootpls.html'>confints.bootpls</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='img'><img src='bootplsbeta-4.png' alt='' width='700' height='433' /></div><div class='input'>
 
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>,index<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-</div><div class='img'><img src='bootplsbeta-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/jack.after.boot.html'>jack.after.boot</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, index<span class='op'>=</span><span class='fl'>2</span>, useJ<span class='op'>=</span><span class='cn'>TRUE</span>, nt<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
-</div><div class='img'><img src='bootplsbeta-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, index<span class='op'>=</span><span class='fl'>2</span>,jack<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='img'><img src='bootplsbeta-5.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='img'><img src='bootplsbeta-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/jack.after.boot.html'>jack.after.boot</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, index<span class='op'>=</span><span class='fl'>2</span>, useJ<span class='op'>=</span><span class='cn'>TRUE</span>, nt<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
+</div><div class='img'><img src='bootplsbeta-6.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, index<span class='op'>=</span><span class='fl'>2</span>,jack<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='bootplsbeta-7.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># PLS bootstrap balanced</span>
 
 <span class='va'>GazYield.boot</span> <span class='op'>&lt;-</span> <span class='fu'>bootplsbeta</span><span class='op'>(</span><span class='fu'><a href='plsRbeta.html'>plsRbeta</a></span><span class='op'>(</span><span class='va'>yield</span><span class='op'>~</span><span class='va'>.</span>,data<span class='op'>=</span><span class='va'>GasolineYield</span>,nt<span class='op'>=</span><span class='fl'>3</span>,
@@ -8073,7 +8166,8 @@ modele<span class='op'>=</span><span class='st'>"pls-beta"</span><span class='op
 #&gt; ____Component____ 2 ____
 #&gt; ____Component____ 3 ____
 #&gt; ****________________________________________________****
-#&gt; </div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+#&gt; </div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, 
+type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 #&gt; Based on 152 bootstrap replicates
 #&gt; 
@@ -8092,7 +8186,8 @@ modele<span class='op'>=</span><span class='st'>"pls-beta"</span><span class='op
 #&gt; Calculations and Intervals on Original Scale
 #&gt; Some basic intervals may be unstable
 #&gt; Some percentile intervals may be unstable
-#&gt; Some BCa intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+#&gt; Some BCa intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, 
+type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 #&gt; Based on 152 bootstrap replicates
 #&gt; 
@@ -8112,7 +8207,8 @@ modele<span class='op'>=</span><span class='st'>"pls-beta"</span><span class='op
 #&gt; Some basic intervals may be unstable
 #&gt; Some percentile intervals may be unstable
 #&gt; Warning : BCa Intervals used Extreme Quantiles
-#&gt; Some BCa intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
+#&gt; Some BCa intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, 
+type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 #&gt; Based on 152 bootstrap replicates
 #&gt; 
@@ -8132,7 +8228,8 @@ modele<span class='op'>=</span><span class='st'>"pls-beta"</span><span class='op
 #&gt; Some basic intervals may be unstable
 #&gt; Some percentile intervals may be unstable
 #&gt; Warning : BCa Intervals used Extreme Quantiles
-#&gt; Some BCa intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span>
+#&gt; Some BCa intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, 
+type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 #&gt; Based on 152 bootstrap replicates
 #&gt; 
@@ -8152,7 +8249,8 @@ modele<span class='op'>=</span><span class='st'>"pls-beta"</span><span class='op
 #&gt; Some basic intervals may be unstable
 #&gt; Some percentile intervals may be unstable
 #&gt; Warning : BCa Intervals used Extreme Quantiles
-#&gt; Some BCa intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>5</span><span class='op'>)</span>
+#&gt; Some BCa intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, 
+type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>5</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 #&gt; Based on 152 bootstrap replicates
 #&gt; 
@@ -8172,7 +8270,8 @@ modele<span class='op'>=</span><span class='st'>"pls-beta"</span><span class='op
 #&gt; Some basic intervals may be unstable
 #&gt; Some percentile intervals may be unstable
 #&gt; Warning : BCa Intervals used Extreme Quantiles
-#&gt; Some BCa intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>6</span><span class='op'>)</span>
+#&gt; Some BCa intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, 
+type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span>,<span class='st'>"bca"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>6</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 #&gt; Based on 152 bootstrap replicates
 #&gt; 
@@ -8195,7 +8294,7 @@ modele<span class='op'>=</span><span class='st'>"pls-beta"</span><span class='op
 #&gt; Some BCa intervals may be unstable</div><div class='input'>
 
 <span class='fu'>plsRglm</span><span class='fu'>::</span><span class='fu'><a href='https://fbertran.github.io/plsRglm/reference/boxplots.bootpls.html'>boxplots.bootpls</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span><span class='op'>)</span>
-</div><div class='img'><img src='bootplsbeta-6.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plsRglm</span><span class='fu'>::</span><span class='fu'><a href='https://fbertran.github.io/plsRglm/reference/confints.bootpls.html'>confints.bootpls</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span><span class='op'>)</span>
+</div><div class='img'><img src='bootplsbeta-8.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plsRglm</span><span class='fu'>::</span><span class='fu'><a href='https://fbertran.github.io/plsRglm/reference/confints.bootpls.html'>confints.bootpls</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt;                                                                      
 #&gt; Intercept -1.81808031 -1.26967221 -1.81110330 -1.24984586 -1.85551194
 #&gt; gravity    0.02469093  0.19520077  0.03044393  0.19271559 -0.01552791
@@ -8230,13 +8329,13 @@ modele<span class='op'>=</span><span class='st'>"pls-beta"</span><span class='op
 #&gt; batch10    0.03353797 -0.14420793  0.023838251
 #&gt; attr(,"typeBCa")
 #&gt; [1] TRUE</div><div class='input'><span class='fu'>plsRglm</span><span class='fu'>::</span><span class='fu'><a href='https://fbertran.github.io/plsRglm/reference/plots.confints.bootpls.html'>plots.confints.bootpls</a></span><span class='op'>(</span><span class='fu'>plsRglm</span><span class='fu'>::</span><span class='fu'><a href='https://fbertran.github.io/plsRglm/reference/confints.bootpls.html'>confints.bootpls</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='img'><img src='bootplsbeta-7.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='output co'>#&gt; <span class='warning'>Warning: extreme order statistics used as endpoints</span></div><div class='img'><img src='bootplsbeta-9.png' alt='' width='700' height='433' /></div><div class='input'>
 
 
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span><span class='op'>)</span>
-</div><div class='img'><img src='bootplsbeta-8.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/jack.after.boot.html'>jack.after.boot</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, index<span class='op'>=</span><span class='fl'>1</span>, useJ<span class='op'>=</span><span class='cn'>TRUE</span>, nt<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
-</div><div class='img'><img src='bootplsbeta-9.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>,jack<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='img'><img src='bootplsbeta-10.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='img'><img src='bootplsbeta-10.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/jack.after.boot.html'>jack.after.boot</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, index<span class='op'>=</span><span class='fl'>1</span>, useJ<span class='op'>=</span><span class='cn'>TRUE</span>, nt<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
+</div><div class='img'><img src='bootplsbeta-11.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>,jack<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='bootplsbeta-12.png' alt='' width='700' height='433' /></div><div class='input'>
 
 <span class='co'># PLS permutation bootstrap</span>
 
@@ -12273,7 +12372,8 @@ modele<span class='op'>=</span><span class='st'>"pls-beta"</span><span class='op
 #&gt; ____Component____ 2 ____
 #&gt; ____Component____ 3 ____
 #&gt; ****________________________________________________****
-#&gt; </div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+#&gt; </div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, 
+type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 #&gt; Based on 250 bootstrap replicates
 #&gt; 
@@ -12287,7 +12387,8 @@ modele<span class='op'>=</span><span class='st'>"pls-beta"</span><span class='op
 #&gt; 95%   (-1.685, -1.616 )   (-1.679, -1.615 )   (-1.491, -1.426 )  
 #&gt; Calculations and Intervals on Original Scale
 #&gt; Some basic intervals may be unstable
-#&gt; Some percentile intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+#&gt; Some percentile intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, 
+type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 #&gt; Based on 250 bootstrap replicates
 #&gt; 
@@ -12301,7 +12402,8 @@ modele<span class='op'>=</span><span class='st'>"pls-beta"</span><span class='op
 #&gt; 95%   ( 0.0929,  0.2558 )   ( 0.0855,  0.2540 )   (-0.0768,  0.0917 )  
 #&gt; Calculations and Intervals on Original Scale
 #&gt; Some basic intervals may be unstable
-#&gt; Some percentile intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
+#&gt; Some percentile intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, 
+type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 #&gt; Based on 250 bootstrap replicates
 #&gt; 
@@ -12315,7 +12417,8 @@ modele<span class='op'>=</span><span class='st'>"pls-beta"</span><span class='op
 #&gt; 95%   ( 0.0889,  0.2367 )   ( 0.0957,  0.2404 )   (-0.0805,  0.0642 )  
 #&gt; Calculations and Intervals on Original Scale
 #&gt; Some basic intervals may be unstable
-#&gt; Some percentile intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span>
+#&gt; Some percentile intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, 
+type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 #&gt; Based on 250 bootstrap replicates
 #&gt; 
@@ -12329,7 +12432,8 @@ modele<span class='op'>=</span><span class='st'>"pls-beta"</span><span class='op
 #&gt; 95%   (-0.6798, -0.4483 )   (-0.6953, -0.4494 )   (-0.1074,  0.1384 )  
 #&gt; Calculations and Intervals on Original Scale
 #&gt; Some basic intervals may be unstable
-#&gt; Some percentile intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>5</span><span class='op'>)</span>
+#&gt; Some percentile intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, 
+type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>5</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 #&gt; Based on 250 bootstrap replicates
 #&gt; 
@@ -12343,7 +12447,8 @@ modele<span class='op'>=</span><span class='st'>"pls-beta"</span><span class='op
 #&gt; 95%   ( 1.2497,  1.7710 )   ( 1.2544,  1.7649 )   (-0.2573,  0.2532 )  
 #&gt; Calculations and Intervals on Original Scale
 #&gt; Some basic intervals may be unstable
-#&gt; Some percentile intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>6</span><span class='op'>)</span>
+#&gt; Some percentile intervals may be unstable</div><div class='input'><span class='fu'>boot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span>, conf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>,<span class='fl'>0.95</span><span class='op'>)</span>, 
+type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"norm"</span>,<span class='st'>"basic"</span>,<span class='st'>"perc"</span><span class='op'>)</span>, index<span class='op'>=</span><span class='fl'>6</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
 #&gt; Based on 250 bootstrap replicates
 #&gt; 
@@ -12358,8 +12463,8 @@ modele<span class='op'>=</span><span class='st'>"pls-beta"</span><span class='op
 #&gt; Calculations and Intervals on Original Scale
 #&gt; Some basic intervals may be unstable
 #&gt; Some percentile intervals may be unstable</div><div class='input'><span class='fu'>plsRglm</span><span class='fu'>::</span><span class='fu'><a href='https://fbertran.github.io/plsRglm/reference/boxplots.bootpls.html'>boxplots.bootpls</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span><span class='op'>)</span>
-</div><div class='img'><img src='bootplsbeta-11.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span><span class='op'>)</span>
-</div><div class='img'><img src='bootplsbeta-12.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
+</div><div class='img'><img src='bootplsbeta-13.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>GazYield.boot</span><span class='op'>)</span>
+</div><div class='img'><img src='bootplsbeta-14.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
 
 </div></pre>
   </div>

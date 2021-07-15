@@ -20,6 +20,10 @@
 
 The goal of plsRbeta is to provide Partial least squares Regression for (weighted) beta regression models (Bertrand 2013,  <http://journal-sfds.fr/article/view/215>) and k-fold cross-validation of such models using various criteria. It allows for missing data in the explanatory variables. Bootstrap confidence intervals constructions are also available.
 
+
+The package was accepted for presentation at the the useR! 2021 international conference. A technical note for the package was created and published on the website of the conference. It can be accessed  here: [https://user2021.r-project.org/participation/technical_notes/t138/technote/](https://user2021.r-project.org/participation/technical_notes/t138/technote/). It is not only an english translation of most of the contents of the original article that was published in French but it also contains the R code reproduce the two examples that were presented in the article.
+
+
 This website and these examples were created by F. Bertrand and M. Maumy-Bertrand.
 
 ## Installation
@@ -114,16 +118,11 @@ modpls$Std.Coeffs
 #> temp10    -0.315301400
 #> temp       0.723088387
 modpls$InfCrit
-#>                  AIC        BIC
-#> Nb_Comp_0  -52.77074  -49.83927
-#> Nb_Comp_1 -112.87383 -108.47662
-#> Nb_Comp_2 -136.43184 -130.56889
-#> Nb_Comp_3 -139.08440 -131.75572
-#>           Chi2_Pearson_Y      RSS_Y
-#> Nb_Comp_0       30.72004 0.35640772
-#> Nb_Comp_1       30.57369 0.05211039
-#> Nb_Comp_2       30.97370 0.02290022
-#> Nb_Comp_3       31.08224 0.02022386
+#>                  AIC        BIC Chi2_Pearson_Y      RSS_Y
+#> Nb_Comp_0  -52.77074  -49.83927       30.72004 0.35640772
+#> Nb_Comp_1 -112.87383 -108.47662       30.57369 0.05211039
+#> Nb_Comp_2 -136.43184 -130.56889       30.97370 0.02290022
+#> Nb_Comp_3 -139.08440 -131.75572       31.08224 0.02022386
 #>           pseudo_R2_Y      R2_Y
 #> Nb_Comp_0          NA        NA
 #> Nb_Comp_1   0.8498691 0.8537900
@@ -231,28 +230,21 @@ modpls$Std.Coeffs
 #> batch9    -0.0173701781
 #> batch10   -0.0587759166
 modpls$InfCrit
-#>                  AIC        BIC
-#> Nb_Comp_0  -52.77074  -49.83927
-#> Nb_Comp_1  -87.96104  -83.56383
-#> Nb_Comp_2 -114.10269 -108.23975
-#> Nb_Comp_3 -152.71170 -145.38302
-#>           Chi2_Pearson_Y      RSS_Y
-#> Nb_Comp_0       30.72004 0.35640772
-#> Nb_Comp_1       31.31448 0.11172576
-#> Nb_Comp_2       33.06807 0.04650238
-#> Nb_Comp_3       30.69727 0.01138837
+#>                  AIC        BIC Chi2_Pearson_Y      RSS_Y
+#> Nb_Comp_0  -52.77074  -49.83927       30.72004 0.35640772
+#> Nb_Comp_1  -87.96104  -83.56383       31.31448 0.11172576
+#> Nb_Comp_2 -114.10269 -108.23975       33.06807 0.04650238
+#> Nb_Comp_3 -152.71170 -145.38302       30.69727 0.01138837
 #>           pseudo_R2_Y      R2_Y
 #> Nb_Comp_0          NA        NA
 #> Nb_Comp_1   0.6879757 0.6865226
 #> Nb_Comp_2   0.8671800 0.8695248
 #> Nb_Comp_3   0.9526757 0.9680468
 modpls$PredictY[1,]
-#>    gravity   pressure     temp10       temp 
-#>  2.0495333  1.6866554 -1.3718198 -1.8219769 
-#>     batch1     batch2     batch3     batch4 
-#>  2.6040833 -0.3165683 -0.3165683 -0.3720119 
-#>     batch5     batch6     batch7     batch8 
-#> -0.3165683 -0.3165683 -0.3720119 -0.3165683 
+#>    gravity   pressure     temp10       temp     batch1     batch2 
+#>  2.0495333  1.6866554 -1.3718198 -1.8219769  2.6040833 -0.3165683 
+#>     batch3     batch4     batch5     batch6     batch7     batch8 
+#> -0.3165683 -0.3720119 -0.3165683 -0.3165683 -0.3720119 -0.3165683 
 #>     batch9    batch10 
 #> -0.2541325 -0.3165683
 ```
@@ -322,70 +314,38 @@ Confidence intervals for the coefficients of the model based on the bootstrap di
 
 ```r
 plsRglm::confints.bootpls(GazYield.boot)
-#>                                   
-#> Intercept -1.79344379 -1.298344159
-#> gravity    0.01927751  0.203207700
-#> pressure  -0.10284957  0.158899010
-#> temp10    -0.50396889 -0.177603439
-#> temp       0.63958439  0.963623548
-#> batch1    -0.09222398  0.110336215
-#> batch2    -0.04513338  0.126556137
-#> batch3    -0.04255156  0.157619185
-#> batch4    -0.05292024  0.065545216
-#> batch5    -0.04251041  0.078338536
-#> batch6    -0.02959175  0.082854597
-#> batch7    -0.13595057  0.097613550
-#> batch8    -0.11677718  0.084955543
-#> batch9    -0.06966369  0.023673543
-#> batch10   -0.14231213  0.006802744
-#>                                    
-#> Intercept -1.820910539 -1.298811257
-#> gravity    0.009687132  0.207137136
-#> pressure  -0.095122794  0.205604518
-#> temp10    -0.520653497 -0.184002462
-#> temp       0.658889299  1.002068184
-#> batch1    -0.099261768  0.106680396
-#> batch2    -0.059420084  0.119437955
-#> batch3    -0.038503175  0.177505160
-#> batch4    -0.047023003  0.081938870
-#> batch5    -0.041090268  0.078484689
-#> batch6    -0.031393204  0.104052342
-#> batch7    -0.125280057  0.127028728
-#> batch8    -0.116202080  0.101367639
-#> batch9    -0.070353628  0.028700049
-#> batch10   -0.142929452  0.007651461
-#>                                              
-#> Intercept -1.80654654 -1.28444726 -1.80046767
-#> gravity   -0.02994946  0.16750055  0.02817987
-#> pressure  -0.04571126  0.25501605 -0.07071644
-#> temp10    -0.37286952 -0.03621849 -0.42413912
-#> temp       0.50546899  0.84864788  0.64173410
-#> batch1    -0.04550730  0.16043487 -0.13892632
-#> batch2    -0.03660410  0.14225394 -0.03921924
-#> batch3    -0.04204445  0.17396388 -0.08110506
-#> batch4    -0.08248484  0.04647703 -0.06253836
-#> batch5    -0.01814943  0.10142552 -0.02899872
-#> batch6    -0.03605921  0.09938634 -0.06114337
-#> batch7    -0.19459845  0.05771034 -0.15688005
-#> batch8    -0.12789671  0.08967301 -0.13986427
-#> batch9    -0.06344040  0.03561327 -0.08371923
-#> batch10   -0.12520329  0.02537762 -0.14907794
-#>                       
-#> Intercept -1.282289852
-#> gravity    0.189061113
-#> pressure   0.140622124
-#> temp10    -0.175831698
-#> temp       0.941303333
-#> batch1     0.100909676
-#> batch2     0.141666087
-#> batch3     0.157875292
-#> batch4     0.077670517
-#> batch5     0.075247803
-#> batch6     0.066367369
-#> batch7     0.078620504
-#> batch8     0.063261668
-#> batch9     0.016030629
-#> batch10   -0.004437664
+#>                                                             
+#> Intercept -1.79344379 -1.298344159 -1.820910539 -1.298811257
+#> gravity    0.01927751  0.203207700  0.009687132  0.207137136
+#> pressure  -0.10284957  0.158899010 -0.095122794  0.205604518
+#> temp10    -0.50396889 -0.177603439 -0.520653497 -0.184002462
+#> temp       0.63958439  0.963623548  0.658889299  1.002068184
+#> batch1    -0.09222398  0.110336215 -0.099261768  0.106680396
+#> batch2    -0.04513338  0.126556137 -0.059420084  0.119437955
+#> batch3    -0.04255156  0.157619185 -0.038503175  0.177505160
+#> batch4    -0.05292024  0.065545216 -0.047023003  0.081938870
+#> batch5    -0.04251041  0.078338536 -0.041090268  0.078484689
+#> batch6    -0.02959175  0.082854597 -0.031393204  0.104052342
+#> batch7    -0.13595057  0.097613550 -0.125280057  0.127028728
+#> batch8    -0.11677718  0.084955543 -0.116202080  0.101367639
+#> batch9    -0.06966369  0.023673543 -0.070353628  0.028700049
+#> batch10   -0.14231213  0.006802744 -0.142929452  0.007651461
+#>                                                           
+#> Intercept -1.80654654 -1.28444726 -1.80046767 -1.282289852
+#> gravity   -0.02994946  0.16750055  0.02817987  0.189061113
+#> pressure  -0.04571126  0.25501605 -0.07071644  0.140622124
+#> temp10    -0.37286952 -0.03621849 -0.42413912 -0.175831698
+#> temp       0.50546899  0.84864788  0.64173410  0.941303333
+#> batch1    -0.04550730  0.16043487 -0.13892632  0.100909676
+#> batch2    -0.03660410  0.14225394 -0.03921924  0.141666087
+#> batch3    -0.04204445  0.17396388 -0.08110506  0.157875292
+#> batch4    -0.08248484  0.04647703 -0.06253836  0.077670517
+#> batch5    -0.01814943  0.10142552 -0.02899872  0.075247803
+#> batch6    -0.03605921  0.09938634 -0.06114337  0.066367369
+#> batch7    -0.19459845  0.05771034 -0.15688005  0.078620504
+#> batch8    -0.12789671  0.08967301 -0.13986427  0.063261668
+#> batch9    -0.06344040  0.03561327 -0.08371923  0.016030629
+#> batch10   -0.12520329  0.02537762 -0.14907794 -0.004437664
 #> attr(,"typeBCa")
 #> [1] TRUE
 ```

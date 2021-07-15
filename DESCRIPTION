@@ -1,10 +1,18 @@
 Package: plsRbeta
 Version: 0.2.8
 Date: 2021-07-11
-Depends: R (>= 2.4.0)
+Depends: R (>= 3.5.0)
 Imports: mvtnorm, boot, Formula, MASS, plsRglm, betareg, methods
 Enhances: 
-Suggests: pls, plsdof
+Suggests: 
+    bipartite,
+    knitr,
+    markdown,
+    plotrix,
+    pls,
+    plsdof,
+    prettydoc,
+    rmarkdown
 Title: Partial Least Squares Regression for Beta Regression Models
 Authors@R: c(
 	person(given = "Frederic", family= "Bertrand", role = c("cre", "aut"), email = "frederic.bertrand@math.unistra.fr", comment = c(ORCID = "0000-0002-0837-8281")),
@@ -15,6 +23,8 @@ Description: Provides Partial least squares Regression for (weighted) beta regre
 License: GPL-3
 Encoding: UTF-8
 Classification/MSC: 62J12, 62J99
+LazyData: true
+VignetteBuilder: knitr
+RoxygenNote: 7.1.1
 URL: https://fbertran.github.io/plsRbeta/, https://github.com/fbertran/plsRbeta/
 BugReports: https://github.com/fbertran/plsRbeta/issues/
-RoxygenNote: 7.1.1

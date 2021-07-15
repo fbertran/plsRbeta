@@ -1,7 +1,10 @@
 # plsRbeta 0.2.8
 
 * Bootstrap function can be specified. A bootstrap function for raw coefficients is provided.
-* Added the technical note for User2021 to the pkgdown website of the package.
+* Added two datasets and precomputed results as datasets for the vignette.
+* Turned the technical note for User2021 into a vignette and 
+* Added the vignette/technical note for User2021 to the pkgdown website of the package.
+* Added the reference to the technical note for useR! 2021.
 
 # plsRbeta 0.2.7
 

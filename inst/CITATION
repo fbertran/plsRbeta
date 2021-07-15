@@ -14,6 +14,17 @@ citEntry(entry="article",
          paste("Frederic Bertrand, Nicolas Meyer, Michele Beau-Faller, Karim El Bayed, Izzie-Jacques Namer, Myriam Maumy-Bertrand (2013). Regression Beta PLS. Journal de la Societe Francaise de Statistique, 154(3):143-159. http://smf4.emath.fr/Publications/JSFdS/154_3/html/.")
 )
 
+citEntry(entry="article",
+         title = "Partial Least Squares Regression for Beta Regression Models",
+         author = personList(as.person("F. Bertrand"), as.person("M. Maumy")),
+	       journal = "user! 2021",
+         year         = 2021,
+         note         = "Zurich",
+         url          = "https://user2021.r-project.org/participation/technical_notes/t138/technote/",
+         textVersion = 
+         paste("Frederic Bertrand, Myriam Maumy (2021). Partial Least Squares Regression for Beta Regression Models. useR! 2021, Zurich. https://user2021.r-project.org/participation/technical_notes/t138/technote/.")
+)
+
 titl <- meta$Title
 year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date)
 vers <- paste("R package version", meta$Version)
