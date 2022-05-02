@@ -105,8 +105,8 @@ Depends on the model that was used to fit the model.
 \url{http://publications-sfds.math.cnrs.fr/index.php/J-SFdS/article/view/215}
 }
 \author{\enc{Frédéric}{Fr\'ed\'eric} Bertrand\cr
-\email{frederic.bertrand@math.unistra.fr}\cr
-\url{http://www-irma.u-strasbg.fr/~fbertran/}
+\email{frederic.bertrand@utt.fr}\cr
+\url{https://fbertran.github.io/homepage/}
 }
 \note{
 Use \code{plsRbeta} instead.

@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plsRbeta</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.9</span>
       </span>
     </div>
 
@@ -86,17 +86,21 @@
 
       
 
-      </header><script src="tn_Insights_files/header-attrs-2.6/header-attrs.js"></script><div class="row">
+      </header><script src="tn_Insights_files/header-attrs-2.10/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Partial Least Squares Regression for Beta Regression Models</h1>
+      <h1 data-toc-skip>Partial Least Squares Regression for Beta
+Regression Models</h1>
             <h3 class="subtitle">The plsRbeta package</h3>
-                        <h4 class="author">Frédéric Bertrand and Myriam Maumy-Bertrand</h4>
+                        <h4 class="author">Frédéric Bertrand and Myriam
+Maumy-Bertrand</h4>
             <address class="author_afil">
-      IRMA, labex IRMIA, Université de Strasbourg and CNRS. LIST3N, Université de technologie de Troyes.<br><a class="author_email" href="mailto:#"></a><a href="mailto:frederic.bertrand@utt.fr" class="email">frederic.bertrand@utt.fr</a>
+      IRMA, labex IRMIA, Université de Strasbourg and CNRS. LIST3N,
+Université de technologie de
+Troyes.<br><a class="author_email" href="mailto:#"></a><a href="mailto:frederic.bertrand@utt.fr" class="email">frederic.bertrand@utt.fr</a>
       </address>
                   
-            <h4 class="date">2021-07-15</h4>
+            <h4 class="date">2022-05-02</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/fbertran/plsRbeta/blob/master/vignettes/tn_Insights.Rmd"><code>vignettes/tn_Insights.Rmd</code></a></small>
       <div class="hidden name"><code>tn_Insights.Rmd</code></div>
@@ -108,22 +112,53 @@
 <div id="abstract" class="section level2">
 <h2 class="hasAnchor">
 <a href="#abstract" class="anchor"></a>Abstract</h2>
-<p>Many variables of interest, such as experimental results, yields or economic indicators, are naturally expressed as rates, proportions or indices whose values are necessarily between zero and one or more generally two fixed values known in advance. Beta regression allows us to model these data with a great deal of flexibility, since the density functions of the Beta laws can take on a wide variety of forms. However, like all usual regression models, it cannot be applied directly when the predictors present multicollinearity problems or worse when they are more numerous than the observations. These situations are frequently encountered in chemistry, medicine, economics or marketing. To circumvent this difficulty, we formulate an extension of PLS regression for Beta regression models. This, along with several tools such as cross-validation and bootstrap techniques, is available for the <code>R</code> language in the <code>plsRbeta</code> library.</p>
+<p>Many variables of interest, such as experimental results, yields or
+economic indicators, are naturally expressed as rates, proportions or
+indices whose values are necessarily between zero and one or more
+generally two fixed values known in advance. Beta regression allows us
+to model these data with a great deal of flexibility, since the density
+functions of the Beta laws can take on a wide variety of forms. However,
+like all usual regression models, it cannot be applied directly when the
+predictors present multicollinearity problems or worse when they are
+more numerous than the observations. These situations are frequently
+encountered in chemistry, medicine, economics or marketing. To
+circumvent this difficulty, we formulate an extension of PLS regression
+for Beta regression models. This, along with several tools such as
+cross-validation and bootstrap techniques, is available for the
+<code>R</code> language in the <code>plsRbeta</code> library.</p>
 <div id="keywords" class="section level3">
 <h3 class="hasAnchor">
 <a href="#keywords" class="anchor"></a>Keywords</h3>
-<p>Beta Regression, PLS Regression, PLS Beta Regression, Cross validation, Bootstrap techniques, <code>R</code> language</p>
+<p>Beta Regression, PLS Regression, PLS Beta Regression, Cross
+validation, Bootstrap techniques, <code>R</code> language</p>
 <p>Classification/MSC: 62F40, 62J07, 62J12, 62P10, 62P20, 62P30</p>
 </div>
 </div>
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p>PLS regression, the result of the NIPALS algorithm initially developed by Wold (Wold, 1966)<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> and explained in detail by Tenenhaus (Tenenhaus, 1998)<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>, has already been successfully extended to generalized linear models by Bastien <em>et al.</em> (Bastien, 2005)<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> and to Cox models by Bastien (Bastien 2008)<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a> and (Bastien 2015)<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>.</p>
-<p>We proposed an extension of PLS regression to Beta regression models in Bertrand (2013)<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>. Indeed, the practical interest of the Beta distribution had been asserted several times, for example by Johnson <em>et al.</em> (Johnson, 1995)<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a> :</p>
-<p>“Beta distributions are very versatile and a variety of uncertanties can be usefully modelled by them. This flexibility encourages its empirical use in a wide range of applications.”</p>
-<p>Several articles have focused on the study of Beta regression and its properties. Let us mention in particular, the article by Ferrari and Cribari-Neto (Ferrari, 2004)<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a> for an introduction to these models and those by Kosmidis and Firth (Kosmidis, 2010)<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>, Simas <em>et al.</em> (Simas, 2010)<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a> and Grün <em>et al.</em> (Grün, 2012)<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a> for extensions or improvements of the estimation techniques of these models.</p>
-<p>We will assume in the rest of the paper that the answer studied has values in the interval <span class="math inline">\([0;1]\)</span>. The model we propose can of course be used as soon as the answer <span class="math inline">\(Y\)</span> has values in a bounded interval <span class="math inline">\([a;b]\)</span>, with <span class="math inline">\(a&lt;b\)</span> fixed and known, by studying <span class="math inline">\((Y-a)/(b-a)\)</span> instead of <span class="math inline">\(Y\)</span>.</p>
+<p>PLS regression, the result of the NIPALS algorithm initially
+developed by Wold (Wold, 1966)<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> and explained in detail by Tenenhaus
+(Tenenhaus, 1998)<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>, has already been successfully extended to
+generalized linear models by Bastien <em>et al.</em> (Bastien, 2005)<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> and to Cox
+models by Bastien (Bastien 2008)<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a> and (Bastien 2015)<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>.</p>
+<p>We proposed an extension of PLS regression to Beta regression models
+in Bertrand (2013)<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>. Indeed, the practical interest of the Beta
+distribution had been asserted several times, for example by Johnson
+<em>et al.</em> (Johnson, 1995)<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a> :</p>
+<p>“Beta distributions are very versatile and a variety of uncertanties
+can be usefully modelled by them. This flexibility encourages its
+empirical use in a wide range of applications.”</p>
+<p>Several articles have focused on the study of Beta regression and its
+properties. Let us mention in particular, the article by Ferrari and
+Cribari-Neto (Ferrari, 2004)<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a> for an introduction to these models and
+those by Kosmidis and Firth (Kosmidis, 2010)<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>, Simas <em>et al.</em>
+(Simas, 2010)<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a> and Grün <em>et al.</em> (Grün, 2012)<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a> for
+extensions or improvements of the estimation techniques of these
+models.</p>
+<p>We will assume in the rest of the paper that the answer studied has
+values in the interval <span class="math inline">\([0;1]\)</span>. The
+model we propose can of course be used as soon as the answer <span class="math inline">\(Y\)</span> has values in a bounded interval <span class="math inline">\([a;b]\)</span>, with <span class="math inline">\(a&lt;b\)</span> fixed and known, by studying <span class="math inline">\((Y-a)/(b-a)\)</span> instead of <span class="math inline">\(Y\)</span>.</p>
 </div>
 <div id="pls-beta-regression" class="section level2">
 <h2 class="hasAnchor">
@@ -131,124 +166,316 @@
 <div id="beta-regression" class="section level3">
 <h3 class="hasAnchor">
 <a href="#beta-regression" class="anchor"></a>Beta Regression</h3>
-<p>When it is non-zero, the density function of the <span class="math inline">\(\textrm{Beta}(p,q)\)</span> law is given by : <span class="math display">\[\begin{equation}
-\pi(y;p;q)=\frac{\Gamma(p+q)}{\Gamma(p)\Gamma(q)}y^{p-1}(1-y)^{q-1}, \quad 0&lt;y&lt;1 \quad \textrm{(E.1)}
-\end{equation}\]</span> with <span class="math inline">\(p&gt;0\)</span>, <span class="math inline">\(q&gt;0\)</span> and <span class="math inline">\(\Gamma(\cdot)\)</span> the Euler gamma function. If <span class="math inline">\(Y\)</span> follows a <span class="math inline">\(\textrm{Beta}(p,q)\)</span> distribution, its expectation and variance are equal to : <span class="math display">\[\begin{equation}
-\mathbb{E}(Y)=\frac{p}{p+q} \quad \textrm{et} \quad \mathrm{Var}(Y)=\frac{pq}{(p+q)^2(p+q+1)}\cdot \quad \textrm{(E.2)}
-\end{equation}\]</span> In order to be able to apply techniques similar to those used for generalized linear models by McCullagh and Nelder, Ferrari and Cribari-Neto (Ferrari, 2004)<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a> propose to rephrase the Beta law as follows. By posing <span class="math inline">\(\mu=p/(p+q)\)</span> and <span class="math inline">\(\phi=p+q\)</span>, i.e. <span class="math inline">\(p=\mu\phi\)</span> and <span class="math inline">\(q=(1-\mu)\phi\)</span>, the Equation (<span class="math inline">\(\textrm{E.2}\)</span>) becomes : <span class="math display">\[
-\mathbb{E}(Y)=\mu \quad \textrm{et} \quad \mathrm{Var}(Y)=\frac{V(\mu)}{1+\phi}
-\]</span> where <span class="math inline">\(V(\mu)=\mu(1-\mu)\)</span>. Thus <span class="math inline">\(\mu\)</span> is the mean value of the response and <span class="math inline">\(\phi\)</span> can be interpreted as a precision parameter since, for a fixed <span class="math inline">\(\mu\)</span>, the higher the value of <span class="math inline">\(\phi\)</span>, the smaller the variance of the response. With these new parameters, the density function given in Equation (<span class="math inline">\(\textrm{E.1}\)</span>) is equal to : <span class="math display">\[\begin{equation}
-\pi(y;\mu;\phi)=\frac{\Gamma(\phi)}{\Gamma(\mu\phi)\Gamma((1-\mu)\phi)}y^{\mu\phi-1}(1-y)^{(1-\mu)\phi-1}, \quad 0&lt;y&lt;1. \quad \textrm{(E.3)}
+<p>When it is non-zero, the density function of the <span class="math inline">\(\textrm{Beta}(p,q)\)</span> law is given by :
+<span class="math display">\[\begin{equation}
+\pi(y;p;q)=\frac{\Gamma(p+q)}{\Gamma(p)\Gamma(q)}y^{p-1}(1-y)^{q-1},
+\quad 0&lt;y&lt;1 \quad \textrm{(E.1)}
+\end{equation}\]</span> with <span class="math inline">\(p&gt;0\)</span>, <span class="math inline">\(q&gt;0\)</span> and <span class="math inline">\(\Gamma(\cdot)\)</span> the Euler gamma function.
+If <span class="math inline">\(Y\)</span> follows a <span class="math inline">\(\textrm{Beta}(p,q)\)</span> distribution, its
+expectation and variance are equal to : <span class="math display">\[\begin{equation}
+\mathbb{E}(Y)=\frac{p}{p+q} \quad \textrm{et} \quad
+\mathrm{Var}(Y)=\frac{pq}{(p+q)^2(p+q+1)}\cdot \quad \textrm{(E.2)}
+\end{equation}\]</span> In order to be able to apply techniques similar
+to those used for generalized linear models by McCullagh and Nelder,
+Ferrari and Cribari-Neto (Ferrari, 2004)<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a> propose to rephrase
+the Beta law as follows. By posing <span class="math inline">\(\mu=p/(p+q)\)</span> and <span class="math inline">\(\phi=p+q\)</span>, i.e. <span class="math inline">\(p=\mu\phi\)</span> and <span class="math inline">\(q=(1-\mu)\phi\)</span>, the Equation (<span class="math inline">\(\textrm{E.2}\)</span>) becomes : <span class="math display">\[
+\mathbb{E}(Y)=\mu \quad \textrm{et} \quad
+\mathrm{Var}(Y)=\frac{V(\mu)}{1+\phi}
+\]</span> where <span class="math inline">\(V(\mu)=\mu(1-\mu)\)</span>.
+Thus <span class="math inline">\(\mu\)</span> is the mean value of the
+response and <span class="math inline">\(\phi\)</span> can be
+interpreted as a precision parameter since, for a fixed <span class="math inline">\(\mu\)</span>, the higher the value of <span class="math inline">\(\phi\)</span>, the smaller the variance of the
+response. With these new parameters, the density function given in
+Equation (<span class="math inline">\(\textrm{E.1}\)</span>) is equal to
+: <span class="math display">\[\begin{equation}
+\pi(y;\mu;\phi)=\frac{\Gamma(\phi)}{\Gamma(\mu\phi)\Gamma((1-\mu)\phi)}y^{\mu\phi-1}(1-y)^{(1-\mu)\phi-1},
+\quad 0&lt;y&lt;1. \quad \textrm{(E.3)}
 \end{equation}\]</span></p>
-<p>It is not possible to apply directly the theory of the generalized linear model, as introduced by the founding article of Nelder and Wedderburn (Nelder, 1972)<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a> and then taken up again in the eponymous book of McCullagh and Nelder (McCullagh, 1995)<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a>, because it is based on the use of a family of laws put in natural exponential form (NEF). However, as indicated by Morris (Morris, 1982)<a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a>, the family of beta laws, with the parameterization taken up by Ferrari and Cribari-Neto (Ferrari, 2004)<a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a> and introduced above, is certainly a univariate exponential family but not a natural exponential family. Indeed, the latter are characterized by their variance function. But the variance function of this parameterization of the family of beta laws is already that of the natural exponential family formed by the binomial laws, hence the result. For the same reason, it is not possible to characterize, within the exponential families, the family of Beta distributions by means of their variance function.</p>
-<p>Let <span class="math inline">\(Y_1\)</span>, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\(Y_n\)</span> be independent random variables distributed according to the density function given in Equation (<span class="math inline">\(\textrm{E.3}\)</span>) of mean <span class="math inline">\(\mu_t\)</span> and unknown precision <span class="math inline">\(\phi\)</span>.</p>
-<p>We obtain the Beta regression model by assuming that the mean of <span class="math inline">\(Y_t\)</span>, <span class="math inline">\(1\leqslant t\leqslant n\)</span>, can be written : <span class="math display">\[\begin{equation}
+<p>It is not possible to apply directly the theory of the generalized
+linear model, as introduced by the founding article of Nelder and
+Wedderburn (Nelder, 1972)<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a> and then taken up again in the eponymous
+book of McCullagh and Nelder (McCullagh, 1995)<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a>, because it is based
+on the use of a family of laws put in natural exponential form (NEF).
+However, as indicated by Morris (Morris, 1982)<a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a>, the family of beta
+laws, with the parameterization taken up by Ferrari and Cribari-Neto
+(Ferrari, 2004)<a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a> and introduced above, is certainly a
+univariate exponential family but not a natural exponential family.
+Indeed, the latter are characterized by their variance function. But the
+variance function of this parameterization of the family of beta laws is
+already that of the natural exponential family formed by the binomial
+laws, hence the result. For the same reason, it is not possible to
+characterize, within the exponential families, the family of Beta
+distributions by means of their variance function.</p>
+<p>Let <span class="math inline">\(Y_1\)</span>, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\(Y_n\)</span> be independent random variables
+distributed according to the density function given in Equation (<span class="math inline">\(\textrm{E.3}\)</span>) of mean <span class="math inline">\(\mu_t\)</span> and unknown precision <span class="math inline">\(\phi\)</span>.</p>
+<p>We obtain the Beta regression model by assuming that the mean of
+<span class="math inline">\(Y_t\)</span>, <span class="math inline">\(1\leqslant t\leqslant n\)</span>, can be written :
+<span class="math display">\[\begin{equation}
 g(\mu_t)=\sum_{i=1}^kx_{ti}\beta_i=\eta_k
-\end{equation}\]</span> where <span class="math inline">\(\beta=(\beta_1,\ldots,\beta_k)'\)</span> is a vector of unknown regression parameters (<span class="math inline">\(\beta \in \mathbb{R}^k\)</span>), <span class="math inline">\('\)</span> denoting the matrix transpose, and <span class="math inline">\(x_{t1,},\ldots,x_{tk}\)</span> are the observations of the <span class="math inline">\(k\)</span> predictors with <span class="math inline">\(k&lt;n\)</span> that are assumed to be known and fixed. Finally, <span class="math inline">\(g(\cdot)\)</span> is a strictly monotone, twice derivable, surjective link function defined on the interval <span class="math inline">\(]0;1[\)</span> and with values in <span class="math inline">\(\mathbb{R}\)</span>. The variance of <span class="math inline">\(Y_t\)</span> is a function of <span class="math inline">\(\mu_t\)</span> and thus depends on the value of the covariates. Therefore, the model automatically takes into account the possible lack of homoscedasticity.</p>
-<p>There are several common choices for the link function <span class="math inline">\(g(\cdot)\)</span>. For example, the logit link <span class="math inline">\(g(\mu)=\log{\mu/(1-\mu)}\)</span>, the probit link <span class="math inline">\(g(\mu)=\Phi^{-1}(\mu)\)</span>, with <span class="math inline">\(\Phi\)</span> the distribution function of the centered and reduced normal distribution, the complementary log-log link <span class="math inline">\(g(\mu)=-\log(1-\mu))\)</span>, the log-log link <span class="math inline">\(g(\mu)=-\log(-\log(\mu))\)</span>. A detailed study of these links has been made by McCullagh and Nelder (McCullagh, 1995)<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a> and Atkinson (Atkinson, 1985)<a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a> has proposed others. As usual, the use of the logit link makes it possible to interpret the exponential of the coefficients of the covariates in terms of the odds ratio.</p>
+\end{equation}\]</span> where <span class="math inline">\(\beta=(\beta_1,\ldots,\beta_k)'\)</span> is a
+vector of unknown regression parameters (<span class="math inline">\(\beta \in \mathbb{R}^k\)</span>), <span class="math inline">\('\)</span> denoting the matrix transpose, and
+<span class="math inline">\(x_{t1,},\ldots,x_{tk}\)</span> are the
+observations of the <span class="math inline">\(k\)</span> predictors
+with <span class="math inline">\(k&lt;n\)</span> that are assumed to be
+known and fixed. Finally, <span class="math inline">\(g(\cdot)\)</span>
+is a strictly monotone, twice derivable, surjective link function
+defined on the interval <span class="math inline">\(]0;1[\)</span> and
+with values in <span class="math inline">\(\mathbb{R}\)</span>. The
+variance of <span class="math inline">\(Y_t\)</span> is a function of
+<span class="math inline">\(\mu_t\)</span> and thus depends on the value
+of the covariates. Therefore, the model automatically takes into account
+the possible lack of homoscedasticity.</p>
+<p>There are several common choices for the link function <span class="math inline">\(g(\cdot)\)</span>. For example, the logit link
+<span class="math inline">\(g(\mu)=\log{\mu/(1-\mu)}\)</span>, the
+probit link <span class="math inline">\(g(\mu)=\Phi^{-1}(\mu)\)</span>,
+with <span class="math inline">\(\Phi\)</span> the distribution function
+of the centered and reduced normal distribution, the complementary
+log-log link <span class="math inline">\(g(\mu)=-\log(1-\mu))\)</span>,
+the log-log link <span class="math inline">\(g(\mu)=-\log(-\log(\mu))\)</span>. A detailed
+study of these links has been made by McCullagh and Nelder (McCullagh,
+1995)<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a>
+and Atkinson (Atkinson, 1985)<a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a> has proposed others. As usual, the use of
+the logit link makes it possible to interpret the exponential of the
+coefficients of the covariates in terms of the odds ratio.</p>
 </div>
 <div id="pls-regression" class="section level3">
 <h3 class="hasAnchor">
 <a href="#pls-regression" class="anchor"></a>PLS Regression</h3>
-<p>Consider the centered variables <span class="math inline">\(Y\)</span>, <span class="math inline">\(x_1\)</span>, , <span class="math inline">\(x_j\)</span>, , <span class="math inline">\(x_p\)</span>. Let <span class="math inline">\(X\)</span> be the matrix of predictors <span class="math inline">\(x_1\)</span>, , <span class="math inline">\(x_j\)</span>, , <span class="math inline">\(x_p\)</span>. PLS regression is well known and exhaustively described by Höskuldsson (Höskuldsson, 1988)<a href="#fn19" class="footnote-ref" id="fnref19"><sup>19</sup></a>, Wold <em>et al.</em> (Wold, 2001)<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a> and Tenenhaus (Tenenhaus, 1998)<a href="#fn21" class="footnote-ref" id="fnref21"><sup>21</sup></a>. The classical presentation of PLS regression is in algorithmic form. We will only recall the elements that are useful for the following. PLS regression is a non-linear model which allows to construct orthogonal components <span class="math inline">\(t_h\)</span> obtained by maximizing the quantities <span class="math inline">\(cov(Y,t_h)\)</span>. Let <span class="math inline">\(T\)</span> be the matrix formed by these components, we have : <span class="math display">\[\begin{eqnarray}
+<p>Consider the centered variables <span class="math inline">\(Y\)</span>, <span class="math inline">\(x_1\)</span>, , <span class="math inline">\(x_j\)</span>, , <span class="math inline">\(x_p\)</span>. Let <span class="math inline">\(X\)</span> be the matrix of predictors <span class="math inline">\(x_1\)</span>, , <span class="math inline">\(x_j\)</span>, , <span class="math inline">\(x_p\)</span>. PLS regression is well known and
+exhaustively described by Höskuldsson (Höskuldsson, 1988)<a href="#fn19" class="footnote-ref" id="fnref19"><sup>19</sup></a>, Wold <em>et
+al.</em> (Wold, 2001)<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a> and Tenenhaus (Tenenhaus, 1998)<a href="#fn21" class="footnote-ref" id="fnref21"><sup>21</sup></a>. The
+classical presentation of PLS regression is in algorithmic form. We will
+only recall the elements that are useful for the following. PLS
+regression is a non-linear model which allows to construct orthogonal
+components <span class="math inline">\(t_h\)</span> obtained by
+maximizing the quantities <span class="math inline">\(cov(Y,t_h)\)</span>. Let <span class="math inline">\(T\)</span> be the matrix formed by these
+components, we have : <span class="math display">\[\begin{eqnarray}
 Y = Tc' + \epsilon,
-\end{eqnarray}\]</span> where <span class="math inline">\(\epsilon\)</span> is the vector of residuals and <span class="math inline">\(c'\)</span> is the vector of component coefficients. By positing <span class="math inline">\(T=XW^*\)</span>, where <span class="math inline">\(W^*\)</span> is the matrix of the coefficients of the <span class="math inline">\(x_j\)</span> variables in each <span class="math inline">\(t_h\)</span> component, we have the direct expression for the response <span class="math inline">\(Y\)</span> using the <span class="math inline">\(x_j\)</span> predictors: <span class="math display">\[\begin{eqnarray}
+\end{eqnarray}\]</span> where <span class="math inline">\(\epsilon\)</span> is the vector of residuals and
+<span class="math inline">\(c'\)</span> is the vector of component
+coefficients. By positing <span class="math inline">\(T=XW^*\)</span>,
+where <span class="math inline">\(W^*\)</span> is the matrix of the
+coefficients of the <span class="math inline">\(x_j\)</span> variables
+in each <span class="math inline">\(t_h\)</span> component, we have the
+direct expression for the response <span class="math inline">\(Y\)</span> using the <span class="math inline">\(x_j\)</span> predictors: <span class="math display">\[\begin{eqnarray}
 Y = X W^*c' + \epsilon.\quad (\textrm{E.4})
 \end{eqnarray}\]</span> Expanding the right-hand side of Equation~(<span class="math inline">\(\textrm{E.4}\)</span>), we obtain for each <span class="math inline">\(Y_i\)</span> component of <span class="math inline">\(Y\)</span>: <span class="math display">\[\begin{eqnarray}
-Y_i = \sum_{h=1}^H \left(c_hw_{1h}^*x_{i1} + c_hw_{ph}^*x_{ip} \right) + \epsilon_i,
-\end{eqnarray}\]</span> <span class="math inline">\(H\)</span> being the number of components retained in the final model with <span class="math inline">\(H \leqslant \mathrm{rg}(X)\)</span>, <span class="math inline">\(H\)</span> being in general much lower than the rank of <span class="math inline">\(X\)</span> and <span class="math inline">\(p\)</span> being equal to the number of variables contained in the matrix <span class="math inline">\(X\)</span>. The coefficients <span class="math inline">\(c_hw^*_{jh}\)</span>, where <span class="math inline">\(1 \leqslant j \leqslant p\)</span>, following the notation with <span class="math inline">\(*\)</span> of Wold <em>et al.</em> (Wold, 2001)<a href="#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a>, translate the relation between the vector <span class="math inline">\(Y\)</span> and the variables <span class="math inline">\(x_j\)</span> through the components <span class="math inline">\(t_h\)</span>.</p>
+Y_i = \sum_{h=1}^H \left(c_hw_{1h}^*x_{i1} + c_hw_{ph}^*x_{ip} \right) +
+\epsilon_i,
+\end{eqnarray}\]</span> <span class="math inline">\(H\)</span> being the
+number of components retained in the final model with <span class="math inline">\(H \leqslant \mathrm{rg}(X)\)</span>, <span class="math inline">\(H\)</span> being in general much lower than the
+rank of <span class="math inline">\(X\)</span> and <span class="math inline">\(p\)</span> being equal to the number of variables
+contained in the matrix <span class="math inline">\(X\)</span>. The
+coefficients <span class="math inline">\(c_hw^*_{jh}\)</span>, where
+<span class="math inline">\(1 \leqslant j \leqslant p\)</span>,
+following the notation with <span class="math inline">\(*\)</span> of
+Wold <em>et al.</em> (Wold, 2001)<a href="#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a>, translate the relation between the
+vector <span class="math inline">\(Y\)</span> and the variables <span class="math inline">\(x_j\)</span> through the components <span class="math inline">\(t_h\)</span>.</p>
 </div>
 <div id="pls-beta-regression-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#pls-beta-regression-1" class="anchor"></a>PLS Beta Regression</h3>
-<p>PLS Beta Regression of the response <span class="math inline">\(Y\)</span> on the variables <span class="math inline">\(x_1\)</span>, , <span class="math inline">\(x_j\)</span>, , <span class="math inline">\(x_p\)</span> with <span class="math inline">\(H\)</span> components <span class="math inline">\(t_h=w^*_{1h}x_{i1}+\cdots+w^*_{ph}x_{ip}\)</span> is written : <span class="math display">\[\begin{eqnarray}
+<p>PLS Beta Regression of the response <span class="math inline">\(Y\)</span> on the variables <span class="math inline">\(x_1\)</span>, , <span class="math inline">\(x_j\)</span>, , <span class="math inline">\(x_p\)</span> with <span class="math inline">\(H\)</span> components <span class="math inline">\(t_h=w^*_{1h}x_{i1}+\cdots+w^*_{ph}x_{ip}\)</span>
+is written : <span class="math display">\[\begin{eqnarray}
 g(\mu) = \sum_{h=1}^H \left(c_h \sum_{j=1}^p w_{jh}^*x_{ij}\right),
-\end{eqnarray}\]</span> where <span class="math inline">\(mu\)</span> is the expectation of <span class="math inline">\(Y\)</span>. The link <span class="math inline">\(g(\cdot)\)</span> is to be chosen among the links logit, probit, complementary log-log, log-log, Cauchit and log according to the type of data and the quality of the model fit to the data.</p>
+\end{eqnarray}\]</span> where <span class="math inline">\(mu\)</span> is
+the expectation of <span class="math inline">\(Y\)</span>. The link
+<span class="math inline">\(g(\cdot)\)</span> is to be chosen among the
+links logit, probit, complementary log-log, log-log, Cauchit and log
+according to the type of data and the quality of the model fit to the
+data.</p>
 <hr>
-<p>The algorithm for determining the PLS <span class="math inline">\(t_h\)</span> components of a Beta PLS regression model is as follows:</p>
+<p>The algorithm for determining the PLS <span class="math inline">\(t_h\)</span> components of a Beta PLS regression
+model is as follows:</p>
 <ul>
 <li>Compute the first PLS component <span class="math inline">\(t_1\)</span> :</li>
 </ul>
 <ol style="list-style-type: decimal">
-<li>Compute the coefficient <span class="math inline">\(a_{1j}\)</span> of <span class="math inline">\(x_j\)</span> in the Beta regression of <span class="math inline">\(Y\)</span> on <span class="math inline">\(x_j\)</span> for each predictor <span class="math inline">\(x_j\)</span>, <span class="math inline">\(1 \leqslant j \leqslant p\)</span>.</li>
-<li>Norm the column vector <span class="math inline">\(a_1\)</span> : <span class="math inline">\(w_1=a_1/\| a_1\|\)</span>.</li>
+<li>Compute the coefficient <span class="math inline">\(a_{1j}\)</span>
+of <span class="math inline">\(x_j\)</span> in the Beta regression of
+<span class="math inline">\(Y\)</span> on <span class="math inline">\(x_j\)</span> for each predictor <span class="math inline">\(x_j\)</span>, <span class="math inline">\(1
+\leqslant j \leqslant p\)</span>.</li>
+<li>Norm the column vector <span class="math inline">\(a_1\)</span> :
+<span class="math inline">\(w_1=a_1/\| a_1\|\)</span>.</li>
 <li>Compute the component <span class="math inline">\(t_1=1/(w_1'w_1)Xw_1\)</span>.</li>
 </ol>
 <ul>
 <li>Compute the second PLS component <span class="math inline">\(t_2\)</span> :</li>
 </ul>
 <ol style="list-style-type: decimal">
-<li>Compute the coefficient <span class="math inline">\(a_{2j}\)</span> of <span class="math inline">\(x_j\)</span> in the Beta regression of <span class="math inline">\(Y\)</span> on <span class="math inline">\(t_1\)</span> and <span class="math inline">\(x_j\)</span> for each predictor <span class="math inline">\(x_j\)</span>, <span class="math inline">\(1 \leqslant j \leqslant p\)</span>.</li>
-<li>Norm the column vector <span class="math inline">\(a_2\)</span> : <span class="math inline">\(w_2=a_2/\| a_2\|\)</span>.</li>
-<li>Compute the residual matrix <span class="math inline">\(X_1\)</span> of the linear regression of <span class="math inline">\(X\)</span> on <span class="math inline">\(t_1\)</span>.</li>
+<li>Compute the coefficient <span class="math inline">\(a_{2j}\)</span>
+of <span class="math inline">\(x_j\)</span> in the Beta regression of
+<span class="math inline">\(Y\)</span> on <span class="math inline">\(t_1\)</span> and <span class="math inline">\(x_j\)</span> for each predictor <span class="math inline">\(x_j\)</span>, <span class="math inline">\(1
+\leqslant j \leqslant p\)</span>.</li>
+<li>Norm the column vector <span class="math inline">\(a_2\)</span> :
+<span class="math inline">\(w_2=a_2/\| a_2\|\)</span>.</li>
+<li>Compute the residual matrix <span class="math inline">\(X_1\)</span>
+of the linear regression of <span class="math inline">\(X\)</span> on
+<span class="math inline">\(t_1\)</span>.</li>
 <li>Compute the component <span class="math inline">\(t_2=1/(w_2'w_2)X_1w_2\)</span>.</li>
-<li>Express the component <span class="math inline">\(t_2\)</span> in terms of predictors <span class="math inline">\(X\)</span>: <span class="math inline">\(t_2=Xw^*_2\)</span>.</li>
+<li>Express the component <span class="math inline">\(t_2\)</span> in
+terms of predictors <span class="math inline">\(X\)</span>: <span class="math inline">\(t_2=Xw^*_2\)</span>.</li>
 </ol>
 <ul>
 <li>We assume having constructed <span class="math inline">\(h-1\)</span> components <span class="math inline">\(t_1\)</span>, <span class="math inline">\(t_{h-1}\)</span>. We then compute the <span class="math inline">\(h-\)</span>th PLS component <span class="math inline">\(t_h\)</span>:</li>
 </ul>
 <ol style="list-style-type: decimal">
-<li>Compute the coefficient <span class="math inline">\(a_{hj}\)</span> of <span class="math inline">\(x_j\)</span> in the Beta regression model of <span class="math inline">\(Y\)</span> on <span class="math inline">\(t_1\)</span>, <span class="math inline">\(t_2\)</span>, $t_ldots, <span class="math inline">\(t_{h-1}\)</span>, and <span class="math inline">\(x_j\)</span> for each predictor <span class="math inline">\(x_j\)</span>, <span class="math inline">\(1 \leqslant j \leqslant p\)</span>.</li>
-<li>Normalize the column vector <span class="math inline">\(a_h\)</span> : <span class="math inline">\(w_h=a_h/\| a_h\|\)</span>.</li>
+<li>Compute the coefficient <span class="math inline">\(a_{hj}\)</span>
+of <span class="math inline">\(x_j\)</span> in the Beta regression model
+of <span class="math inline">\(Y\)</span> on <span class="math inline">\(t_1\)</span>, <span class="math inline">\(t_2\)</span>, $t_ldots, <span class="math inline">\(t_{h-1}\)</span>, and <span class="math inline">\(x_j\)</span> for each predictor <span class="math inline">\(x_j\)</span>, <span class="math inline">\(1
+\leqslant j \leqslant p\)</span>.</li>
+<li>Normalize the column vector <span class="math inline">\(a_h\)</span>
+: <span class="math inline">\(w_h=a_h/\| a_h\|\)</span>.</li>
 <li>Compute the residual matrix <span class="math inline">\(X_{h-1}\)</span> of the linear regression of <span class="math inline">\(X\)</span> on <span class="math inline">\(t_1\)</span>, <span class="math inline">\(t_2\)</span>, <span class="math inline">\(t_{h-1}\)</span>.</li>
 <li>Compute the component <span class="math inline">\(t_h=1/(w_h'w_h)X_{h-1}w_h\)</span>.</li>
-<li>Express the component <span class="math inline">\(t_h\)</span> in terms of predictors <span class="math inline">\(X\)</span>: <span class="math inline">\(t_h=Xw^*_h\)</span>.</li>
+<li>Express the component <span class="math inline">\(t_h\)</span> in
+terms of predictors <span class="math inline">\(X\)</span>: <span class="math inline">\(t_h=Xw^*_h\)</span>.</li>
 </ol>
 <hr>
 <div id="proposition" class="section level5">
 <h5 class="hasAnchor">
 <a href="#proposition" class="anchor"></a>Proposition</h5>
-<p>The PLS components <span class="math inline">\((t_h)_{1 \leqslant h \leqslant H}\)</span> are orthogonal.</p>
+<p>The PLS components <span class="math inline">\((t_h)_{1 \leqslant h
+\leqslant H}\)</span> are orthogonal.</p>
 <hr>
-<p>It is easy to modify the previous algorithm to be able to handle incomplete datasets (Tenenhaus, 1998)<a href="#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a>.</p>
+<p>It is easy to modify the previous algorithm to be able to handle
+incomplete datasets (Tenenhaus, 1998)<a href="#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a>.</p>
 </div>
 </div>
 </div>
 <div id="bootstrap-techniques-cross-validation-and-software-implementation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bootstrap-techniques-cross-validation-and-software-implementation" class="anchor"></a>Bootstrap techniques, cross-validation and software implementation</h2>
+<a href="#bootstrap-techniques-cross-validation-and-software-implementation" class="anchor"></a>Bootstrap techniques, cross-validation and software
+implementation</h2>
 <div id="bootstrap-techniques" class="section level3">
 <h3 class="hasAnchor">
 <a href="#bootstrap-techniques" class="anchor"></a>Bootstrap techniques</h3>
-<p>We assume that we have retained the appropriate number <span class="math inline">\(m\)</span> of components of a <span class="math inline">\(Y\)</span> Beta PLS regression model on <span class="math inline">\(x_1\)</span>, , <span class="math inline">\(x_j\)</span>, , <span class="math inline">\(x_p\)</span>. We propose the following algorithm to construct confidence intervals and significance tests for the predictors <span class="math inline">\(x_j\)</span>, <span class="math inline">\(1 \leqslant j \leqslant p\)</span>, using bootstrap techniques. Let <span class="math inline">\(\widehat{F}_{(T|Y)}\)</span> be the empirical distribution function given the matrix <span class="math inline">\(T\)</span> formed by the <span class="math inline">\(m\)</span> PLS components and the response <span class="math inline">\(Y\)</span>.</p>
+<p>We assume that we have retained the appropriate number <span class="math inline">\(m\)</span> of components of a <span class="math inline">\(Y\)</span> Beta PLS regression model on <span class="math inline">\(x_1\)</span>, , <span class="math inline">\(x_j\)</span>, , <span class="math inline">\(x_p\)</span>. We propose the following algorithm
+to construct confidence intervals and significance tests for the
+predictors <span class="math inline">\(x_j\)</span>, <span class="math inline">\(1 \leqslant j \leqslant p\)</span>, using
+bootstrap techniques. Let <span class="math inline">\(\widehat{F}_{(T|Y)}\)</span> be the empirical
+distribution function given the matrix <span class="math inline">\(T\)</span> formed by the <span class="math inline">\(m\)</span> PLS components and the response <span class="math inline">\(Y\)</span>.</p>
 <ul>
 <li>
-<em>Step 1.</em> Draw <span class="math inline">\(B\)</span> samples from <span class="math inline">\(\widehat{F}_{(T|Y)}\)</span>.</li>
+<em>Step 1.</em> Draw <span class="math inline">\(B\)</span> samples
+from <span class="math inline">\(\widehat{F}_{(T|Y)}\)</span>.</li>
 <li>
 <em>Step 2.</em> For all <span class="math inline">\(b=1,\ldots,B\)</span>, calculate : <span class="math display">\[
-c^{(b)}=(T^{(b)}{}'T^{(b)})^{-1}T^{(b)}{}'Y^{(b)} \quad \mbox{and} \quad b^{(b)}=W^*{c'}^{(b)},
-\]</span> where <span class="math inline">\([T^{(b)},Y^{(b)}]\)</span> is the <span class="math inline">\(b-\)</span>th bootstrap sample, <span class="math inline">\({c'}^{(b)}\)</span> is the vector of component coefficients and <span class="math inline">\(b^{(b)}\)</span> is the vector of coefficients of the original <span class="math inline">\(p\)</span> predictors for this sample and finally <span class="math inline">\(W^*\)</span> is the fixed matrix of the weights of the predictors in the original model with <span class="math inline">\(m\)</span> components.</li>
+c^{(b)}=(T^{(b)}{}'T^{(b)})^{-1}T^{(b)}{}'Y^{(b)} \quad
+\mbox{and} \quad b^{(b)}=W^*{c'}^{(b)},
+\]</span> where <span class="math inline">\([T^{(b)},Y^{(b)}]\)</span>
+is the <span class="math inline">\(b-\)</span>th bootstrap sample, <span class="math inline">\({c'}^{(b)}\)</span> is the vector of component
+coefficients and <span class="math inline">\(b^{(b)}\)</span> is the
+vector of coefficients of the original <span class="math inline">\(p\)</span> predictors for this sample and finally
+<span class="math inline">\(W^*\)</span> is the fixed matrix of the
+weights of the predictors in the original model with <span class="math inline">\(m\)</span> components.</li>
 <li>
-<em>Step 3.</em> For each <span class="math inline">\(j\)</span>, let <span class="math inline">\(\phi_{b_j}\)</span> be the Monte Carlo approximation of the distribution function of the bootstrap statistic of <span class="math inline">\(b_j\)</span>. For each <span class="math inline">\(b_j\)</span>, whisker boxes and confidence intervals can be constructed using the percentiles of <span class="math inline">\(\Phi_{b_j}\)</span>. A confidence interval can be defined as <span class="math inline">\(I_j(\alpha)=]\Phi^{-1}_{b_j}(\alpha), \Phi^{-1}_{b_j}(1-\alpha)[\)</span> where <span class="math inline">\(\Phi^{-1}_{b_j}(\alpha)\)</span> and <span class="math inline">\(\Phi^{-1}_{b_j}(1-\alpha)\)</span> are the values obtained from the distribution function of the bootstrap statistic such that a nominal level of confidence of level <span class="math inline">\(100(1-2\alpha)\%\)</span> is reached. In order to improve the quality of the confidence interval in terms of coverage rates, i.e., the ability of <span class="math inline">\(I_j(\alpha)\)</span> to provide the expected coverage rates, it is possible to use several construction techniques: normal, percentile, or <span class="math inline">\(BC_a\)</span> (Efron 1993)<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a> or (Davison 1997)<a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a>. The resulting intervals are not intended to be used for multiple or pairwise comparisons and should be interpreted separately.</li>
+<em>Step 3.</em> For each <span class="math inline">\(j\)</span>,
+let <span class="math inline">\(\phi_{b_j}\)</span> be the Monte Carlo
+approximation of the distribution function of the bootstrap statistic of
+<span class="math inline">\(b_j\)</span>. For each <span class="math inline">\(b_j\)</span>, whisker boxes and confidence
+intervals can be constructed using the percentiles of <span class="math inline">\(\Phi_{b_j}\)</span>. A confidence interval can be
+defined as <span class="math inline">\(I_j(\alpha)=]\Phi^{-1}_{b_j}(\alpha),
+\Phi^{-1}_{b_j}(1-\alpha)[\)</span> where <span class="math inline">\(\Phi^{-1}_{b_j}(\alpha)\)</span> and <span class="math inline">\(\Phi^{-1}_{b_j}(1-\alpha)\)</span> are the values
+obtained from the distribution function of the bootstrap statistic such
+that a nominal level of confidence of level <span class="math inline">\(100(1-2\alpha)\%\)</span> is reached. In order to
+improve the quality of the confidence interval in terms of coverage
+rates, i.e., the ability of <span class="math inline">\(I_j(\alpha)\)</span> to provide the expected
+coverage rates, it is possible to use several construction techniques:
+normal, percentile, or <span class="math inline">\(BC_a\)</span> (Efron
+1993)<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a>
+or (Davison 1997)<a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a>. The resulting intervals are not intended
+to be used for multiple or pairwise comparisons and should be
+interpreted separately.</li>
 </ul>
 </div>
 <div id="strengths-of-the-software-implementation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#strengths-of-the-software-implementation" class="anchor"></a>Strengths of the software implementation</h3>
-<p>The <code>plsRbeta</code> function library for the <code>R</code> language implements PLS Beta regression models. It uses the Beta regression implemented in the <code>betareg</code> (Cribari-Neto, 2010)<a href="#fn26" class="footnote-ref" id="fnref26"><sup>26</sup></a> function library for the <code>R</code> language to perform the  step.</p>
+<p>The <code>plsRbeta</code> function library for the <code>R</code>
+language implements PLS Beta regression models. It uses the Beta
+regression implemented in the <code>betareg</code> (Cribari-Neto,
+2010)<a href="#fn26" class="footnote-ref" id="fnref26"><sup>26</sup></a>
+function library for the <code>R</code> language to perform the
+step.</p>
 <ul>
 <li>Beta PLS regression models with complete or incomplete data.</li>
-<li>Choice of the number of components thanks to different criteria AIC, BIC, modified <span class="math inline">\(R^2\)</span>, stop of significance of the <span class="math inline">\(t_{m+1}\)</span> component when none of the <span class="math inline">\(a_{m+1}\)</span> coefficients is significant in the model at a given <span class="math inline">\(alpha'\)</span> level or by using a <span class="math inline">\(Q^2\)</span> criterion estimated by cross validation.</li>
-<li>Repeated <span class="math inline">\(k\)</span>-fold cross-validation with complete or incomplete data. Tables 3 and 5 are examples of using cross-validation to determine the appropriate number of components.</li>
-<li>Bootstrapping predictor coefficients for Beta PLS regression models with complete or incomplete data. Various interval constructions, detailed in Efron and Tibshirani (Efron, 1993)<a href="#fn27" class="footnote-ref" id="fnref27"><sup>27</sup></a> or Davison and Hinkley (Davison, 1997)<a href="#fn28" class="footnote-ref" id="fnref28"><sup>28</sup></a>, are available and are based on the <code>boot</code> (Canty, 2021)<a href="#fn29" class="footnote-ref" id="fnref29"><sup>29</sup></a> function library for the <code>R</code> language. Figure 5 is an example of whisker boxes constructed from the bootstrap distribution of the coefficients of the predictors of a PLS Beta regression model. Figures 2, 3, and 6 are examples of using bootstrap techniques to establish the significance of the predictors of a PLS Beta regression model.</li>
+<li>Choice of the number of components thanks to different criteria AIC,
+BIC, modified <span class="math inline">\(R^2\)</span>, stop of
+significance of the <span class="math inline">\(t_{m+1}\)</span>
+component when none of the <span class="math inline">\(a_{m+1}\)</span>
+coefficients is significant in the model at a given <span class="math inline">\(alpha'\)</span> level or by using a <span class="math inline">\(Q^2\)</span> criterion estimated by cross
+validation.</li>
+<li>Repeated <span class="math inline">\(k\)</span>-fold
+cross-validation with complete or incomplete data. Tables 3 and 5 are
+examples of using cross-validation to determine the appropriate number
+of components.</li>
+<li>Bootstrapping predictor coefficients for Beta PLS regression models
+with complete or incomplete data. Various interval constructions,
+detailed in Efron and Tibshirani (Efron, 1993)<a href="#fn27" class="footnote-ref" id="fnref27"><sup>27</sup></a> or Davison and
+Hinkley (Davison, 1997)<a href="#fn28" class="footnote-ref" id="fnref28"><sup>28</sup></a>, are available and are based on the
+<code>boot</code> (Canty, 2021)<a href="#fn29" class="footnote-ref" id="fnref29"><sup>29</sup></a> function library for the <code>R</code>
+language. Figure 5 is an example of whisker boxes constructed from the
+bootstrap distribution of the coefficients of the predictors of a PLS
+Beta regression model. Figures 2, 3, and 6 are examples of using
+bootstrap techniques to establish the significance of the predictors of
+a PLS Beta regression model.</li>
 </ul>
 </div>
 <div id="selecting-the-number-of-components" class="section level3">
 <h3 class="hasAnchor">
 <a href="#selecting-the-number-of-components" class="anchor"></a>Selecting the number of components</h3>
-<p>A crucial problem for the correct use of PLS regression is the determination of the number of components. If, in the case of the original PLS regression, the <span class="math inline">\(Q^2\)</span> criterion is extremely efficient, its good properties unfortunately disappear for the PLS generalized linear regression models. A simulation study is therefore necessary to determine a functional criterion to choose the number of components. We propose to compare the following criteria <span class="math inline">\(AIC\)</span> and <span class="math inline">\(BIC\)</span> (Cribari-Neto, 2010)<a href="#fn30" class="footnote-ref" id="fnref30"><sup>30</sup></a>, Pearson’s <span class="math inline">\(\chi^2\)</span>, Pearson’s <span class="math inline">\(R^2\)</span> and pseudo-<span class="math inline">\(R^2\)</span> (Ferrari, 2004)<a href="#fn31" class="footnote-ref" id="fnref31"><sup>31</sup></a> or cumulative <span class="math inline">\(Q^2\chi^2\)</span> and <span class="math inline">\(Q^2\chi^2\)</span> criteria estimated by 5-group cross-validation (5-CV) or 10-group cross-validation (10-CV) (Bastien, 2005)<a href="#fn32" class="footnote-ref" id="fnref32"><sup>32</sup></a>.</p>
+<p>A crucial problem for the correct use of PLS regression is the
+determination of the number of components. If, in the case of the
+original PLS regression, the <span class="math inline">\(Q^2\)</span>
+criterion is extremely efficient, its good properties unfortunately
+disappear for the PLS generalized linear regression models. A simulation
+study is therefore necessary to determine a functional criterion to
+choose the number of components. We propose to compare the following
+criteria <span class="math inline">\(AIC\)</span> and <span class="math inline">\(BIC\)</span> (Cribari-Neto, 2010)<a href="#fn30" class="footnote-ref" id="fnref30"><sup>30</sup></a>, Pearson’s <span class="math inline">\(\chi^2\)</span>, Pearson’s <span class="math inline">\(R^2\)</span> and pseudo-<span class="math inline">\(R^2\)</span> (Ferrari, 2004)<a href="#fn31" class="footnote-ref" id="fnref31"><sup>31</sup></a> or cumulative <span class="math inline">\(Q^2\chi^2\)</span> and <span class="math inline">\(Q^2\chi^2\)</span> criteria estimated by 5-group
+cross-validation (5-CV) or 10-group cross-validation (10-CV) (Bastien,
+2005)<a href="#fn32" class="footnote-ref" id="fnref32"><sup>32</sup></a>.</p>
 <p>The following parameters were used for the simulation design.</p>
 <ul>
 <li>Number of individuals: 25, 50 and 100.</li>
 <li>Number of variables: 10, 25, 50 and 100.</li>
 <li>Number of components: 2, 4 and 6.</li>
 <li>
-<span class="math inline">\(\phi\)</span> dispersion : 2,5, 5, 10 and 15.</li>
+<span class="math inline">\(\phi\)</span> dispersion : 2,5, 5, 10
+and 15.</li>
 </ul>
-<p>The algorithm used to create the simulated data is a direct adaptation of the algorithm of Li <em>et al.</em> (Li, 2002)<a href="#fn33" class="footnote-ref" id="fnref33"><sup>33</sup></a> which is itself a multivariate generalization of that of Naes and Martens (Naes, 1985)<a href="#fn34" class="footnote-ref" id="fnref34"><sup>34</sup></a>. This type of generalization has already been used successfully in the case of PLS logistic regression models (Meyer, 2010)<a href="#fn35" class="footnote-ref" id="fnref35"><sup>35</sup></a>.</p>
-<p>Table 1 is an example of a result for 25 individuals, 10 variables, 2 components and a dispersion parameter <span class="math inline">\(\phi\)</span> equal to 2.5. For 100 simulated data sets, a maximum number of 6 components had to be calculated. The average number of components that could actually be computed, as well as the number of complete failures of the beta regression model fit are shown in Table 2. The abbreviations <span class="math inline">\(ML\)</span>, <span class="math inline">\(BR\)</span>, and <span class="math inline">\(BC\)</span> indicate that the Beta regressions used to fit the Beta PLS regression are based on maximum likelihood, bias reduction, or bias correction (Kosmidis, 2010)<a href="#fn36" class="footnote-ref" id="fnref36"><sup>36</sup></a>. The prefixes <span class="math inline">\(K5\)</span> and <span class="math inline">\(K10\)</span> mean that the value was obtained after cross-validation in <span class="math inline">\(K=5\)</span> or <span class="math inline">\(K=10\)</span> groups.</p>
+<p>The algorithm used to create the simulated data is a direct
+adaptation of the algorithm of Li <em>et al.</em> (Li, 2002)<a href="#fn33" class="footnote-ref" id="fnref33"><sup>33</sup></a> which
+is itself a multivariate generalization of that of Naes and Martens
+(Naes, 1985)<a href="#fn34" class="footnote-ref" id="fnref34"><sup>34</sup></a>. This type of generalization has already
+been used successfully in the case of PLS logistic regression models
+(Meyer, 2010)<a href="#fn35" class="footnote-ref" id="fnref35"><sup>35</sup></a>.</p>
+<p>Table 1 is an example of a result for 25 individuals, 10 variables, 2
+components and a dispersion parameter <span class="math inline">\(\phi\)</span> equal to 2.5. For 100 simulated data
+sets, a maximum number of 6 components had to be calculated. The average
+number of components that could actually be computed, as well as the
+number of complete failures of the beta regression model fit are shown
+in Table 2. The abbreviations <span class="math inline">\(ML\)</span>,
+<span class="math inline">\(BR\)</span>, and <span class="math inline">\(BC\)</span> indicate that the Beta regressions
+used to fit the Beta PLS regression are based on maximum likelihood,
+bias reduction, or bias correction (Kosmidis, 2010)<a href="#fn36" class="footnote-ref" id="fnref36"><sup>36</sup></a>. The prefixes <span class="math inline">\(K5\)</span> and <span class="math inline">\(K10\)</span> mean that the value was obtained
+after cross-validation in <span class="math inline">\(K=5\)</span> or
+<span class="math inline">\(K=10\)</span> groups.</p>
 <table class="table">
-<caption>Table 1. Choice of the number of components per simulation. Target value 2.</caption>
+<caption>Table 1. Choice of the number of components per simulation.
+Target value 2.</caption>
+<colgroup>
+<col width="10%">
+<col width="10%">
+<col width="10%">
+<col width="10%">
+<col width="10%">
+<col width="10%">
+<col width="10%">
+<col width="10%">
+<col width="10%">
+<col width="10%">
+</colgroup>
 <thead><tr class="header">
 <th>Criterion</th>
 <th>Mean</th>
@@ -516,10 +743,22 @@ c^{(b)}=(T^{(b)}{}'T^{(b)})^{-1}T^{(b)}{}'Y^{(b)} \quad \mbox{and} \quad b^{(b)}
 </tr>
 </tbody>
 </table>
-<p>Note that the MAD is the median of the absolute deviations from the median. It is a robust indicator of dispersion naturally associated with the median. A value of 0 for the MAD means that in more than half of the simulations, the value chosen for the number of components is equal to the median value of all simulations.</p>
-<p>In general, the results of the simulation study show that the <span class="math inline">\(Q^2\chi^2\)</span> (5-CV and 10-CV), already known for its surprising behavior in PLS logistic regression (Bastien, 2005)<a href="#fn37" class="footnote-ref" id="fnref37"><sup>37</sup></a>, (Meyer, 2010)<a href="#fn38" class="footnote-ref" id="fnref38"><sup>38</sup></a>, does not behave much better for the Beta PLS regression models. Maximizing the <span class="math inline">\(R^2\)</span> or pseudo-<span class="math inline">\(R^2\)</span> criteria, also proves inefficient. The <span class="math inline">\(AIC\)</span> and <span class="math inline">\(BIC\)</span> criteria systematically retain a few too many components. This tendency is also known in the case of the traditional PLS Regression (Kramer, 2011)<a href="#fn39" class="footnote-ref" id="fnref39"><sup>39</sup></a> as well as in the case of the Logistic PLS Regression (Meyer, 2010)<a href="#fn40" class="footnote-ref" id="fnref40"><sup>40</sup></a>.</p>
+<p>Note that the MAD is the median of the absolute deviations from the
+median. It is a robust indicator of dispersion naturally associated with
+the median. A value of 0 for the MAD means that in more than half of the
+simulations, the value chosen for the number of components is equal to
+the median value of all simulations.</p>
+<p>In general, the results of the simulation study show that the <span class="math inline">\(Q^2\chi^2\)</span> (5-CV and 10-CV), already known
+for its surprising behavior in PLS logistic regression (Bastien, 2005)<a href="#fn37" class="footnote-ref" id="fnref37"><sup>37</sup></a>,
+(Meyer, 2010)<a href="#fn38" class="footnote-ref" id="fnref38"><sup>38</sup></a>, does not behave much better for the Beta
+PLS regression models. Maximizing the <span class="math inline">\(R^2\)</span> or pseudo-<span class="math inline">\(R^2\)</span> criteria, also proves inefficient.
+The <span class="math inline">\(AIC\)</span> and <span class="math inline">\(BIC\)</span> criteria systematically retain a few
+too many components. This tendency is also known in the case of the
+traditional PLS Regression (Kramer, 2011)<a href="#fn39" class="footnote-ref" id="fnref39"><sup>39</sup></a> as well as in the
+case of the Logistic PLS Regression (Meyer, 2010)<a href="#fn40" class="footnote-ref" id="fnref40"><sup>40</sup></a>.</p>
 <table class="table">
-<caption>Table 2. Maximum number of calculated components and failed fits.</caption>
+<caption>Table 2. Maximum number of calculated components and failed
+fits.</caption>
 <thead><tr class="header">
 <th></th>
 <th>Mean</th>
@@ -603,18 +842,73 @@ c^{(b)}=(T^{(b)}{}'T^{(b)})^{-1}T^{(b)}{}'Y^{(b)} \quad \mbox{and} \quad b^{(b)}
 </tr>
 </tbody>
 </table>
-<p>We find that the proposed PLS Beta Regression algorithm succeeds in extracting the maximum number of components requested very consistently and that the fit is impossible in only one of the 100 simulations for the BR technique. The cross-validation, on the other hand, is completed in 98.5 % of the simulations.</p>
+<p>We find that the proposed PLS Beta Regression algorithm succeeds in
+extracting the maximum number of components requested very consistently
+and that the fit is impossible in only one of the 100 simulations for
+the BR technique. The cross-validation, on the other hand, is completed
+in 98.5 % of the simulations.</p>
 </div>
 </div>
 <div id="example-of-application-in-medicine" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example-of-application-in-medicine" class="anchor"></a>Example of application in medicine</h2>
-<p>Cancerous tumors represent one of the three main causes of death in the Western world. The understanding of the mechanisms of cancer pathologies is currently based on the study of the interrelationships of acquired genetic abnormalities, which appear in tissues during the process of cancerization. These abnormalities are frequently analyzed by allelotyping, allowing to determine for a more or less important number of gene sites, the presence or not of a modification of the number of copies of each gene. The multivariate description of these anomalies is informative about the carcinogenesis process. Furthermore, the set of these gene sites with or without abnormalities can be used to try to predict certain clinical or biological characteristics of the tumor such as the tumor cell count on biopsy of a lesion. Modeling in a statistical model of rate, variable whose space of variation is contained in the closed interval <span class="math inline">\([0;1]\)</span> as predicted variable suggests the use of Beta regression. Furthermore, allelotyping data are characterized by frequent collinearity and a large proportion of missing data. Moreover, the data matrix often has dimensions <span class="math inline">\((i;j)\)</span> such that <span class="math inline">\(j&gt;i\)</span>, which makes the matrix non-invertible, posing difficulties in fitting a regression model. The PLS Beta regression that we have developed is therefore particularly well suited to deal with allelotyping data in the particular context of predicting a rate variable.</p>
-<p>The example is that of allelotyping data obtained on a series of 93 patients with different types of lung cancer and with <span class="math inline">\(23.2 \%\)</span> missing values. The predicted variable is the tumor cellularity rate of the intraoperative tumor specimen. The explanatory variables are composed of 56 binary variables indicating the presence of an abnormality on each of the 56 microsatellites and three clinical variables.</p>
-<p>The selection of variables is very important in this example because it allows to define a subset of predictors, i.e. gene sites, able to predict the tumor cell rate. Indeed, cancer pathologies are acquired genetic pathologies and some of these anomalies are the cause and others the consequence of the tumor pathology. Moreover, the information contained in the different microsatellite gene sites is potentially redundant. Variable selection, separating variables that probably play a driving role in tumor development from variables that merely reflect random background noise induced by abnormalities caused by tumor development, is therefore an indispensable aid to understanding the underlying mechanisms of tumorigenesis.</p>
-<p>Table 3 summarizes the values of different criteria used to determine the number of components to be used to properly model the allelotype data with BR and a logit link.</p>
+<p>Cancerous tumors represent one of the three main causes of death in
+the Western world. The understanding of the mechanisms of cancer
+pathologies is currently based on the study of the interrelationships of
+acquired genetic abnormalities, which appear in tissues during the
+process of cancerization. These abnormalities are frequently analyzed by
+allelotyping, allowing to determine for a more or less important number
+of gene sites, the presence or not of a modification of the number of
+copies of each gene. The multivariate description of these anomalies is
+informative about the carcinogenesis process. Furthermore, the set of
+these gene sites with or without abnormalities can be used to try to
+predict certain clinical or biological characteristics of the tumor such
+as the tumor cell count on biopsy of a lesion. Modeling in a statistical
+model of rate, variable whose space of variation is contained in the
+closed interval <span class="math inline">\([0;1]\)</span> as predicted
+variable suggests the use of Beta regression. Furthermore, allelotyping
+data are characterized by frequent collinearity and a large proportion
+of missing data. Moreover, the data matrix often has dimensions <span class="math inline">\((i;j)\)</span> such that <span class="math inline">\(j&gt;i\)</span>, which makes the matrix
+non-invertible, posing difficulties in fitting a regression model. The
+PLS Beta regression that we have developed is therefore particularly
+well suited to deal with allelotyping data in the particular context of
+predicting a rate variable.</p>
+<p>The example is that of allelotyping data obtained on a series of 93
+patients with different types of lung cancer and with <span class="math inline">\(23.2 \%\)</span> missing values. The predicted
+variable is the tumor cellularity rate of the intraoperative tumor
+specimen. The explanatory variables are composed of 56 binary variables
+indicating the presence of an abnormality on each of the 56
+microsatellites and three clinical variables.</p>
+<p>The selection of variables is very important in this example because
+it allows to define a subset of predictors, i.e. gene sites, able to
+predict the tumor cell rate. Indeed, cancer pathologies are acquired
+genetic pathologies and some of these anomalies are the cause and others
+the consequence of the tumor pathology. Moreover, the information
+contained in the different microsatellite gene sites is potentially
+redundant. Variable selection, separating variables that probably play a
+driving role in tumor development from variables that merely reflect
+random background noise induced by abnormalities caused by tumor
+development, is therefore an indispensable aid to understanding the
+underlying mechanisms of tumorigenesis.</p>
+<p>Table 3 summarizes the values of different criteria used to determine
+the number of components to be used to properly model the allelotype
+data with BR and a logit link.</p>
 <table class="table">
-<caption>Table 3. Selecting the number of components, BR method and logit link.</caption>
+<caption>Table 3. Selecting the number of components, BR method and
+logit link.</caption>
+<colgroup>
+<col width="9%">
+<col width="9%">
+<col width="9%">
+<col width="9%">
+<col width="9%">
+<col width="9%">
+<col width="9%">
+<col width="9%">
+<col width="9%">
+<col width="9%">
+<col width="9%">
+</colgroup>
 <thead><tr class="header">
 <th>Nb of Comp.</th>
 <th>0</th>
@@ -726,15 +1020,48 @@ c^{(b)}=(T^{(b)}{}'T^{(b)})^{-1}T^{(b)}{}'Y^{(b)} \quad \mbox{and} \quad b^{(b)}
 </tr>
 </tbody>
 </table>
-<p>The stopping criterion as soon as there is no significant predictor would lead us to choose 6 components. This choice is confirmed by the pseudo-<span class="math inline">\(R^2\)</span> or <span class="math inline">\(R^2\)</span> criteria for which a kink appears from 6 components.</p>
-<p>The BIC criterion invites us to choose 8 components and the AIC criterion an even higher number. During the simulation study, we noticed that these criteria are liberal and generally retain a few too many components.</p>
-<p>Depending on the criteria, 6 or 8 components should be retained for a logit link. Taking into account the previous simulation study, we decide to retain 6 components. The same study was performed with the BC method or a log-log link and leads to the same conclusions.</p>
-<p>Confidence intervals are then obtained for each of the predictors using bootstrap samples of size 1000 and the normal, basic, percentile or <span class="math inline">\(BC_a\)</span> techniques.</p>
-<p>The use of bootstrap techniques to establish the significance of the predictors of a PLS Beta regression model is illustrated in Figure 2 for the case of the 6-component model with the BR bias reduction technique.</p>
-<p>In the end, we use the <span class="math inline">\(BC_a\)</span> technique, known for its good properties, to select the variables that are significant at the 5 % threshold by retaining those for which the <span class="math inline">\(BC_a\)</span> confidence interval does not contain 0, as shown in Figure 3 for the case of the 6-component model with the BR bias reduction technique.</p>
-<p>Thus, we retain the variables in Table 4 as having a significant effect on the tumor cellularity rate of the intraoperative tumor specimen. We find that the two techniques for dealing with the Beta regression bias have results that differ only in the single variable EGF3, significant at the <span class="math inline">\(5 \%\)</span> threshold for the BC technique and not for the BR technique.</p>
+<p>The stopping criterion as soon as there is no significant predictor
+would lead us to choose 6 components. This choice is confirmed by the
+pseudo-<span class="math inline">\(R^2\)</span> or <span class="math inline">\(R^2\)</span> criteria for which a kink appears
+from 6 components.</p>
+<p>The BIC criterion invites us to choose 8 components and the AIC
+criterion an even higher number. During the simulation study, we noticed
+that these criteria are liberal and generally retain a few too many
+components.</p>
+<p>Depending on the criteria, 6 or 8 components should be retained for a
+logit link. Taking into account the previous simulation study, we decide
+to retain 6 components. The same study was performed with the BC method
+or a log-log link and leads to the same conclusions.</p>
+<p>Confidence intervals are then obtained for each of the predictors
+using bootstrap samples of size 1000 and the normal, basic, percentile
+or <span class="math inline">\(BC_a\)</span> techniques.</p>
+<p>The use of bootstrap techniques to establish the significance of the
+predictors of a PLS Beta regression model is illustrated in Figure 2 for
+the case of the 6-component model with the BR bias reduction
+technique.</p>
+<p>In the end, we use the <span class="math inline">\(BC_a\)</span>
+technique, known for its good properties, to select the variables that
+are significant at the 5 % threshold by retaining those for which the
+<span class="math inline">\(BC_a\)</span> confidence interval does not
+contain 0, as shown in Figure 3 for the case of the 6-component model
+with the BR bias reduction technique.</p>
+<p>Thus, we retain the variables in Table 4 as having a significant
+effect on the tumor cellularity rate of the intraoperative tumor
+specimen. We find that the two techniques for dealing with the Beta
+regression bias have results that differ only in the single variable
+EGF3, significant at the <span class="math inline">\(5 \%\)</span>
+threshold for the BC technique and not for the BR technique.</p>
 <table class="table">
 <caption>Table 4. Significant Variables.</caption>
+<colgroup>
+<col width="14%">
+<col width="14%">
+<col width="14%">
+<col width="14%">
+<col width="14%">
+<col width="14%">
+<col width="14%">
+</colgroup>
 <thead><tr class="header">
 <th>Nb Comp</th>
 <th>Significant Variables</th>
@@ -819,7 +1146,10 @@ c^{(b)}=(T^{(b)}{}'T^{(b)})^{-1}T^{(b)}{}'Y^{(b)} \quad \mbox{and} \quad b^{(b)}
 </tr>
 </tbody>
 </table>
-<p>Figure 4 allows us to evaluate the stability of the significant variables selected by the bootstrap technique <span class="math inline">\(BC_a\)</span> for a number of components varying from 1 to 6 and the two techniques BC and BR for fitting the Beta regression model.</p>
+<p>Figure 4 allows us to evaluate the stability of the significant
+variables selected by the bootstrap technique <span class="math inline">\(BC_a\)</span> for a number of components varying
+from 1 to 6 and the two techniques BC and BR for fitting the Beta
+regression model.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://fbertran.github.io/plsRglm/">plsRglm</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://fbertran.github.io/plsRbeta/">plsRbeta</a></span><span class="op">)</span></code></pre></div>
@@ -856,7 +1186,8 @@ Figure 2. Bootstrap 95% confidence intervals, 6 components BR.
 <code class="sourceCode R"><span class="fu">plsRglm</span><span class="fu">::</span><span class="fu"><a href="https://fbertran.github.io/plsRglm/reference/plots.confints.bootpls.html">plots.confints.bootpls</a></span><span class="op">(</span><span class="va">temp.ci</span>,prednames<span class="op">=</span><span class="cn">TRUE</span>,indices <span class="op">=</span> <span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">temp.ci</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="va">ind_BCa_nt6BR</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,articlestyle<span class="op">=</span><span class="cn">FALSE</span>,legendpos<span class="op">=</span><span class="st">"topright"</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="tn_Insights_files/figure-html/unnamed-chunk-7-1.png" alt="Figure 3. Bootstrap 95% confidence intervals, BCa significant variables, 6 components BR." width="480"><p class="caption">
-Figure 3. Bootstrap 95% confidence intervals, BCa significant variables, 6 components BR.
+Figure 3. Bootstrap 95% confidence intervals, BCa significant variables,
+6 components BR.
 </p>
 </div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -972,30 +1303,26 @@ Figure 3. Bootstrap 95% confidence intervals, BCa significant variables, 6 compo
 <span class="co">#&gt; Le chargement a nécessité le package : statnet.common</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Attachement du package : 'statnet.common'</span>
-<span class="co">#&gt; The following object is masked from 'package:base':</span>
+<span class="co">#&gt; Les objets suivants sont masqués depuis 'package:base':</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt;     order</span>
+<span class="co">#&gt;     attr, order</span>
 <span class="co">#&gt; Le chargement a nécessité le package : network</span>
-<span class="co">#&gt; network: Classes for Relational Data</span>
-<span class="co">#&gt; Version 1.16.1 created on 2020-10-06.</span>
-<span class="co">#&gt; copyright (c) 2005, Carter T. Butts, University of California-Irvine</span>
-<span class="co">#&gt;                     Mark S. Handcock, University of California -- Los Angeles</span>
-<span class="co">#&gt;                     David R. Hunter, Penn State University</span>
-<span class="co">#&gt;                     Martina Morris, University of Washington</span>
-<span class="co">#&gt;                     Skye Bender-deMoll, University of Washington</span>
-<span class="co">#&gt;  For citation information, type citation("network").</span>
-<span class="co">#&gt;  Type help("network-package") to get started.</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; 'network' 1.17.1 (2021-06-12), part of the Statnet Project</span>
+<span class="co">#&gt; * 'news(package="network")' for changes since last version</span>
+<span class="co">#&gt; * 'citation("network")' for citation information</span>
+<span class="co">#&gt; * 'https://statnet.org' for help, support, and other information</span>
 <span class="co">#&gt; sna: Tools for Social Network Analysis</span>
 <span class="co">#&gt; Version 2.6 created on 2020-10-5.</span>
 <span class="co">#&gt; copyright (c) 2005, Carter T. Butts, University of California-Irvine</span>
 <span class="co">#&gt;  For citation information, type citation("sna").</span>
 <span class="co">#&gt;  Type help(package="sna") to get started.</span>
-<span class="co">#&gt;  This is bipartite 2.15.</span>
+<span class="co">#&gt;  This is bipartite 2.16.</span>
 <span class="co">#&gt;  For latest changes see versionlog in ?"bipartite-package". For citation see: citation("bipartite").</span>
 <span class="co">#&gt;  Have a nice time plotting and analysing two-mode networks.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Attachement du package : 'bipartite'</span>
-<span class="co">#&gt; The following object is masked from 'package:vegan':</span>
+<span class="co">#&gt; L'objet suivant est masqué depuis 'package:vegan':</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;     nullmodel</span>
 <span class="fu">bipartite</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bipartite/man/visweb.html">visweb</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">inone</span><span class="op">)</span>,type<span class="op">=</span><span class="st">"None"</span>,labsize<span class="op">=</span><span class="fl">2</span>,square<span class="op">=</span><span class="st">"b"</span>,box.col<span class="op">=</span><span class="st">"grey25"</span>,pred.lablength<span class="op">=</span><span class="fl">7</span><span class="op">)</span></code></pre></div>
@@ -1008,8 +1335,27 @@ Figure 4. Selected variables using the bootstrap BCa technique.
 <div id="example-of-application-in-chemometrics" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example-of-application-in-chemometrics" class="anchor"></a>Example of application in chemometrics</h2>
-<p>The goal is to find compounds that can predict the rate of cancer cell infiltration in patients from spectrometry data. A healthy patient has 0 % of cancer cells in a biopsy while a sick patient will have in a biopsy a % higher than the sample contains cancer cells. The interest of this experiment is to try to reduce considerably the time of analysis of the biopsies by avoiding the need for a counting by a doctor specialized in anatomy and pathological cytology. An additional statistical difficulty appears here: there are more variables (180) than individuals (80). More details on the experimental protocol followed are available in the article in which this dataset has already been published (Piotto, 2012)<a href="#fn41" class="footnote-ref" id="fnref41"><sup>41</sup></a>.</p>
-<p>We begin by determining the number of components to use to fit a model with all areas of the spectrum as explanatory variables. Table 5 contains the components for selecting the number of components. We again see the tendency of the AIC and BIC criteria to retain a very high number of components, namely more than 10. On the other hand, in this example the <span class="math inline">\(Q^2\chi^2\)</span> criterion, estimated using a 10-group cross-validation (10-CV), seems relevant and invites us to keep 3 components. The same is true for the Pearson <span class="math inline">\(chi^2\)</span>. The pseudo-<span class="math inline">\(R^2\)</span> is also in line with this since we observe a rapid decrease in the explanatory contribution following the addition of additional components beyond the third one.</p>
+<p>The goal is to find compounds that can predict the rate of cancer
+cell infiltration in patients from spectrometry data. A healthy patient
+has 0 % of cancer cells in a biopsy while a sick patient will have in a
+biopsy a % higher than the sample contains cancer cells. The interest of
+this experiment is to try to reduce considerably the time of analysis of
+the biopsies by avoiding the need for a counting by a doctor specialized
+in anatomy and pathological cytology. An additional statistical
+difficulty appears here: there are more variables (180) than individuals
+(80). More details on the experimental protocol followed are available
+in the article in which this dataset has already been published (Piotto,
+2012)<a href="#fn41" class="footnote-ref" id="fnref41"><sup>41</sup></a>.</p>
+<p>We begin by determining the number of components to use to fit a
+model with all areas of the spectrum as explanatory variables. Table 5
+contains the components for selecting the number of components. We again
+see the tendency of the AIC and BIC criteria to retain a very high
+number of components, namely more than 10. On the other hand, in this
+example the <span class="math inline">\(Q^2\chi^2\)</span> criterion,
+estimated using a 10-group cross-validation (10-CV), seems relevant and
+invites us to keep 3 components. The same is true for the Pearson <span class="math inline">\(chi^2\)</span>. The pseudo-<span class="math inline">\(R^2\)</span> is also in line with this since we
+observe a rapid decrease in the explanatory contribution following the
+addition of additional components beyond the third one.</p>
 <table class="table">
 <caption>Table 5. Selecting the number of components.</caption>
 <colgroup>
@@ -1131,7 +1477,16 @@ Figure 4. Selected variables using the bootstrap BCa technique.
 </tr>
 </tbody>
 </table>
-<p>We then construct bootstrap samples of size 250 of the predictor coefficients for a 3-component model with the bias reduction (BR) method. Figure 5 gives the whisker boxes of these distributions. Confidence intervals are then obtained for each of the predictors with the normal, basic, percentile or <span class="math inline">\(BC_a\)</span> techniques. In the end, we use the <span class="math inline">\(BC_a\)</span> technique, known for its good properties (Diciccio, 1996)<a href="#fn42" class="footnote-ref" id="fnref42"><sup>42</sup></a>, to select the significant variables at the 5 % threshold by retaining those for which the <span class="math inline">\(BC_a\)</span> confidence interval does not contain 0 as illustrated by Figure 6 for the case of the 3-component model with the BR bias reduction technique.</p>
+<p>We then construct bootstrap samples of size 250 of the predictor
+coefficients for a 3-component model with the bias reduction (BR)
+method. Figure 5 gives the whisker boxes of these distributions.
+Confidence intervals are then obtained for each of the predictors with
+the normal, basic, percentile or <span class="math inline">\(BC_a\)</span> techniques. In the end, we use the
+<span class="math inline">\(BC_a\)</span> technique, known for its good
+properties (Diciccio, 1996)<a href="#fn42" class="footnote-ref" id="fnref42"><sup>42</sup></a>, to select the significant variables at
+the 5 % threshold by retaining those for which the <span class="math inline">\(BC_a\)</span> confidence interval does not contain
+0 as illustrated by Figure 6 for the case of the 3-component model with
+the BR bias reduction technique.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">colon</span><span class="op">)</span>
 <span class="va">orig</span> <span class="op">&lt;-</span> <span class="va">colon</span></code></pre></div>
@@ -1147,7 +1502,8 @@ Figure 4. Selected variables using the bootstrap BCa technique.
 <code class="sourceCode R"><span class="fu"><a href="https://fbertran.github.io/plsRglm/reference/boxplots.bootpls.html">boxplots.bootpls</a></span><span class="op">(</span><span class="va">modpls.boot3</span>,indices <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">temp.ci</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="tn_Insights_files/figure-html/unnamed-chunk-16-1.png" alt="Figure 5. Boxplots of the bootstrap distribution of the coefficients of the predictors, 3 components BR" width="480"><p class="caption">
-Figure 5. Boxplots of the bootstrap distribution of the coefficients of the predictors, 3 components BR
+Figure 5. Boxplots of the bootstrap distribution of the coefficients of
+the predictors, 3 components BR
 </p>
 </div>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
@@ -1178,17 +1534,22 @@ Figure 6. Bootstrap 95% confidence intervals, 3 components BR
 <code class="sourceCode R"><span class="fu">plsRglm</span><span class="fu">::</span><span class="fu"><a href="https://fbertran.github.io/plsRglm/reference/plots.confints.bootpls.html">plots.confints.bootpls</a></span><span class="op">(</span><span class="va">temp.ci</span>,prednames<span class="op">=</span><span class="cn">TRUE</span>,indices <span class="op">=</span> <span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">temp.ci</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="va">ind_BCa_nt3</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,articlestyle<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="tn_Insights_files/figure-html/unnamed-chunk-19-1.png" alt="Figure 7. Bootstrap 95% confidence intervals, BCa significant variables, 3 components BR." width="480"><p class="caption">
-Figure 7. Bootstrap 95% confidence intervals, BCa significant variables, 3 components BR.
+Figure 7. Bootstrap 95% confidence intervals, BCa significant variables,
+3 components BR.
 </p>
 </div>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">plsRglm</span><span class="fu">::</span><span class="fu"><a href="https://fbertran.github.io/plsRglm/reference/plots.confints.bootpls.html">plots.confints.bootpls</a></span><span class="op">(</span><span class="va">temp.ci</span>,prednames<span class="op">=</span><span class="cn">TRUE</span>,indices <span class="op">=</span> <span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">temp.ci</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="va">ind_BCa_nt3</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,articlestyle<span class="op">=</span><span class="cn">FALSE</span>,typeIC<span class="op">=</span><span class="st">"BCa"</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="tn_Insights_files/figure-html/unnamed-chunk-20-1.png" alt="Figure 8. BCa Bootstrap 95% confidence intervals, BCa significant variables, 3 components BR." width="480"><p class="caption">
-Figure 8. BCa Bootstrap 95% confidence intervals, BCa significant variables, 3 components BR.
+Figure 8. BCa Bootstrap 95% confidence intervals, BCa significant
+variables, 3 components BR.
 </p>
 </div>
-<p>Finally, we fit a Beta PLS regression model constructed from the only 79 significant predictors for the <span class="math inline">\(BC_a\)</span> bootstrap technique. The selection of the number of components, not reproduced here due to lack of space, leads us to retain 2 of them.</p>
+<p>Finally, we fit a Beta PLS regression model constructed from the only
+79 significant predictors for the <span class="math inline">\(BC_a\)</span> bootstrap technique. The selection
+of the number of components, not reproduced here due to lack of space,
+leads us to retain 2 of them.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"ind_BCa_nt3"</span><span class="op">)</span>
 <span class="va">colon_sub4</span> <span class="op">&lt;-</span> <span class="va">colon</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">TRUE</span>,<span class="va">ind_BCa_nt3</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">]</span></code></pre></div>
@@ -1309,7 +1670,9 @@ Figure 8. BCa Bootstrap 95% confidence intervals, BCa significant variables, 3 c
 Figure 9. Residuals index plot.
 </p>
 </div>
-<p>We note on Figure 10 that this model is validated by the use of a simulated envelope (Atkinson, 1981)<a href="#fn43" class="footnote-ref" id="fnref43"><sup>43</sup></a>. This one is constructed, as recommended by Atkinson, from 19 order statistics.</p>
+<p>We note on Figure 10 that this model is validated by the use of a
+simulated envelope (Atkinson, 1981)<a href="#fn43" class="footnote-ref" id="fnref43"><sup>43</sup></a>. This one is constructed, as recommended
+by Atkinson, from 19 order statistics.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">betareg</span><span class="op">)</span>
 <span class="co"># A Half-normal Plot with simulated envelop</span>
@@ -1351,12 +1714,27 @@ Figure 9. Residuals index plot.
 Figure 10. Residuals and simulated envelop.
 </p>
 </div>
-<p>As we can see in Figure 11, the two components of the model formed by the only 79 significant predictors for the bootstrap technique <span class="math inline">\(BC_a\)</span> allow a clear linear separation between the healthy subjects, in dark green, and the sick subjects whose condition is all the more serious as the color approaches red. To allow a graphical evaluation of the predictive quality of the model, we represent the observed values as a function of the predicted values on the <span class="math inline">\(\textrm{logit}\)</span> scale, Figure 12, and on the original scale Figure 13. Note that, since the transition from one to the other of the two graphs is done by means of a continuous, bijective and increasing transformation of the axes, the Kendall correlation coefficient between the observed and predicted values will be identical for both scales. For both graphs, we measure an association in the sense of Kendall’s correlation coefficient between the observed values and the predicted values equal to <span class="math inline">\(0.72\)</span> for a <span class="math inline">\(p\)</span>-value of <span class="math inline">\(7.03*10^{-19}\)</span>, thus significant at the <span class="math inline">\(1\%\)</span> threshold.</p>
+<p>As we can see in Figure 11, the two components of the model formed by
+the only 79 significant predictors for the bootstrap technique <span class="math inline">\(BC_a\)</span> allow a clear linear separation
+between the healthy subjects, in dark green, and the sick subjects whose
+condition is all the more serious as the color approaches red. To allow
+a graphical evaluation of the predictive quality of the model, we
+represent the observed values as a function of the predicted values on
+the <span class="math inline">\(\textrm{logit}\)</span> scale, Figure
+12, and on the original scale Figure 13. Note that, since the transition
+from one to the other of the two graphs is done by means of a
+continuous, bijective and increasing transformation of the axes, the
+Kendall correlation coefficient between the observed and predicted
+values will be identical for both scales. For both graphs, we measure an
+association in the sense of Kendall’s correlation coefficient between
+the observed values and the predicted values equal to <span class="math inline">\(0.72\)</span> for a <span class="math inline">\(p\)</span>-value of <span class="math inline">\(7.03*10^{-19}\)</span>, thus significant at the
+<span class="math inline">\(1\%\)</span> threshold.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">modpls_sub4</span><span class="op">$</span><span class="va">tt</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,<span class="va">modpls_sub4</span><span class="op">$</span><span class="va">tt</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>,col<span class="op">=</span><span class="fu">plotrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plotrix/man/color.scale.html">color.scale</a></span><span class="op">(</span><span class="va">colon</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span>,<span class="fl">0</span><span class="op">)</span>,pch<span class="op">=</span><span class="fl">16</span>,ylab<span class="op">=</span><span class="st">""</span>,xlab<span class="op">=</span><span class="st">""</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="tn_Insights_files/figure-html/mod_sub4_nt2_12_beta-1.png" alt="Figure 11. Representation of individuals on the plane formed by the first two components." width="480"><p class="caption">
-Figure 11. Representation of individuals on the plane formed by the first two components.
+Figure 11. Representation of individuals on the plane formed by the
+first two components.
 </p>
 </div>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
@@ -1372,73 +1750,178 @@ Figure 12. Observed values versus predicted values on the logit scale.
 <span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,lwd<span class="op">=</span><span class="fl">2</span>,lty<span class="op">=</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="tn_Insights_files/figure-html/plot_xpred_yorig_submod4-1.png" alt="Figure 13. Observed values versus predicted values on the original scale." width="480"><p class="caption">
-Figure 13. Observed values versus predicted values on the original scale.
+Figure 13. Observed values versus predicted values on the original
+scale.
 </p>
 </div>
-<p>Note, however, that the data in this example are in fact formed by mixing healthy individuals for whom the infiltration rate is zero and sick individuals for whom these rates are non-zero and vary from 0 to 1. Thus the use of a PLS regression model based on the combination of a logistic PLS regression model and a Beta logistic regression model or a Beta regression model with inflation of 0 introduced by Ospina and Ferrari (Ospina, 2012)<a href="#fn44" class="footnote-ref" id="fnref44"><sup>44</sup></a> would likely make sense and is currently being carried out by the authors.</p>
+<p>Note, however, that the data in this example are in fact formed by
+mixing healthy individuals for whom the infiltration rate is zero and
+sick individuals for whom these rates are non-zero and vary from 0 to 1.
+Thus the use of a PLS regression model based on the combination of a
+logistic PLS regression model and a Beta logistic regression model or a
+Beta regression model with inflation of 0 introduced by Ospina and
+Ferrari (Ospina, 2012)<a href="#fn44" class="footnote-ref" id="fnref44"><sup>44</sup></a> would likely make sense and is currently
+being carried out by the authors.</p>
 </div>
 <div id="conclusion-and-perspectives" class="section level2">
 <h2 class="hasAnchor">
 <a href="#conclusion-and-perspectives" class="anchor"></a>Conclusion and perspectives</h2>
-<p>Our goal has been to propose an extension of PLS regression to Beta regression models, and then to make it available to users of the free language <code>R</code>.</p>
-<p>We thus offer the possibility to work with collinear predictors to model rates or proportions, which is an unavoidable difficulty when modeling mixtures or when analyzing spectra or studying genetic, proteomic or metabonomic data.</p>
-<p>Moreover, Beta PLS regression can also be applied to incomplete data sets. It is also possible in this case, as in the case of complete data, to select the number of components by repeated <span class="math inline">\(k\)</span>-fold cross-validation.</p>
-<p>Finally, we propose bootstrap techniques in order to, for example, test the significance of each of the predictors present in the dataset and thus validate the models built.</p>
-<p>The study of two real datasets allowed the proposed tools to demonstrate their efficiency.</p>
+<p>Our goal has been to propose an extension of PLS regression to Beta
+regression models, and then to make it available to users of the free
+language <code>R</code>.</p>
+<p>We thus offer the possibility to work with collinear predictors to
+model rates or proportions, which is an unavoidable difficulty when
+modeling mixtures or when analyzing spectra or studying genetic,
+proteomic or metabonomic data.</p>
+<p>Moreover, Beta PLS regression can also be applied to incomplete data
+sets. It is also possible in this case, as in the case of complete data,
+to select the number of components by repeated <span class="math inline">\(k\)</span>-fold cross-validation.</p>
+<p>Finally, we propose bootstrap techniques in order to, for example,
+test the significance of each of the predictors present in the dataset
+and thus validate the models built.</p>
+<p>The study of two real datasets allowed the proposed tools to
+demonstrate their efficiency.</p>
 <div id="acknowledgements" class="section level3">
 <h3 class="hasAnchor">
 <a href="#acknowledgements" class="anchor"></a>Acknowledgements</h3>
-<p>The authors are grateful to the two referees for their comments and suggestions which helped to improve the quality of several points of the article as well as to Jean-Pierre Gauchi for his availability and his pertinent and constructive remarks.</p>
+<p>The authors are grateful to the two referees for their comments and
+suggestions which helped to improve the quality of several points of the
+article as well as to Jean-Pierre Gauchi for his availability and his
+pertinent and constructive remarks.</p>
 <p><br><br><br></p>
 </div>
 </div>
-<div class="footnotes">
+<div class="footnotes footnotes-end-of-document">
 <hr>
 <ol>
-<li id="fn1"><p><em>H. WOLD</em>. Estimation of principal component and related models by iterative least squares. In <em>P.R. KRISHNAIAH</em>, editor : Multivariate Analysis, pages 391–420. Academic Press, New York, 1966.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p><em>M. TENENHAUS</em>. La régression PLS : Théorie et Pratique. Technip, Paris, 1998.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
-<li id="fn3"><p><em>Ph. BASTIEN, V. ESPOSITO VINZI et M. TENENHAUS</em>. Pls generalised linear regression. Computational Statistics &amp; Data Analysis, 48(1):17–46, 2005.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
-<li id="fn4"><p><em>Ph. BASTIEN</em>. Deviance residuals based PLS regression for censored data in high dimensional setting. Chemometrics and Intelligent Laboratory Systems, 91(1):78–86, 2008.<a href="#fnref4" class="footnote-back">↩︎</a></p></li>
-<li id="fn5"><p><em>Ph. BASTIEN, F. BERTRAND, N. MEYER and M. MAUMY-BERTRAND</em>. Deviance residuals based sparse PLS and sparse kernel PLS regression for censored data. Bioinformatics, 31(3):397–404, 2015.<a href="#fnref5" class="footnote-back">↩︎</a></p></li>
-<li id="fn6"><p><em>F. BERTRAND, N. MEYER, M. BEAU-FALLER, K. EL BAYED, I.-J. NAMER, M. MAUMY-BERTRAND</em>. Régression Bêta PLS. (French) [PLS Beta regression.]. J. SFdS, 154(3):143–159, 2013.<a href="#fnref6" class="footnote-back">↩︎</a></p></li>
-<li id="fn7"><p><em>N.L. JOHNSON, S. KOTZ et N. BALAKRISHNAN</em>. Continuous Univariate Distributions, volume 2. Wiley, New York, 2nd edition, 1995.<a href="#fnref7" class="footnote-back">↩︎</a></p></li>
-<li id="fn8"><p><em>S.L.P. FERRARI, et F. CRIBARI-NETO</em>. Beta Regression for Modeling Rates and Proportions. Journal of Applied Statistics, 31(7):799–815, 2004.<a href="#fnref8" class="footnote-back">↩︎</a></p></li>
-<li id="fn9"><p><em>I. KOSMIDIS et D. FIRTH</em>. A Generic Algorithm for Reducing Bias in Parametric Estimation. Journal of Chemometrics, 4:1097–1112, 2010.<a href="#fnref9" class="footnote-back">↩︎</a></p></li>
-<li id="fn10"><p><em>A.B. SIMAS,W. BARRETO-SOUZA et A.V. ROCHA</em>. Improved Estimators for a General Class of Beta Regression Models. Computational Statistics &amp; Data Analysis, 54(2):348–366, 2010.<a href="#fnref10" class="footnote-back">↩︎</a></p></li>
-<li id="fn11"><p><em>B. GRÜN, I. KOSMIDIS et A. ZEILEIS</em>. Extended Beta Regression in R : Shaken, Stirred, Mixed and Partitioned. Journal of Statistical Software, 48(11):1–25, 2012.<a href="#fnref11" class="footnote-back">↩︎</a></p></li>
-<li id="fn12"><p><em>S.L.P. FERRARI, et F. CRIBARI-NETO</em>. Beta Regression for Modeling Rates and Proportions. Journal of Applied Statistics, 31(7):799–815, 2004.<a href="#fnref12" class="footnote-back">↩︎</a></p></li>
-<li id="fn13"><p><em>J. NELDER et R. WEDDERBURN</em>. Generalized Linear Models. Journal of the Royal Statistical Society. Series A (General), 135(3):370–384, 1972.<a href="#fnref13" class="footnote-back">↩︎</a></p></li>
-<li id="fn14"><p><em>P. MCCULLAGH et J.A. NELDER</em>. Generalized Linear Models. Chapman &amp; Hall/CRC, Boca Raton, 2nd édition, 1995.<a href="#fnref14" class="footnote-back">↩︎</a></p></li>
-<li id="fn15"><p><em>C.N. MORRIS</em>. Natural exponential families with quadratic variance functions. The Annals of Statistics, 10:65–80, 1982.<a href="#fnref15" class="footnote-back">↩︎</a></p></li>
-<li id="fn16"><p><em>S.L.P. FERRARI, et F. CRIBARI-NETO</em>. Beta Regression for Modeling Rates and Proportions. Journal of Applied Statistics, 31(7):799–815, 2004.<a href="#fnref16" class="footnote-back">↩︎</a></p></li>
-<li id="fn17"><p><em>P. MCCULLAGH et J.A. NELDER</em>. Generalized Linear Models. Chapman &amp; Hall/CRC, Boca Raton, 2nd édition, 1995.<a href="#fnref17" class="footnote-back">↩︎</a></p></li>
-<li id="fn18"><p><em>A.C. ATKINSON</em>. Plots, Transformations and Regression : An Introduction to Graphical Methods of Diagnostic Regression Analysis. Oxford University Press, Oxford, 1985.<a href="#fnref18" class="footnote-back">↩︎</a></p></li>
-<li id="fn19"><p><em>A. HÖSKULDSSON</em>. PLS regression methods. Journal of Chemometrics, 2:211–228, 1988.<a href="#fnref19" class="footnote-back">↩︎</a></p></li>
-<li id="fn20"><p><em>S. WOLD, M. SJÖSTRÖM et L. ERIKSSON</em>. PLS-regression : a basic tool of Chemometrics. Chemometrics and Intelligent Laboratory Systems, 58:109–130, 2001.<a href="#fnref20" class="footnote-back">↩︎</a></p></li>
-<li id="fn21"><p><em>M. TENENHAUS</em>. La régression PLS : Théorie et Pratique. Technip, Paris, 1998.<a href="#fnref21" class="footnote-back">↩︎</a></p></li>
-<li id="fn22"><p><em>S. WOLD, M. SJÖSTRÖM et L. ERIKSSON</em>. PLS-regression : a basic tool of Chemometrics. Chemometrics and Intelligent Laboratory Systems, 58:109–130, 2001.<a href="#fnref22" class="footnote-back">↩︎</a></p></li>
-<li id="fn23"><p><em>M. TENENHAUS</em>. La régression PLS : Théorie et Pratique. Technip, Paris, 1998.<a href="#fnref23" class="footnote-back">↩︎</a></p></li>
-<li id="fn24"><p><em>B. EFRON et R.J. TIBSHIRANI</em>. An Introduction to the Bootstrap. Chapman &amp; Hall, New York, 1993.<a href="#fnref24" class="footnote-back">↩︎</a></p></li>
-<li id="fn25"><p><em>A.C. DAVISON et D.V. HINKLEY</em>. Bootstrap methods and their application. Cambridge University Press, Cambridge, 1997.<a href="#fnref25" class="footnote-back">↩︎</a></p></li>
-<li id="fn26"><p><em>F. CRIBARI-NETO and A. ZEILEIS</em>. Beta Regression in R. Journal of Statistical Software, 34(2):1–24, 2010.<a href="#fnref26" class="footnote-back">↩︎</a></p></li>
-<li id="fn27"><p><em>B. EFRON et R.J. TIBSHIRANI</em>. An Introduction to the Bootstrap. Chapman &amp; Hall, New York, 1993.<a href="#fnref27" class="footnote-back">↩︎</a></p></li>
-<li id="fn28"><p><em>A.C. DAVISON et D.V. HINKLEY</em>. Bootstrap methods and their application. Cambridge University Press, Cambridge, 1997.<a href="#fnref28" class="footnote-back">↩︎</a></p></li>
-<li id="fn29"><p><em>A. CANTY and B. RIPLEY</em>. boot: Bootstrap R (S-Plus) Functions. R package version 1.3-26, 2021.<a href="#fnref29" class="footnote-back">↩︎</a></p></li>
-<li id="fn30"><p><em>F. CRIBARI-NETO and A. ZEILEIS</em>. Beta Regression in R. Journal of Statistical Software, 34(2):1–24, 2010.<a href="#fnref30" class="footnote-back">↩︎</a></p></li>
-<li id="fn31"><p><em>S.L.P. FERRARI, et F. CRIBARI-NETO</em>. Beta Regression for Modeling Rates and Proportions. Journal of Applied Statistics, 31(7):799–815, 2004.<a href="#fnref31" class="footnote-back">↩︎</a></p></li>
-<li id="fn32"><p><em>Ph. BASTIEN, V. ESPOSITO VINZI et M. TENENHAUS</em>. Pls generalised linear regression. Computational Statistics &amp; Data Analysis, 48(1):17–46, 2005.<a href="#fnref32" class="footnote-back">↩︎</a></p></li>
-<li id="fn33"><p><em>B. LI, J. MORRIS et E.B. MARTIN</em>. Model selection for partial least squares regression. Chemometrics and Intelligent Laboratory Systems, 64:79–89, 2002.<a href="#fnref33" class="footnote-back">↩︎</a></p></li>
-<li id="fn34"><p><em>T. NAES et H. MARTENS</em>. Comparison of prediction methods for multicollinear data. Communications in Statistics – Simulation and Computation, 14:545–576, 1985.<a href="#fnref34" class="footnote-back">↩︎</a></p></li>
-<li id="fn35"><p><em>N. MEYER, M. MAUMY-BERTRAND et F. BERTRAND</em>. Comparaison de variantes de régressions logistiques PLS et de régression PLS sur variables qualitatives : application aux donnés d’allélotypage. Journal de la Société Française De Statistique, 151(2):1–18, 2010.<a href="#fnref35" class="footnote-back">↩︎</a></p></li>
-<li id="fn36"><p><em>I. KOSMIDIS et D. FIRTH</em>. A Generic Algorithm for Reducing Bias in Parametric Estimation. Journal of Chemometrics, 4:1097–1112, 2010.<a href="#fnref36" class="footnote-back">↩︎</a></p></li>
-<li id="fn37"><p><em>Ph. BASTIEN, V. ESPOSITO VINZI et M. TENENHAUS</em>. Pls generalised linear regression. Computational Statistics &amp; Data Analysis, 48(1):17–46, 2005.<a href="#fnref37" class="footnote-back">↩︎</a></p></li>
-<li id="fn38"><p><em>N. MEYER, M. MAUMY-BERTRAND et F. BERTRAND</em>. Comparaison de variantes de régressions logistiques PLS et de régression PLS sur variables qualitatives : application aux donnés d’allélotypage. Journal de la Société Française De Statistique, 151(2):1–18, 2010.<a href="#fnref38" class="footnote-back">↩︎</a></p></li>
-<li id="fn39"><p><em>N. KRAEMER et M. SUGIYAMA</em>. The Degrees of Freedom of Partial Least Squares Regression. Journal of the American Statistical Association, 106(494):697–705, 2011.<a href="#fnref39" class="footnote-back">↩︎</a></p></li>
-<li id="fn40"><p><em>N. MEYER, M. MAUMY-BERTRAND et F. BERTRAND</em>. Comparaison de variantes de régressions logistiques PLS et de régression PLS sur variables qualitatives : application aux donnés d’allélotypage. Journal de la Société Française De Statistique, 151(2):1–18, 2010.<a href="#fnref40" class="footnote-back">↩︎</a></p></li>
-<li id="fn41"><p><em>M. PIOTTO, F.-M. MOUSSALLIEH, A. NEUVILLE, J.-P. BELLOCQ, K. ELBAYED et I.J. NAMER</em>. Towards real-time metabolic profiling of a biopsy specimen during a surgical operation by 1h high resolution magic angle spinning nuclear magnetic resonance : a case report. Journal of Medical Case Reports, 6(1), 2012.<a href="#fnref41" class="footnote-back">↩︎</a></p></li>
-<li id="fn42"><p><em>T.J. DICICCIO et B. EFRON</em>. Bootstrap confidence intervals (with discussion). Statistical Science, 11:189–228, 1996.<a href="#fnref42" class="footnote-back">↩︎</a></p></li>
-<li id="fn43"><p><em>A.C. ATKINSON</em>. Two graphical displays for outlying and influential observations in regression. Biometrika, 68(1):13–20, 1981.<a href="#fnref43" class="footnote-back">↩︎</a></p></li>
-<li id="fn44"><p><em>R. OSPINA et SLP. FERRARI</em>. A general class of zero-or-one inflated beta regression models. Computational Statistics &amp; Data Analysis, 56(1):1609–1623, 2012.<a href="#fnref44" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p><em>H. WOLD</em>. Estimation of principal component and
+related models by iterative least squares. In <em>P.R. KRISHNAIAH</em>,
+editor : Multivariate Analysis, pages 391–420. Academic Press, New York,
+1966.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p><em>M. TENENHAUS</em>. La régression PLS : Théorie et
+Pratique. Technip, Paris, 1998.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p><em>Ph. BASTIEN, V. ESPOSITO VINZI et M. TENENHAUS</em>.
+Pls generalised linear regression. Computational Statistics &amp; Data
+Analysis, 48(1):17–46, 2005.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p><em>Ph. BASTIEN</em>. Deviance residuals based PLS
+regression for censored data in high dimensional setting. Chemometrics
+and Intelligent Laboratory Systems, 91(1):78–86, 2008.<a href="#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p><em>Ph. BASTIEN, F. BERTRAND, N. MEYER and M.
+MAUMY-BERTRAND</em>. Deviance residuals based sparse PLS and sparse
+kernel PLS regression for censored data. Bioinformatics, 31(3):397–404,
+2015.<a href="#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p><em>F. BERTRAND, N. MEYER, M. BEAU-FALLER, K. EL BAYED,
+I.-J. NAMER, M. MAUMY-BERTRAND</em>. Régression Bêta PLS. (French) [PLS
+Beta regression.]. J. SFdS, 154(3):143–159, 2013.<a href="#fnref6" class="footnote-back">↩︎</a></p></li>
+<li id="fn7"><p><em>N.L. JOHNSON, S. KOTZ et N. BALAKRISHNAN</em>.
+Continuous Univariate Distributions, volume 2. Wiley, New York, 2nd
+edition, 1995.<a href="#fnref7" class="footnote-back">↩︎</a></p></li>
+<li id="fn8"><p><em>S.L.P. FERRARI, et F. CRIBARI-NETO</em>. Beta
+Regression for Modeling Rates and Proportions. Journal of Applied
+Statistics, 31(7):799–815, 2004.<a href="#fnref8" class="footnote-back">↩︎</a></p></li>
+<li id="fn9"><p><em>I. KOSMIDIS et D. FIRTH</em>. A Generic Algorithm
+for Reducing Bias in Parametric Estimation. Journal of Chemometrics,
+4:1097–1112, 2010.<a href="#fnref9" class="footnote-back">↩︎</a></p></li>
+<li id="fn10"><p><em>A.B. SIMAS,W. BARRETO-SOUZA et A.V. ROCHA</em>.
+Improved Estimators for a General Class of Beta Regression Models.
+Computational Statistics &amp; Data Analysis, 54(2):348–366, 2010.<a href="#fnref10" class="footnote-back">↩︎</a></p></li>
+<li id="fn11"><p><em>B. GRÜN, I. KOSMIDIS et A. ZEILEIS</em>. Extended
+Beta Regression in R : Shaken, Stirred, Mixed and Partitioned. Journal
+of Statistical Software, 48(11):1–25, 2012.<a href="#fnref11" class="footnote-back">↩︎</a></p></li>
+<li id="fn12"><p><em>S.L.P. FERRARI, et F. CRIBARI-NETO</em>. Beta
+Regression for Modeling Rates and Proportions. Journal of Applied
+Statistics, 31(7):799–815, 2004.<a href="#fnref12" class="footnote-back">↩︎</a></p></li>
+<li id="fn13"><p><em>J. NELDER et R. WEDDERBURN</em>. Generalized Linear
+Models. Journal of the Royal Statistical Society. Series A (General),
+135(3):370–384, 1972.<a href="#fnref13" class="footnote-back">↩︎</a></p></li>
+<li id="fn14"><p><em>P. MCCULLAGH et J.A. NELDER</em>. Generalized
+Linear Models. Chapman &amp; Hall/CRC, Boca Raton, 2nd édition, 1995.<a href="#fnref14" class="footnote-back">↩︎</a></p></li>
+<li id="fn15"><p><em>C.N. MORRIS</em>. Natural exponential families with
+quadratic variance functions. The Annals of Statistics, 10:65–80,
+1982.<a href="#fnref15" class="footnote-back">↩︎</a></p></li>
+<li id="fn16"><p><em>S.L.P. FERRARI, et F. CRIBARI-NETO</em>. Beta
+Regression for Modeling Rates and Proportions. Journal of Applied
+Statistics, 31(7):799–815, 2004.<a href="#fnref16" class="footnote-back">↩︎</a></p></li>
+<li id="fn17"><p><em>P. MCCULLAGH et J.A. NELDER</em>. Generalized
+Linear Models. Chapman &amp; Hall/CRC, Boca Raton, 2nd édition, 1995.<a href="#fnref17" class="footnote-back">↩︎</a></p></li>
+<li id="fn18"><p><em>A.C. ATKINSON</em>. Plots, Transformations and
+Regression : An Introduction to Graphical Methods of Diagnostic
+Regression Analysis. Oxford University Press, Oxford, 1985.<a href="#fnref18" class="footnote-back">↩︎</a></p></li>
+<li id="fn19"><p><em>A. HÖSKULDSSON</em>. PLS regression methods.
+Journal of Chemometrics, 2:211–228, 1988.<a href="#fnref19" class="footnote-back">↩︎</a></p></li>
+<li id="fn20"><p><em>S. WOLD, M. SJÖSTRÖM et L. ERIKSSON</em>.
+PLS-regression : a basic tool of Chemometrics. Chemometrics and
+Intelligent Laboratory Systems, 58:109–130, 2001.<a href="#fnref20" class="footnote-back">↩︎</a></p></li>
+<li id="fn21"><p><em>M. TENENHAUS</em>. La régression PLS : Théorie et
+Pratique. Technip, Paris, 1998.<a href="#fnref21" class="footnote-back">↩︎</a></p></li>
+<li id="fn22"><p><em>S. WOLD, M. SJÖSTRÖM et L. ERIKSSON</em>.
+PLS-regression : a basic tool of Chemometrics. Chemometrics and
+Intelligent Laboratory Systems, 58:109–130, 2001.<a href="#fnref22" class="footnote-back">↩︎</a></p></li>
+<li id="fn23"><p><em>M. TENENHAUS</em>. La régression PLS : Théorie et
+Pratique. Technip, Paris, 1998.<a href="#fnref23" class="footnote-back">↩︎</a></p></li>
+<li id="fn24"><p><em>B. EFRON et R.J. TIBSHIRANI</em>. An Introduction
+to the Bootstrap. Chapman &amp; Hall, New York, 1993.<a href="#fnref24" class="footnote-back">↩︎</a></p></li>
+<li id="fn25"><p><em>A.C. DAVISON et D.V. HINKLEY</em>. Bootstrap
+methods and their application. Cambridge University Press, Cambridge,
+1997.<a href="#fnref25" class="footnote-back">↩︎</a></p></li>
+<li id="fn26"><p><em>F. CRIBARI-NETO and A. ZEILEIS</em>. Beta
+Regression in R. Journal of Statistical Software, 34(2):1–24, 2010.<a href="#fnref26" class="footnote-back">↩︎</a></p></li>
+<li id="fn27"><p><em>B. EFRON et R.J. TIBSHIRANI</em>. An Introduction
+to the Bootstrap. Chapman &amp; Hall, New York, 1993.<a href="#fnref27" class="footnote-back">↩︎</a></p></li>
+<li id="fn28"><p><em>A.C. DAVISON et D.V. HINKLEY</em>. Bootstrap
+methods and their application. Cambridge University Press, Cambridge,
+1997.<a href="#fnref28" class="footnote-back">↩︎</a></p></li>
+<li id="fn29"><p><em>A. CANTY and B. RIPLEY</em>. boot: Bootstrap R
+(S-Plus) Functions. R package version 1.3-26, 2021.<a href="#fnref29" class="footnote-back">↩︎</a></p></li>
+<li id="fn30"><p><em>F. CRIBARI-NETO and A. ZEILEIS</em>. Beta
+Regression in R. Journal of Statistical Software, 34(2):1–24, 2010.<a href="#fnref30" class="footnote-back">↩︎</a></p></li>
+<li id="fn31"><p><em>S.L.P. FERRARI, et F. CRIBARI-NETO</em>. Beta
+Regression for Modeling Rates and Proportions. Journal of Applied
+Statistics, 31(7):799–815, 2004.<a href="#fnref31" class="footnote-back">↩︎</a></p></li>
+<li id="fn32"><p><em>Ph. BASTIEN, V. ESPOSITO VINZI et M.
+TENENHAUS</em>. Pls generalised linear regression. Computational
+Statistics &amp; Data Analysis, 48(1):17–46, 2005.<a href="#fnref32" class="footnote-back">↩︎</a></p></li>
+<li id="fn33"><p><em>B. LI, J. MORRIS et E.B. MARTIN</em>. Model
+selection for partial least squares regression. Chemometrics and
+Intelligent Laboratory Systems, 64:79–89, 2002.<a href="#fnref33" class="footnote-back">↩︎</a></p></li>
+<li id="fn34"><p><em>T. NAES et H. MARTENS</em>. Comparison of
+prediction methods for multicollinear data. Communications in Statistics
+– Simulation and Computation, 14:545–576, 1985.<a href="#fnref34" class="footnote-back">↩︎</a></p></li>
+<li id="fn35"><p><em>N. MEYER, M. MAUMY-BERTRAND et F. BERTRAND</em>.
+Comparaison de variantes de régressions logistiques PLS et de régression
+PLS sur variables qualitatives : application aux donnés d’allélotypage.
+Journal de la Société Française De Statistique, 151(2):1–18, 2010.<a href="#fnref35" class="footnote-back">↩︎</a></p></li>
+<li id="fn36"><p><em>I. KOSMIDIS et D. FIRTH</em>. A Generic Algorithm
+for Reducing Bias in Parametric Estimation. Journal of Chemometrics,
+4:1097–1112, 2010.<a href="#fnref36" class="footnote-back">↩︎</a></p></li>
+<li id="fn37"><p><em>Ph. BASTIEN, V. ESPOSITO VINZI et M.
+TENENHAUS</em>. Pls generalised linear regression. Computational
+Statistics &amp; Data Analysis, 48(1):17–46, 2005.<a href="#fnref37" class="footnote-back">↩︎</a></p></li>
+<li id="fn38"><p><em>N. MEYER, M. MAUMY-BERTRAND et F. BERTRAND</em>.
+Comparaison de variantes de régressions logistiques PLS et de régression
+PLS sur variables qualitatives : application aux donnés d’allélotypage.
+Journal de la Société Française De Statistique, 151(2):1–18, 2010.<a href="#fnref38" class="footnote-back">↩︎</a></p></li>
+<li id="fn39"><p><em>N. KRAEMER et M. SUGIYAMA</em>. The Degrees of
+Freedom of Partial Least Squares Regression. Journal of the American
+Statistical Association, 106(494):697–705, 2011.<a href="#fnref39" class="footnote-back">↩︎</a></p></li>
+<li id="fn40"><p><em>N. MEYER, M. MAUMY-BERTRAND et F. BERTRAND</em>.
+Comparaison de variantes de régressions logistiques PLS et de régression
+PLS sur variables qualitatives : application aux donnés d’allélotypage.
+Journal de la Société Française De Statistique, 151(2):1–18, 2010.<a href="#fnref40" class="footnote-back">↩︎</a></p></li>
+<li id="fn41"><p><em>M. PIOTTO, F.-M. MOUSSALLIEH, A. NEUVILLE, J.-P.
+BELLOCQ, K. ELBAYED et I.J. NAMER</em>. Towards real-time metabolic
+profiling of a biopsy specimen during a surgical operation by 1h high
+resolution magic angle spinning nuclear magnetic resonance : a case
+report. Journal of Medical Case Reports, 6(1), 2012.<a href="#fnref41" class="footnote-back">↩︎</a></p></li>
+<li id="fn42"><p><em>T.J. DICICCIO et B. EFRON</em>. Bootstrap
+confidence intervals (with discussion). Statistical Science, 11:189–228,
+1996.<a href="#fnref42" class="footnote-back">↩︎</a></p></li>
+<li id="fn43"><p><em>A.C. ATKINSON</em>. Two graphical displays for
+outlying and influential observations in regression. Biometrika,
+68(1):13–20, 1981.<a href="#fnref43" class="footnote-back">↩︎</a></p></li>
+<li id="fn44"><p><em>R. OSPINA et SLP. FERRARI</em>. A general class of
+zero-or-one inflated beta regression models. Computational Statistics
+&amp; Data Analysis, 56(1):1609–1623, 2012.<a href="#fnref44" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
   </div>

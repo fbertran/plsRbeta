@@ -14,8 +14,8 @@
 #' \item{list()}{\dots{}} \item{list}{table of fit statistics for last group
 #' partition}
 #' @author Frédéric Bertrand\cr
-#' \email{frederic.bertrand@@math.unistra.fr}\cr
-#' \url{http://www-irma.u-strasbg.fr/~fbertran/}
+#' \email{frederic.bertrand@@utt.fr}\cr
+#' \url{https://fbertran.github.io/homepage/}
 #' @seealso \code{\link[plsRglm]{kfolds2coeff}},
 #' \code{\link[plsRglm]{kfolds2Pressind}}, \code{\link[plsRglm]{kfolds2Press}},
 #' \code{\link[plsRglm]{kfolds2Mclassedind}} and

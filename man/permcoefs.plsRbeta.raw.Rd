@@ -70,7 +70,7 @@ See also \code{\link{bootplsbeta}}.
 }
 \author{
 Frédéric Bertrand\cr
-\email{frederic.bertrand@math.unistra.fr}\cr
-\url{http://www-irma.u-strasbg.fr/~fbertran/}
+\email{frederic.bertrand@utt.fr}\cr
+\url{https://fbertran.github.io/homepage/}
 }
 \keyword{models}

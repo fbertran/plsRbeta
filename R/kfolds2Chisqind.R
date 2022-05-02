@@ -13,8 +13,8 @@
 #' @note Use \code{\link{PLS_beta_kfoldcv}} to create kfold cross validated
 #' partial least squares regression glm models.
 #' @author Frédéric Bertrand\cr
-#' \email{frederic.bertrand@@math.unistra.fr}\cr
-#' \url{http://www-irma.u-strasbg.fr/~fbertran/}
+#' \email{frederic.bertrand@@utt.fr}\cr
+#' \url{https://fbertran.github.io/homepage/}
 #' @seealso \code{\link[plsRglm]{kfolds2coeff}},
 #' \code{\link[plsRglm]{kfolds2Press}}, \code{\link[plsRglm]{kfolds2Pressind}},
 #' \code{\link{kfolds2Chisq}}, \code{\link[plsRglm]{kfolds2Mclassedind}} and

@@ -19,8 +19,8 @@
 #' @param verbose should info messages be displayed ?
 #' @return Estimates on a bootstrap sample.
 #' @author Frédéric Bertrand\cr
-#' \email{frederic.bertrand@@math.unistra.fr}\cr
-#' \url{http://www-irma.u-strasbg.fr/~fbertran/}
+#' \email{frederic.bertrand@@utt.fr}\cr
+#' \url{https://fbertran.github.io/homepage/}
 #' @seealso See also \code{\link{bootplsbeta}}.
 #' @references Frédéric Bertrand, Nicolas Meyer,
 #' Michèle Beau-Faller, Karim El Bayed, Izzie-Jacques Namer,

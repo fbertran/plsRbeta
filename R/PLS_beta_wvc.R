@@ -109,8 +109,8 @@
 #' \code{ncol(dataX) * 1} matrix of the coefficients of the the eXplanatory
 #' variables}
 #' @author Frédéric Bertrand\cr
-#' \email{frederic.bertrand@@math.unistra.fr}\cr
-#' \url{http://www-irma.u-strasbg.fr/~fbertran/}
+#' \email{frederic.bertrand@@utt.fr}\cr
+#' \url{https://fbertran.github.io/homepage/}
 #' @seealso \code{\link{PLS_beta}} for more detailed results,
 #' \code{\link{PLS_beta_kfoldcv}} for cross validating models and
 #' \code{\link{PLS_lm_wvc}} for the same function dedicated to plsR models

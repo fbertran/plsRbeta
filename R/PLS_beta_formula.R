@@ -233,8 +233,8 @@
 #' @return Depends on the model that was used to fit the model.
 #' @note Use \code{plsRbeta} instead.
 #' @author Frédéric Bertrand\cr
-#' \email{frederic.bertrand@@math.unistra.fr}\cr
-#' \url{http://www-irma.u-strasbg.fr/~fbertran/}
+#' \email{frederic.bertrand@@utt.fr}\cr
+#' \url{https://fbertran.github.io/homepage/}
 #' @seealso \code{\link[plsRbeta]{PLS_beta_wvc}} and
 #' \code{\link[plsRbeta]{PLS_beta_kfoldcv_formula}}
 #' @references Frédéric Bertrand, Nicolas Meyer,

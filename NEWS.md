@@ -1,3 +1,7 @@
+# plsRbeta 0.2.9
+
+* Update to fix empty labels in Rd files
+
 # plsRbeta 0.2.8
 
 * Bootstrap function can be specified. A bootstrap function for raw coefficients is provided.

@@ -106,21 +106,21 @@ ML with bias reduction ("\code{BR}") are supported.}
 }
 \value{
 \item{results_kfolds}{list of \code{NK}. Each element of the list
-sums up the results for a group division: \describe{ \item{}{list of
+sums up the results for a group division: \describe{ \item{list}{ of
 \code{K} matrices of size about \code{nrow(dataX)/K * nt} with the predicted
 values for a growing number of components} \item{list()}{\dots{}}
-\item{}{list of \code{K} matrices of size about \code{nrow(dataX)/K * nt}
+\item{list}{ of \code{K} matrices of size about \code{nrow(dataX)/K * nt}
 with the predicted values for a growing number of components} }}
 \item{folds}{list of \code{NK}. Each element of the list sums up the
-informations for a group division: \describe{ \item{}{list of \code{K}
+informations for a group division: \describe{ \item{list}{ of \code{K}
 vectors of length about \code{nrow(dataX)} with the numbers of the rows of
 \code{dataX} that were used as a training set} \item{list()}{\dots{}}
-\item{}{list of \code{K} vectors of length about \code{nrow(dataX)} with the
+\item{list}{ of \code{K} vectors of length about \code{nrow(dataX)} with the
 numbers of the rows of \code{dataX} that were used as a training set} } }
 \item{dataY_kfolds}{list of \code{NK}. Each element of the list sums up the
-results for a group division: \describe{ \item{}{list of \code{K} matrices
+results for a group division: \describe{ \item{list}{ of \code{K} matrices
 of size about \code{nrow(dataX)/K * 1} with the observed values of the
-response} \item{list()}{\dots{}} \item{}{list of \code{K} matrices of size
+response} \item{list()}{\dots{}} \item{list}{ of \code{K} matrices of size
 about \code{nrow(dataX)/K * 1} with the observed values of the response} } }
 \item{call}{the call of the function}
 }
@@ -217,8 +217,8 @@ from kfold cross validation.
 }
 \author{
 Frédéric Bertrand\cr
-\email{frederic.bertrand@math.unistra.fr}\cr
-\url{http://www-irma.u-strasbg.fr/~fbertran/}
+\email{frederic.bertrand@utt.fr}\cr
+\url{https://fbertran.github.io/homepage/}
 }
 \keyword{models}
 \keyword{regression}

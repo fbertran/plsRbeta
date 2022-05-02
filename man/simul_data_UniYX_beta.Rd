@@ -118,8 +118,8 @@ Laboratory Systems}, \bold{64}:79-89. <doi:110.1016/S0169-7439(02)00051-5>
 }
 \author{
 Frédéric Bertrand\cr
-\email{frederic.bertrand@math.unistra.fr}\cr
-\url{http://www-irma.u-strasbg.fr/~fbertran/}
+\email{frederic.bertrand@utt.fr}\cr
+\url{https://fbertran.github.io/homepage/}
 }
 \keyword{datagen}
 \keyword{utilities}
