@@ -14,6 +14,8 @@ permcoefs.plsRbeta.raw(
   link = "logit",
   link.phi = NULL,
   type = "ML",
+  maxcoefvalues,
+  ifbootfail,
   verbose = TRUE
 )
 }
@@ -40,6 +42,11 @@ permcoefs.plsRbeta.raw(
 
 \item{type}{type of estimates}
 
+\item{maxcoefvalues}{maximum values allowed for the estimates of the
+coefficients to discard those coming from singular bootstrap samples}
+
+\item{ifbootfail}{value to return if the estimation fails on a}
+
 \item{verbose}{should info messages be displayed ?}
 }
 \value{
@@ -51,9 +58,9 @@ A function passed to \code{boot} to perform bootstrap.
 \examples{
 \donttest{
 data("GasolineYield",package="betareg")
-
-data("GasolineYield",package="betareg")
-modpls <- permcoefs.plsRbeta.raw(GasolineYield[,-6],1:32,nt=3,modele="pls-beta")
+modplsbeta <- plsRbeta(yield~.,data=GasolineYield,nt=3, modele="pls-beta")
+GazYield.boot.raw <- bootplsbeta(modplsbeta, sim="permutation", stype="i", 
+R=250, statistic=coefs.plsRbeta.raw)
 }
 
 }

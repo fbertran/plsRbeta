@@ -1,6 +1,6 @@
 #' @title Bootstrap distribution TxTum BC1 model
 #' 
-#' A precomputed bootstrap distribution of the coefficients of a model used in the vignette.
+#' @description A precomputed bootstrap distribution of the coefficients of a model used in the vignette.
 #' 
 #' @name TxTum.mod.bootBC1
 #' @docType data

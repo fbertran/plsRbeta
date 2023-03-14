@@ -72,7 +72,7 @@ More details on bootstrap techniques are available in the help of the
 data("GasolineYield",package="betareg")
 
 # Std coefficients
-modplsbeta <- plsRbeta(yield~.,data=GasolineYield,nt=3, modele="pls-beta")
+modplsbeta <- plsRbeta(yield~., data=GasolineYield, nt=3, modele="pls-beta")
 GazYield.boot <- bootplsbeta(modplsbeta, sim="ordinary", stype="i", R=250)
 boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
 type = c("norm","basic","perc","bca"), index=1)
@@ -108,62 +108,62 @@ type = c("norm","basic","perc","bca"), index=5)
 boot::boot.ci(GazYield.boot.raw, conf = c(0.90,0.95), 
 type = c("norm","basic","perc","bca"), index=6)
 
-plsRglm::boxplots.bootpls(GazYield.boot)
-plsRglm::confints.bootpls(GazYield.boot)
-plsRglm::plots.confints.bootpls(plsRglm::confints.bootpls(GazYield.boot))
+plsRglm::boxplots.bootpls(GazYield.boot.raw)
+plsRglm::confints.bootpls(GazYield.boot.raw)
+plsRglm::plots.confints.bootpls(plsRglm::confints.bootpls(GazYield.boot.raw))
 
 
-plot(GazYield.boot,index=2)
-boot::jack.after.boot(GazYield.boot, index=2, useJ=TRUE, nt=3)
-plot(GazYield.boot, index=2,jack=TRUE)
+plot(GazYield.boot.raw,index=2)
+boot::jack.after.boot(GazYield.boot.raw, index=2, useJ=TRUE, nt=3)
+plot(GazYield.boot.raw, index=2,jack=TRUE)
 
 # PLS bootstrap balanced
 
-GazYield.boot <- bootplsbeta(plsRbeta(yield~.,data=GasolineYield,nt=3,
+GazYield.boot.bal <- bootplsbeta(plsRbeta(yield~.,data=GasolineYield,nt=3,
 modele="pls-beta"), sim="balanced", stype="i", R=250)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+boot::boot.ci(GazYield.boot.bal, conf = c(0.90,0.95), 
 type = c("norm","basic","perc","bca"), index=1)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+boot::boot.ci(GazYield.boot.bal, conf = c(0.90,0.95), 
 type = c("norm","basic","perc","bca"), index=2)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+boot::boot.ci(GazYield.boot.bal, conf = c(0.90,0.95), 
 type = c("norm","basic","perc","bca"), index=3)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+boot::boot.ci(GazYield.boot.bal, conf = c(0.90,0.95), 
 type = c("norm","basic","perc","bca"), index=4)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+boot::boot.ci(GazYield.boot.bal, conf = c(0.90,0.95), 
 type = c("norm","basic","perc","bca"), index=5)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+boot::boot.ci(GazYield.boot.bal, conf = c(0.90,0.95), 
 type = c("norm","basic","perc","bca"), index=6)
 
 
-plsRglm::boxplots.bootpls(GazYield.boot)
-plsRglm::confints.bootpls(GazYield.boot)
-plsRglm::plots.confints.bootpls(plsRglm::confints.bootpls(GazYield.boot))
+plsRglm::boxplots.bootpls(GazYield.boot.bal)
+plsRglm::confints.bootpls(GazYield.boot.bal)
+plsRglm::plots.confints.bootpls(plsRglm::confints.bootpls(GazYield.boot.bal))
 
 
 
-plot(GazYield.boot)
-boot::jack.after.boot(GazYield.boot, index=1, useJ=TRUE, nt=3)
-plot(GazYield.boot,jack=TRUE)
+plot(GazYield.boot.bal)
+boot::jack.after.boot(GazYield.boot.bal, index=1, useJ=TRUE, nt=3)
+plot(GazYield.boot.bal,jack=TRUE)
 
 
 # PLS permutation bootstrap
 
-GazYield.boot <- bootplsbeta(plsRbeta(yield~.,data=GasolineYield,nt=3,
+GazYield.boot.perm <- bootplsbeta(plsRbeta(yield~.,data=GasolineYield,nt=3,
 modele="pls-beta"), sim="permutation", stype="i", R=250)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+boot::boot.ci(GazYield.boot.perm, conf = c(0.90,0.95), 
 type = c("norm","basic","perc"), index=1)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+boot::boot.ci(GazYield.boot.perm, conf = c(0.90,0.95), 
 type = c("norm","basic","perc"), index=2)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+boot::boot.ci(GazYield.boot.perm, conf = c(0.90,0.95), 
 type = c("norm","basic","perc"), index=3)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+boot::boot.ci(GazYield.boot.perm, conf = c(0.90,0.95), 
 type = c("norm","basic","perc"), index=4)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+boot::boot.ci(GazYield.boot.perm, conf = c(0.90,0.95), 
 type = c("norm","basic","perc"), index=5)
-boot::boot.ci(GazYield.boot, conf = c(0.90,0.95), 
+boot::boot.ci(GazYield.boot.perm, conf = c(0.90,0.95), 
 type = c("norm","basic","perc"), index=6)
-plsRglm::boxplots.bootpls(GazYield.boot)
-plot(GazYield.boot)
+plsRglm::boxplots.bootpls(GazYield.boot.perm)
+plot(GazYield.boot.perm)
 }
 
 }

@@ -80,11 +80,11 @@
 #' http://arxiv.org/abs/1002.4112.
 #' 
 #' @aliases plsRbeta plsRbetamodel.default plsRbetamodel.formula
-#' @param x a formula or a response (training) dataset
-#' @param dataY response (training) dataset
+#' @param object a response (training) dataset or an object of
+#' class "\code{\link{formula}}" (or one that can be coerced to 
+#' that class): a symbolic description of the model to be fitted.
 #' @param dataX predictor(s) (training) dataset
-#' @param formula an object of class "\code{\link{formula}}" (or one that can
-#' be coerced to that class): a symbolic description of the model to be fitted.
+#' @param formula 
 #' The details of model specification are given under 'Details'.
 #' @param data an optional data frame, list or environment (or object coercible
 #' by \code{\link{as.data.frame}} to a data frame) containing the variables in
@@ -206,7 +206,7 @@
 #' 
 #' 
 #' @export plsRbeta
-plsRbeta <- function(x, ...) UseMethod("plsRbetamodel")
+plsRbeta <- function(object, ...) UseMethod("plsRbetamodel")
 
 #' @rdname plsRbeta
 #' @aliases plsRbeta

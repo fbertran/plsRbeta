@@ -14,6 +14,8 @@ permcoefs.plsRbeta(
   link = "logit",
   link.phi = NULL,
   type = "ML",
+  maxcoefvalues,
+  ifbootfail,
   verbose = TRUE
 )
 }
@@ -39,6 +41,11 @@ permcoefs.plsRbeta(
 \item{link.phi}{link.phi for beta regression}
 
 \item{type}{type of estimates}
+
+\item{maxcoefvalues}{maximum values allowed for the estimates of the
+coefficients to discard those coming from singular bootstrap samples}
+
+\item{ifbootfail}{value to return if the estimation fails on a}
 
 \item{verbose}{should info messages be displayed ?}
 }

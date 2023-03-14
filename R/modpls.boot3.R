@@ -1,6 +1,6 @@
 #' @title Bootstrap distribution of a 3 components model
 #' 
-#' A precomputed bootstrap distribution of the coefficients of a model used in the vignette.
+#' @description A precomputed bootstrap distribution of the coefficients of a model used in the vignette.
 #' 
 #' @name modpls.boot3
 #' @docType data

@@ -7,25 +7,23 @@
 This function implements Partial least squares Regression generalized linear models complete or incomplete datasets.
 }
 \usage{
-plsRbeta(x, \dots)
-\method{plsRbetamodel}{default}(dataY,dataX,nt=2,limQ2set=.0975,
+plsRbeta(object, \dots)
+\method{plsRbetamodel}{default}(object,dataX,nt=2,limQ2set=.0975,
 dataPredictY=dataX,modele="pls",family=NULL,typeVC="none",EstimXNA=FALSE,
 scaleX=TRUE,scaleY=NULL,pvals.expli=FALSE,alpha.pvals.expli=.05,
 MClassed=FALSE,tol_Xi=10^(-12),weights,method,sparse=FALSE,sparseStop=TRUE,
-naive=FALSE,link=NULL,link.phi=NULL,type="ML",verbose=TRUE)
-\method{plsRbetamodel}{formula}(formula,data=NULL,nt=2,limQ2set=.0975,
+naive=FALSE,link=NULL,link.phi=NULL,type="ML",verbose=TRUE, \dots)
+\method{plsRbetamodel}{formula}(object,data=NULL,nt=2,limQ2set=.0975,
 dataPredictY,modele="pls",family=NULL,typeVC="none",EstimXNA=FALSE,
 scaleX=TRUE,scaleY=NULL,pvals.expli=FALSE,alpha.pvals.expli=.05,
 MClassed=FALSE,tol_Xi=10^(-12),weights,subset,start=NULL,etastart,
 mustart,offset,method="glm.fit",control= list(),contrasts=NULL,
 sparse=FALSE,sparseStop=TRUE,naive=FALSE,link=NULL,link.phi=NULL,type="ML",
-verbose=TRUE)
+verbose=TRUE, \dots)
 }
 \arguments{
-  \item{x}{a formula or a response (training) dataset}
-  \item{dataY}{response (training) dataset}
+  \item{object}{a response (training) dataset or an object of class "\code{\link{formula}}" (or one that can be coerced to that class): a symbolic description of the model to be fitted. The details of model specification are given under 'Details'.}
   \item{dataX}{predictor(s) (training) dataset}
-  \item{formula}{an object of class "\code{\link{formula}}" (or one that can be coerced to that class): a symbolic description of the model to be fitted. The details of model specification are given under 'Details'.}
   \item{data}{an optional data frame, list or environment (or object coercible by \code{\link{as.data.frame}} to a data frame) containing the variables in the model. If not found in \code{data}, the variables are taken from \code{environment(formula)}, typically the environment from which \code{plsRbeta} is called.}  
   \item{nt}{number of components to be extracted}
   \item{limQ2set}{limit value for the Q2}
@@ -101,7 +99,7 @@ The default estimator for Degrees of Freedom is the Kramer and Sugiyama's one wh
 Depends on the model that was used to fit the model.
 }
 \references{
-\enc{Frédéric}{Fr\'ed\'eric} Bertrand, Nicolas Meyer, \enc{Michèle}{Mich\`ele} Beau-Faller, Karim El Bayed, Izzie-Jacques Namer, Myriam Maumy-Bertrand (2013). \enc{Régression}{R\'egression} \enc{Bêta}{B\^eta} PLS. \emph{Journal de la \enc{Société}{Soci\'et'e} Française de Statistique}, \bold{154}(3):143-159.
+\enc{Frédéric}{Fr\'ed\'eric} Bertrand, Nicolas Meyer, \enc{Michèle}{Mich\`ele} Beau-Faller, Karim El Bayed, Izzie-Jacques Namer, Myriam Maumy-Bertrand (2013). \enc{Régression}{R\'egression} \enc{Bêta}{Beta} PLS. \emph{Journal de la \enc{Société}{Soci\'et'e} Française de Statistique}, \bold{154}(3):143-159.
 \url{http://publications-sfds.math.cnrs.fr/index.php/J-SFdS/article/view/215}
 }
 \author{\enc{Frédéric}{Fr\'ed\'eric} Bertrand\cr

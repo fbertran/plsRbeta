@@ -1,5 +1,7 @@
 This file documents software changes.
 
+0.3.0 Fix to methods as requested by CRAN and update of some bootstrap functions
+0.2.9 Update to fix empty labels in Rd files.
 0.2.8 Bootstrap function can be specified. A bootstrap function for raw coefficients is provided. Added the technical note for User2021 to the pkgdown website of the package.
 0.2.7 Package help page.
 0.2.6 Roxygen the package, add badges and update pkgdown site.

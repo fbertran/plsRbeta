@@ -3,9 +3,7 @@
 \docType{data}
 \name{TxTum.mod.bootBC1}
 \alias{TxTum.mod.bootBC1}
-\title{Bootstrap distribution TxTum BC1 model
-
-A precomputed bootstrap distribution of the coefficients of a model used in the vignette.}
+\title{Bootstrap distribution TxTum BC1 model}
 \format{
 a class boot object
 }
@@ -13,8 +11,6 @@ a class boot object
 TxTum.mod.bootBC1
 }
 \description{
-Bootstrap distribution TxTum BC1 model
-
 A precomputed bootstrap distribution of the coefficients of a model used in the vignette.
 }
 \examples{

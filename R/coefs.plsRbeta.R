@@ -16,6 +16,10 @@
 #' @param link link for beta regression
 #' @param link.phi link.phi for beta regression
 #' @param type type of estimates
+#' @param maxcoefvalues maximum values allowed for the estimates of the
+#' coefficients to discard those coming from singular bootstrap samples
+#' @param ifbootfail value to return if the estimation fails on a bootstrap
+#' sample
 #' @param verbose should info messages be displayed ?
 #' @return Coefficients' Estimates on a sample.
 #' @author Frédéric Bertrand\cr
@@ -32,10 +36,11 @@
 #' @examples
 #' \donttest{
 #' data("GasolineYield",package="betareg")
-#' modpls <- coefs.plsRbeta(GasolineYield[,-6],1:32,nt=3,modele="pls-beta")
+#' bootplsbeta(plsRbeta(yield~.,data=GasolineYield,nt=3, modele="pls-beta"), typeboot="plsmodel", 
+#' R=250, statistic=coefs.plsRbeta)
 #' }
 #' 
-coefs.plsRbeta <- function(dataset, ind, nt, modele, family=NULL, method="logistic", link=NULL, link.phi=NULL, type="ML",verbose=TRUE) 
+coefs.plsRbeta <- function(dataset, ind, nt, modele, family=NULL, method="logistic", link=NULL, link.phi=NULL, type="ML", maxcoefvalues, ifbootfail, verbose=TRUE) 
 {
     tempcoefs <- try(PLS_beta_wvc(dataY = dataset[ind, 1], dataX = dataset[ind, 
         -1], nt = nt, modele = modele, family=family, method=method, link=link, keepstd.coeffs = TRUE, link.phi=link.phi, type=type, verbose=verbose)$std.coeffs, silent=TRUE)
@@ -43,6 +48,9 @@ coefs.plsRbeta <- function(dataset, ind, nt, modele, family=NULL, method="logist
         return(tempcoefs)
     }
     else {
-        return(as.matrix(as.numeric(ifelse(any(class(dataset[,1])=="factor"),rep(NA, ncol(dataset)+nlevels(dataset[,1])-1),rep(NA, ncol(dataset))))))
-    }
+      return(ifbootfail)
+      }
 }
+
+
+

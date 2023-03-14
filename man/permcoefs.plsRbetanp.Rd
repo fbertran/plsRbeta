@@ -48,7 +48,7 @@ A function passed to \code{boot} to perform bootstrap.
 \donttest{
 data("GasolineYield",package="betareg")
 modplsbeta <- plsRbeta(yield~.,data=GasolineYield,nt=3, modele="pls-beta")
-bootplsbeta(modplsbeta, R=250, statistic=permcoefs.plsRbetanp)
+bootplsbeta(modplsbeta, R=250, statistic=permcoefs.plsRbetanp, typeboot="fmodel_np")
 }
 }
 \seealso{

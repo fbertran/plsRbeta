@@ -14,6 +14,8 @@ coefs.plsRbeta.raw(
   link = NULL,
   link.phi = NULL,
   type = "ML",
+  maxcoefvalues,
+  ifbootfail,
   verbose = TRUE
 )
 }
@@ -40,6 +42,12 @@ coefs.plsRbeta.raw(
 
 \item{type}{type of estimates}
 
+\item{maxcoefvalues}{maximum values allowed for the estimates of the
+coefficients to discard those coming from singular bootstrap samples}
+
+\item{ifbootfail}{value to return if the estimation fails on a bootstrap
+sample}
+
 \item{verbose}{should info messages be displayed ?}
 }
 \value{
@@ -51,7 +59,8 @@ Returns the coefficients of a \code{"plsRbeta"} model.
 \examples{
 \donttest{
 data("GasolineYield",package="betareg")
-modpls <- coefs.plsRbeta.raw(GasolineYield[,-6],1:32,nt=3,modele="pls-beta")
+bootplsbeta(plsRbeta(yield~.,data=GasolineYield,nt=3, modele="pls-beta"), typeboot="fmodel_par", 
+R=250, statistic=coefs.plsRbeta.raw)
 }
 
 }

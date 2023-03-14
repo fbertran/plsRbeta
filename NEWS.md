@@ -1,3 +1,7 @@
+# plsRbeta 0.3.0
+
+* Fix to methods as requested by CRAN and update of some bootstrap functions
+
 # plsRbeta 0.2.9
 
 * Update to fix empty labels in Rd files

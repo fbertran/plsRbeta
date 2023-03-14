@@ -3,9 +3,7 @@
 \docType{data}
 \name{modpls.boot3}
 \alias{modpls.boot3}
-\title{Bootstrap distribution of a 3 components model
-
-A precomputed bootstrap distribution of the coefficients of a model used in the vignette.}
+\title{Bootstrap distribution of a 3 components model}
 \format{
 a class boot object
 }
@@ -13,8 +11,6 @@ a class boot object
 modpls.boot3
 }
 \description{
-Bootstrap distribution of a 3 components model
-
 A precomputed bootstrap distribution of the coefficients of a model used in the vignette.
 }
 \examples{

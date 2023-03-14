@@ -25,7 +25,7 @@
 #' \donttest{
 #' data("GasolineYield",package="betareg")
 #' modplsbeta <- plsRbeta(yield~.,data=GasolineYield,nt=3, modele="pls-beta")
-#' bootplsbeta(modplsbeta, R=250, statistic=permcoefs.plsRbetanp)
+#' bootplsbeta(modplsbeta, R=250, statistic=permcoefs.plsRbetanp, typeboot="fmodel_np")
 #' }
 #' @export permcoefs.plsRbetanp
 permcoefs.plsRbetanp <- function(dataRepYtt, ind, nt, modele, family = NULL, maxcoefvalues, wwetoile, ifbootfail) 

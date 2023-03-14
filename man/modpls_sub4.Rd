@@ -3,9 +3,7 @@
 \docType{data}
 \name{modpls_sub4}
 \alias{modpls_sub4}
-\title{A plsRbetamodel model on a data subset
-
-A precomputed four components plsRbetamodel fitted to a subset of an example dataset and used in the vignette.}
+\title{A plsRbetamodel model on a data subset}
 \format{
 a class plsRbetamodel object
 }
@@ -13,8 +11,6 @@ a class plsRbetamodel object
 modpls_sub4
 }
 \description{
-A plsRbetamodel model on a data subset
-
 A precomputed four components plsRbetamodel fitted to a subset of an example dataset and used in the vignette.
 }
 \examples{

@@ -43,6 +43,8 @@
 #' @param index The index of the statistic of interest in the output from
 #' \code{statistic}. By default the first element of the output of
 #' \code{statistic} is used.
+#' @param stabvalue A value to hard threshold bootstrap estimates computed from
+#' atypical resamplings.
 #' @return An object of class "boot".
 #' @author Frédéric Bertrand\cr
 #' \email{frederic.bertrand@@utt.fr}\cr
@@ -58,17 +60,23 @@
 #' @examples
 #' \donttest{
 #' data("GasolineYield",package="betareg")
-#' 
-#' GazYield.tilt.boot <- tilt.bootplsbeta(plsRbeta(yield~.,data=GasolineYield,nt=3,
-#' modele="pls-beta"), statistic=coefs.plsRbeta, R=c(499, 100, 100), 
-#' alpha=c(0.025, 0.975), sim="balanced", stype="i", index=1)
-#' boxplots.bootpls(GazYield.tilt.boot,1:2)
-#' 
+#' yGasolineYield <- GasolineYield$yield
+#' XGasolineYield <- GasolineYield[,2:5]
+#' modplsRbeta <- plsRbeta(yGasolineYield, XGasolineYield, nt=3, 
+#' modele="pls-beta")
+#' # GazYield.tilt.boot <- tilt.bootplsbeta(modplsRbeta,
+#' # statistic=coefs.plsRbeta, R=c(499, 100, 100), 
+#' # alpha=c(0.025, 0.975), sim="balanced", stype="i", index=1)
+#' # boxplots.bootpls(GazYield.tilt.boot,1:2)
 #' }
 #' 
-tilt.bootplsbeta <- function(object, typeboot="plsmodel", statistic=coefs.plsRbeta, R=c(499, 250, 250), alpha=c(0.025, 0.975), sim="ordinary", stype="i", index=1){
+tilt.bootplsbeta <- function(object, typeboot="plsmodel", statistic=coefs.plsRbeta, R=c(499, 250, 250), alpha=c(0.025, 0.975), sim="ordinary", stype="i", index=1, stabvalue=1e6){
 callplsRbeta <- object$call
-dataset <- cbind(y = eval(callplsRbeta$dataY),eval(callplsRbeta$dataX))
+maxcoefvalues <- stabvalue*abs(object$Coeffs)
+#dataset <- cbind(y = eval(callplsRbeta$dataY),eval(callplsRbeta$dataX))
+dataset <- cbind(y = object$dataY,object$dataX)
+nt <- eval(callplsRbeta$nt)
+ifbootfail <- as.matrix(as.numeric(ifelse(any(class(dataset[,1])=="factor"),rep(NA, ncol(dataset)+nlevels(dataset[,1])-1),rep(NA, ncol(dataset)))))
 nt <- eval(callplsRbeta$nt)
 if(!is.null(callplsRbeta$modele)){modele <- eval(callplsRbeta$modele)} else {modele <- "pls"}
 if(!is.null(callplsRbeta$family)){family <- eval(callplsRbeta$family)} else {family <- NULL}
@@ -77,12 +85,12 @@ if(!is.null(callplsRbeta$link.phi)){link.phi <- eval(callplsRbeta$link.phi)} els
 if(!is.null(callplsRbeta$type)){type <- eval(callplsRbeta$type)} else {type <- "ML"}
 if(!is.null(callplsRbeta$verbose)){verbose <- eval(callplsRbeta$verbose)} else {verbose <- TRUE}
 if(typeboot=="plsmodel"){
-return(tilt.boot(data=dataset, statistic=if(!(sim=="permutation")){coefs.plsRbeta} else {permcoefs.plsRbeta}, sim=sim, stype=stype, R=R, nt=nt, modele=modele, family=family, link=link, link.phi=link.phi, type=type, verbose=verbose))
+return(tilt.boot(data=dataset, statistic=if(!(sim=="permutation")){coefs.plsRbeta} else {permcoefs.plsRbeta}, sim=sim, stype=stype, R=R, nt=nt, modele=modele, family=family, link=link, link.phi=link.phi, type=type, maxcoefvalues = maxcoefvalues, ifbootfail=ifbootfail, verbose=verbose))
 }
 if(typeboot=="fmodel_np"){
-return(tilt.boot(data=dataset, statistic=if(!(sim=="permutation")){coefs.plsRbeta} else {permcoefs.plsRbeta}, sim=sim, stype=stype, R=R, nt=nt, modele=modele, family=family, link=link, link.phi=link.phi, type=type, verbose=verbose))
+return(tilt.boot(data=dataset, statistic=if(!(sim=="permutation")){coefs.plsRbeta} else {permcoefs.plsRbeta}, sim=sim, stype=stype, R=R, nt=nt, modele=modele, family=family, link=link, link.phi=link.phi, type=type, maxcoefvalues = maxcoefvalues, ifbootfail=ifbootfail, verbose=verbose))
 }
 if(typeboot=="fmodel_par"){
-return(tilt.boot(data=dataset, statistic=if(!(sim=="permutation")){coefs.plsRbeta} else {permcoefs.plsRbeta}, sim=sim, stype=stype, R=R, nt=nt, modele=modele, family=family, link=link, link.phi=link.phi, type=type, verbose=verbose))
+return(tilt.boot(data=dataset, statistic=if(!(sim=="permutation")){coefs.plsRbeta} else {permcoefs.plsRbeta}, sim=sim, stype=stype, R=R, nt=nt, modele=modele, family=family, link=link, link.phi=link.phi, type=type, maxcoefvalues = maxcoefvalues, ifbootfail=ifbootfail, verbose=verbose))
 }
 }

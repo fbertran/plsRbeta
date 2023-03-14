@@ -1,6 +1,6 @@
 Package: plsRbeta
-Version: 0.2.9
-Date: 2022-05-02
+Version: 0.3.0
+Date: 2023-03-12
 Depends: R (>= 3.5.0)
 Imports: mvtnorm, boot, Formula, MASS, plsRglm, betareg, methods
 Enhances: 
@@ -25,6 +25,6 @@ Encoding: UTF-8
 Classification/MSC: 62J12, 62J99
 LazyData: true
 VignetteBuilder: knitr
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.1
 URL: https://fbertran.github.io/plsRbeta/, https://github.com/fbertran/plsRbeta/
 BugReports: https://github.com/fbertran/plsRbeta/issues/

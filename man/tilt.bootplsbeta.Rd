@@ -12,7 +12,8 @@ tilt.bootplsbeta(
   alpha = c(0.025, 0.975),
   sim = "ordinary",
   stype = "i",
-  index = 1
+  index = 1,
+  stabvalue = 1e+06
 )
 }
 \arguments{
@@ -56,6 +57,9 @@ Possible values are \code{"ordinary"} (the default), \code{"balanced"},
 \item{index}{The index of the statistic of interest in the output from
 \code{statistic}. By default the first element of the output of
 \code{statistic} is used.}
+
+\item{stabvalue}{A value to hard threshold bootstrap estimates computed from
+atypical resamplings.}
 }
 \value{
 An object of class "boot".
@@ -73,12 +77,14 @@ probabilities as the resampling distribution.
 \examples{
 \donttest{
 data("GasolineYield",package="betareg")
-
-GazYield.tilt.boot <- tilt.bootplsbeta(plsRbeta(yield~.,data=GasolineYield,nt=3,
-modele="pls-beta"), statistic=coefs.plsRbeta, R=c(499, 100, 100), 
-alpha=c(0.025, 0.975), sim="balanced", stype="i", index=1)
-boxplots.bootpls(GazYield.tilt.boot,1:2)
-
+yGasolineYield <- GasolineYield$yield
+XGasolineYield <- GasolineYield[,2:5]
+modplsRbeta <- plsRbeta(yGasolineYield, XGasolineYield, nt=3, 
+modele="pls-beta")
+# GazYield.tilt.boot <- tilt.bootplsbeta(modplsRbeta,
+# statistic=coefs.plsRbeta, R=c(499, 100, 100), 
+# alpha=c(0.025, 0.975), sim="balanced", stype="i", index=1)
+# boxplots.bootpls(GazYield.tilt.boot,1:2)
 }
 
 }

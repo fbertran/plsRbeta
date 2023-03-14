@@ -10,6 +10,11 @@ coefs.plsRbetanp(
   nt,
   modele,
   family = NULL,
+  method = "logistic",
+  link = NULL,
+  link.phi = NULL,
+  type = "ML",
+  verbose = TRUE,
   maxcoefvalues,
   wwetoile,
   ifbootfail
@@ -25,6 +30,16 @@ coefs.plsRbetanp(
 \item{modele}{type of modele to use, see \link{plsRbeta}}
 
 \item{family}{glm family to use, see \link{plsRbeta}}
+
+\item{method}{method for beta regression}
+
+\item{link}{link for beta regression}
+
+\item{link.phi}{link.phi for beta regression}
+
+\item{type}{type of estimates}
+
+\item{verbose}{should info messages be displayed ?}
 
 \item{maxcoefvalues}{maximum values allowed for the estimates of the
 coefficients to discard those coming from singular bootstrap samples}
@@ -47,7 +62,7 @@ A function passed to \code{boot} to perform bootstrap.
 \examples{
 \donttest{
 data("GasolineYield",package="betareg")
-bootplsbeta(plsRbeta(yield~.,data=GasolineYield,nt=3, modele="pls-beta"), 
+bootplsbeta(plsRbeta(yield~.,data=GasolineYield,nt=3, modele="pls-beta"), typeboot="fmodel_np", 
 R=250, statistic=coefs.plsRbetanp)
 }
 }

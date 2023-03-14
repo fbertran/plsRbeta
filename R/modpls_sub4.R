@@ -1,6 +1,6 @@
 #' @title A plsRbetamodel model on a data subset
 #' 
-#' A precomputed four components plsRbetamodel fitted to a subset of an example dataset and used in the vignette.
+#' @description A precomputed four components plsRbetamodel fitted to a subset of an example dataset and used in the vignette.
 #' 
 #' @name modpls_sub4
 #' @docType data

@@ -16,6 +16,9 @@
 #' @param link link for beta regression
 #' @param link.phi link.phi for beta regression
 #' @param type type of estimates
+#' @param maxcoefvalues maximum values allowed for the estimates of the
+#' coefficients to discard those coming from singular bootstrap samples
+#' @param ifbootfail value to return if the estimation fails on a
 #' @param verbose should info messages be displayed ?
 #' @return Estimates on a bootstrap sample.
 #' @author Frédéric Bertrand\cr
@@ -32,11 +35,22 @@
 #' @examples
 #' \donttest{
 #' data("GasolineYield",package="betareg")
-#' 
-#' data("GasolineYield",package="betareg")
-#' modpls <- permcoefs.plsRbeta.raw(GasolineYield[,-6],1:32,nt=3,modele="pls-beta")
+#' modplsbeta <- plsRbeta(yield~.,data=GasolineYield,nt=3, modele="pls-beta")
+#' GazYield.boot.raw <- bootplsbeta(modplsbeta, sim="permutation", stype="i", 
+#' R=250, statistic=coefs.plsRbeta.raw)
 #' }
 #' 
-permcoefs.plsRbeta.raw <- function(dataset,ind,nt,modele,family=NULL,method="logistic",link="logit",link.phi=NULL,type="ML",verbose=TRUE){
-PLS_beta_wvc(dataY =dataset[,1], dataX=dataset[ind,-1], nt=nt, modele=modele, family=family, keepcoeffs=TRUE, method=method, link=link, link.phi=link.phi, type=type,verbose=verbose)$coeffs
+permcoefs.plsRbeta.raw <- function(dataset,ind,nt,modele,family=NULL,method="logistic",link="logit",link.phi=NULL,type="ML", maxcoefvalues,ifbootfail,verbose=TRUE){
+  tempcoefs <- try(PLS_beta_wvc(dataY =dataset[,1], dataX=dataset[ind,-1], nt=nt, modele=modele, family=family, keepcoeffs=TRUE, method=method, link=link, link.phi=link.phi, type=type,verbose=verbose)$coeffs, silent=TRUE)
+  Cond <- FALSE
+  try(Cond<-is.numeric(tempcoefs)&all(abs(tempcoefs)<maxcoefvalues),silent=TRUE)
+  if (Cond) {
+    return(tempcoefs)
+  }
+  else {
+    return(ifbootfail)
+  }
 }
+
+
+
