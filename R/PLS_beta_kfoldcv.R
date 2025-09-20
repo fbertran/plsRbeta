@@ -129,7 +129,7 @@
 #' \item{call}{the call of the function}
 #' @note Works for complete and incomplete datasets.
 #' @author Frédéric Bertrand\cr
-#' \email{frederic.bertrand@@utt.fr}\cr
+#' \email{frederic.bertrand@@lecnam.net}\cr
 #' \url{https://fbertran.github.io/homepage/}
 #' @seealso \code{\link[plsRglm]{kfolds2coeff}},
 #' \code{\link[plsRglm]{kfolds2Pressind}}, \code{\link[plsRglm]{kfolds2Press}},
@@ -142,7 +142,7 @@
 #' Myriam Maumy-Bertrand (2013). Régression Bêta
 #' PLS. \emph{Journal de la Société Française de Statistique},
 #' \bold{154}(3):143-159.
-#' \url{http://publications-sfds.math.cnrs.fr/index.php/J-SFdS/article/view/215}
+#' \url{https://ojs-test.apps.ocp.math.cnrs.fr/index.php/J-SFdS/article/view/215}
 #' @keywords models regression
 #' @examples
 #' 

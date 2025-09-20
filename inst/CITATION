@@ -9,7 +9,7 @@ bibentry(bibtype="article",
          pages = 143-159,
          year  = 2013,
          note  = "Paris",
-         url   = "http://publications-sfds.math.cnrs.fr/index.php/J-SFdS/article/view/215",
+         url   = "https://ojs-test.apps.ocp.math.cnrs.fr/index.php/J-SFdS/article/view/215",
          textVersion = 
          paste("Frederic Bertrand, Nicolas Meyer, Michele Beau-Faller, Karim El Bayed, Izzie-Jacques Namer, Myriam Maumy-Bertrand (2013). Regression Beta PLS. Journal de la Societe Francaise de Statistique, 154(3):143-159. http://smf4.emath.fr/Publications/JSFdS/154_3/html/.")
 )
@@ -28,6 +28,8 @@ bibentry(bibtype="article",
 titl <- meta$Title
 year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date)
 vers <- paste("R package version", meta$Version)
+doi <- paste0("10.32614/CRAN.package.", meta$Package)
+urldoi <- paste0("https://doi.org/", doi)
 
 bibentry(bibtype="Manual",
          title = titl,
@@ -35,10 +37,10 @@ bibentry(bibtype="Manual",
    publisher = "manual",
          year         = year,
          note         = vers,
-         url          = "https://fbertran.github.io/homepage/",
+         url          = "https://fbertran.github.io/plsRbeta/",
          textVersion = 
          paste("Frederic Bertrand and Myriam Maumy-Bertrand (",year ,"). ", 
-               titl, ", ", vers, ".", sep=""
+               titl, ", ", vers, ". doi:", doi, ".", sep=""
                )
 )
 

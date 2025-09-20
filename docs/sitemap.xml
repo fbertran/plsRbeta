@@ -1,147 +1,51 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/articles/tn_Insights.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PLS_beta.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PLS_beta_formula.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PLS_beta_kfoldcv.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PLS_beta_kfoldcv_formula.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PLS_beta_wvc.html</loc>
-  </url>
-  <url>
-    <loc>/reference/TxTum.html</loc>
-  </url>
-  <url>
-    <loc>/reference/TxTum.mod.bootBC1.html</loc>
-  </url>
-  <url>
-    <loc>/reference/TxTum.mod.bootBR6.html</loc>
-  </url>
-  <url>
-    <loc>/reference/bootplsbeta.html</loc>
-  </url>
-  <url>
-    <loc>/reference/coefs.plsRbeta.html</loc>
-  </url>
-  <url>
-    <loc>/reference/coefs.plsRbeta.raw.html</loc>
-  </url>
-  <url>
-    <loc>/reference/coefs.plsRbetanp.html</loc>
-  </url>
-  <url>
-    <loc>/reference/colon.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ind_BCa_nt1BC.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ind_BCa_nt1BR.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ind_BCa_nt2BC.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ind_BCa_nt2BR.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ind_BCa_nt3.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ind_BCa_nt3BC.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ind_BCa_nt3BR.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ind_BCa_nt4BC.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ind_BCa_nt4BR.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ind_BCa_nt5BC.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ind_BCa_nt5BR.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ind_BCa_nt6BC.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ind_BCa_nt6BR.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/kfolds2CVinfos_beta.html</loc>
-  </url>
-  <url>
-    <loc>/reference/kfolds2Chisq.html</loc>
-  </url>
-  <url>
-    <loc>/reference/kfolds2Chisqind.html</loc>
-  </url>
-  <url>
-    <loc>/reference/modpls.boot3.html</loc>
-  </url>
-  <url>
-    <loc>/reference/modpls_sub4.html</loc>
-  </url>
-  <url>
-    <loc>/reference/permcoefs.plsRbeta.html</loc>
-  </url>
-  <url>
-    <loc>/reference/permcoefs.plsRbeta.raw.html</loc>
-  </url>
-  <url>
-    <loc>/reference/permcoefs.plsRbetanp.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plsRbeta-package.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plsRbeta.html</loc>
-  </url>
-  <url>
-    <loc>/reference/print.plsRbetamodel.html</loc>
-  </url>
-  <url>
-    <loc>/reference/print.summary.plsRbetamodel.html</loc>
-  </url>
-  <url>
-    <loc>/reference/simul_data_UniYX_beta.html</loc>
-  </url>
-  <url>
-    <loc>/reference/summary.plsRbetamodel.html</loc>
-  </url>
-  <url>
-    <loc>/reference/tilt.bootplsbeta.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://fbertran.github.io/plsRbeta/404.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/articles/index.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/articles/tn_Insights.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/authors.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/index.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/news/index.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/PLS_beta.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/PLS_beta_formula.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/PLS_beta_kfoldcv.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/PLS_beta_kfoldcv_formula.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/PLS_beta_wvc.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/TxTum.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/TxTum.mod.bootBC1.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/TxTum.mod.bootBR6.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/bootplsbeta.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/coefs.plsRbeta.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/coefs.plsRbeta.raw.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/coefs.plsRbetanp.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/colon.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/ind_BCa_nt1BC.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/ind_BCa_nt1BR.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/ind_BCa_nt2BC.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/ind_BCa_nt2BR.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/ind_BCa_nt3.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/ind_BCa_nt3BC.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/ind_BCa_nt3BR.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/ind_BCa_nt4BC.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/ind_BCa_nt4BR.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/ind_BCa_nt5BC.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/ind_BCa_nt5BR.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/ind_BCa_nt6BC.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/ind_BCa_nt6BR.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/index.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/kfolds2CVinfos_beta.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/kfolds2Chisq.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/kfolds2Chisqind.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/modpls.boot3.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/modpls_sub4.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/permcoefs.plsRbeta.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/permcoefs.plsRbeta.raw.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/permcoefs.plsRbetanp.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/plsRbeta-package.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/plsRbeta.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/print.plsRbetamodel.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/print.summary.plsRbetamodel.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/simul_data_UniYX_beta.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/summary.plsRbetamodel.html</loc></url>
+<url><loc>https://fbertran.github.io/plsRbeta/reference/tilt.bootplsbeta.html</loc></url>
 </urlset>
+

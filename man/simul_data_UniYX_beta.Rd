@@ -103,7 +103,7 @@ Michèle Beau-Faller, Karim El Bayed, Izzie-Jacques Namer,
 Myriam Maumy-Bertrand (2013). Régression Bêta
 PLS. \emph{Journal de la Société Française de Statistique},
 \bold{154}(3):143-159.
-\url{http://publications-sfds.math.cnrs.fr/index.php/J-SFdS/article/view/215}
+\url{https://ojs-test.apps.ocp.math.cnrs.fr/index.php/J-SFdS/article/view/215}
 
 T. Naes, H. Martens (1985). Comparison of prediction methods for
 multicollinear data.  \emph{Commun. Stat., Simul.}, \bold{14}:545-576.
@@ -118,7 +118,7 @@ Laboratory Systems}, \bold{64}:79-89. <doi:110.1016/S0169-7439(02)00051-5>
 }
 \author{
 Frédéric Bertrand\cr
-\email{frederic.bertrand@utt.fr}\cr
+\email{frederic.bertrand@lecnam.net}\cr
 \url{https://fbertran.github.io/homepage/}
 }
 \keyword{datagen}

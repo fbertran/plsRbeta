@@ -7,7 +7,10 @@
 # Partial Least Squares Regression for Beta Regression Models
 ## Frédéric Bertrand and Myriam Maumy-Bertrand
 
+<https://doi.org/10.32614/CRAN.package.plsRbeta>
+
 <!-- badges: start -->
+[![DOI](https://img.shields.io/badge/doi-10.32614/CRAN.package.plsRbeta-blue.svg)](https://doi.org/10.32614/CRAN.package.plsRbeta)
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-green.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R-CMD-check](https://github.com/fbertran/plsRbeta/workflows/R-CMD-check/badge.svg)](https://github.com/fbertran/plsRbeta/actions)
@@ -15,10 +18,9 @@
 [![CRAN status](https://www.r-pkg.org/badges/version/plsRbeta)](https://cran.r-project.org/package=plsRbeta)
 [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/plsRbeta)](https://cran.r-project.org/package=plsRbeta)
 [![GitHub Repo stars](https://img.shields.io/github/stars/fbertran/plsRbeta?style=social)](https://github.com/fbertran/plsRbeta)
-[![DOI](https://zenodo.org/badge/18454088.svg)](https://zenodo.org/badge/latestdoi/18454088)
 <!-- badges: end -->
 
-The goal of plsRbeta is to provide Partial least squares Regression for (weighted) beta regression models (Bertrand 2013,  <http://journal-sfds.fr/article/view/215>) and k-fold cross-validation of such models using various criteria. It allows for missing data in the explanatory variables. Bootstrap confidence intervals constructions are also available.
+The goal of plsRbeta is to provide Partial least squares Regression for (weighted) beta regression models (Bertrand 2013,  <https://ojs-test.apps.ocp.math.cnrs.fr/index.php/J-SFdS/article/view/215>) and k-fold cross-validation of such models using various criteria. It allows for missing data in the explanatory variables. Bootstrap confidence intervals constructions are also available.
 
 
 The package was accepted for presentation at the the useR! 2021 international conference. A technical note for the package was created and published on the website of the conference. It can be accessed  here: [https://user2021.r-project.org/participation/technical_notes/t138/technote/](https://user2021.r-project.org/participation/technical_notes/t138/technote/). It is not only an english translation of most of the contents of the original article that was published in French but it also contains the R code reproduce the two examples that were presented in the article.
@@ -31,14 +33,14 @@ This website and these examples were created by F. Bertrand and M. Maumy-Bertran
 You can install the released version of plsRbeta from [CRAN](https://CRAN.R-project.org) with:
 
 
-```r
+``` r
 install.packages("plsRbeta")
 ```
 
 You can install the development version of plsRbeta from [github](https://github.com) with:
 
 
-```r
+``` r
 devtools::install_github("fbertran/plsRbeta")
 ```
 
@@ -96,7 +98,7 @@ print(modpls)
 
 Additionnal values can be retrieved from the fitted model.
 
-```r
+``` r
 modpls$pp
 #>             Comp_ 1    Comp_ 2    Comp_ 3
 #> gravity   0.4590380 -0.4538663 -2.5188256
@@ -118,16 +120,16 @@ modpls$Std.Coeffs
 #> temp10    -0.315301400
 #> temp       0.723088387
 modpls$InfCrit
-#>                  AIC        BIC Chi2_Pearson_Y      RSS_Y
-#> Nb_Comp_0  -52.77074  -49.83927       30.72004 0.35640772
-#> Nb_Comp_1 -112.87383 -108.47662       30.57369 0.05211039
-#> Nb_Comp_2 -136.43184 -130.56889       30.97370 0.02290022
-#> Nb_Comp_3 -139.08440 -131.75572       31.08224 0.02022386
-#>           pseudo_R2_Y      R2_Y
-#> Nb_Comp_0          NA        NA
-#> Nb_Comp_1   0.8498691 0.8537900
-#> Nb_Comp_2   0.9256771 0.9357471
-#> Nb_Comp_3   0.9385887 0.9432564
+#>                  AIC        BIC Chi2_Pearson_Y      RSS_Y pseudo_R2_Y
+#> Nb_Comp_0  -52.77074  -49.83927       30.72004 0.35640772          NA
+#> Nb_Comp_1 -112.87383 -108.47662       30.57369 0.05211039   0.8498691
+#> Nb_Comp_2 -136.43184 -130.56889       30.97370 0.02290022   0.9256771
+#> Nb_Comp_3 -139.08440 -131.75572       31.08224 0.02022386   0.9385887
+#>                R2_Y
+#> Nb_Comp_0        NA
+#> Nb_Comp_1 0.8537900
+#> Nb_Comp_2 0.9357471
+#> Nb_Comp_3 0.9432564
 modpls$PredictY[1,]
 #>   gravity  pressure    temp10      temp 
 #>  2.049533  1.686655 -1.371820 -1.821977
@@ -178,7 +180,7 @@ print(modpls)
 
 Additionnal values can be retrieved from the fitted model.
 
-```r
+``` r
 modpls$pp
 #>              Comp_ 1     Comp_ 2     Comp_ 3
 #> gravity   0.37895923 -0.42864981  0.50983922
@@ -230,23 +232,21 @@ modpls$Std.Coeffs
 #> batch9    -0.0173701781
 #> batch10   -0.0587759166
 modpls$InfCrit
-#>                  AIC        BIC Chi2_Pearson_Y      RSS_Y
-#> Nb_Comp_0  -52.77074  -49.83927       30.72004 0.35640772
-#> Nb_Comp_1  -87.96104  -83.56383       31.31448 0.11172576
-#> Nb_Comp_2 -114.10269 -108.23975       33.06807 0.04650238
-#> Nb_Comp_3 -152.71170 -145.38302       30.69727 0.01138837
-#>           pseudo_R2_Y      R2_Y
-#> Nb_Comp_0          NA        NA
-#> Nb_Comp_1   0.6879757 0.6865226
-#> Nb_Comp_2   0.8671800 0.8695248
-#> Nb_Comp_3   0.9526757 0.9680468
+#>                  AIC        BIC Chi2_Pearson_Y      RSS_Y pseudo_R2_Y
+#> Nb_Comp_0  -52.77074  -49.83927       30.72004 0.35640772          NA
+#> Nb_Comp_1  -87.96104  -83.56383       31.31448 0.11172576   0.6879757
+#> Nb_Comp_2 -114.10269 -108.23975       33.06807 0.04650238   0.8671800
+#> Nb_Comp_3 -152.71170 -145.38302       30.69727 0.01138837   0.9526757
+#>                R2_Y
+#> Nb_Comp_0        NA
+#> Nb_Comp_1 0.6865226
+#> Nb_Comp_2 0.8695248
+#> Nb_Comp_3 0.9680468
 modpls$PredictY[1,]
-#>    gravity   pressure     temp10       temp     batch1 
-#>  2.0495333  1.6866554 -1.3718198 -1.8219769  2.6040833 
-#>     batch2     batch3     batch4     batch5     batch6 
-#> -0.3165683 -0.3165683 -0.3720119 -0.3165683 -0.3165683 
-#>     batch7     batch8     batch9    batch10 
-#> -0.3720119 -0.3165683 -0.2541325 -0.3165683
+#>    gravity   pressure     temp10       temp     batch1     batch2     batch3 
+#>  2.0495333  1.6866554 -1.3718198 -1.8219769  2.6040833 -0.3165683 -0.3165683 
+#>     batch4     batch5     batch6     batch7     batch8     batch9    batch10 
+#> -0.3720119 -0.3165683 -0.3165683 -0.3720119 -0.3165683 -0.2541325 -0.3165683
 ```
 
 ###Information criteria and cross validation
@@ -309,72 +309,62 @@ GazYield.boot <- bootplsbeta(modpls, sim="ordinary", stype="i", R=250)
 
 Boxplots of the bootstrap distributions
 
-```r
+``` r
 plsRglm::boxplots.bootpls(GazYield.boot)
 ```
 
-<img src="man/figures/README-bootboxplots-1.png" title="plot of chunk bootboxplots" alt="plot of chunk bootboxplots" width="100%" />
+<div class="figure">
+<img src="man/figures/README-bootboxplots-1.png" alt="plot of chunk bootboxplots" width="100%" />
+<p class="caption">plot of chunk bootboxplots</p>
+</div>
 
 Confidence intervals for the coefficients of the model based on the bootstrap distributions
 
-```r
+``` r
 plsRglm::confints.bootpls(GazYield.boot)
-#>                                                
-#> Intercept -1.796887447 -1.298797470 -1.79109655
-#> gravity    0.007803426  0.203529463 -0.03031919
-#> pressure  -0.114413178  0.178241939 -0.10016933
-#> temp10    -0.500300165 -0.196296503 -0.50450721
-#> temp       0.634667387  0.964477695  0.64140043
-#> batch1    -0.103808147  0.123669771 -0.09078670
-#> batch2    -0.043844906  0.118181125 -0.05804124
-#> batch3    -0.039650496  0.160223180 -0.02620071
-#> batch4    -0.063189142  0.069329059 -0.05878901
-#> batch5    -0.046868693  0.090317880 -0.04970864
-#> batch6    -0.036189372  0.084497622 -0.04342852
-#> batch7    -0.130445774  0.072421206 -0.10384760
-#> batch8    -0.127087903  0.103619226 -0.09754607
-#> batch9    -0.070998169  0.032240075 -0.06309787
-#> batch10   -0.136043809  0.008565401 -0.14272981
-#>                                                          
-#> Intercept -1.32785762 -1.77750018 -1.31426124 -1.75724986
-#> gravity    0.19625824 -0.01907056  0.20750687  0.01728695
-#> pressure   0.23040737 -0.07051412  0.26006259 -0.22781373
-#> temp10    -0.21483215 -0.34203983 -0.05236477 -0.40987882
-#> temp       0.99074204  0.51679514  0.86613674  0.62994281
-#> batch1     0.14234706 -0.08117396  0.15195980 -0.14041823
-#> batch2     0.12705691 -0.04422306  0.14087509 -0.05179246
-#> batch3     0.19773676 -0.06227605  0.16166141 -0.08981571
-#> batch4     0.09310470 -0.09365068  0.05824304 -0.09749153
-#> batch5     0.08458056 -0.02424531  0.11004389 -0.09315423
-#> batch6     0.10265439 -0.03466126  0.11142165 -0.04818180
-#> batch7     0.10180298 -0.16937270  0.03627788 -0.25198453
-#> batch8     0.14968985 -0.17621892  0.07101700 -0.21517753
-#> batch9     0.04674180 -0.08148215  0.02835751 -0.12674384
-#> batch10    0.01478130 -0.13233313  0.02517798 -0.15107466
-#>                       
-#> Intercept -1.263641413
-#> gravity    0.240794215
-#> pressure   0.136939906
-#> temp10    -0.175141922
-#> temp       0.900503031
-#> batch1     0.120479458
-#> batch2     0.110789411
-#> batch3     0.128573856
-#> batch4     0.052650981
-#> batch5     0.082446108
-#> batch6     0.065003348
-#> batch7     0.017661871
-#> batch8     0.052435236
-#> batch9     0.010888555
-#> batch10    0.004957851
+#>                                                                        
+#> Intercept -1.796887447 -1.298797470 -1.79109655 -1.32785762 -1.77750018
+#> gravity    0.007803426  0.203529463 -0.03031919  0.19625824 -0.01907056
+#> pressure  -0.114413178  0.178241939 -0.10016933  0.23040737 -0.07051412
+#> temp10    -0.500300165 -0.196296503 -0.50450721 -0.21483215 -0.34203983
+#> temp       0.634667387  0.964477695  0.64140043  0.99074204  0.51679514
+#> batch1    -0.103808147  0.123669771 -0.09078670  0.14234706 -0.08117396
+#> batch2    -0.043844906  0.118181125 -0.05804124  0.12705691 -0.04422306
+#> batch3    -0.039650496  0.160223180 -0.02620071  0.19773676 -0.06227605
+#> batch4    -0.063189142  0.069329059 -0.05878901  0.09310470 -0.09365068
+#> batch5    -0.046868693  0.090317880 -0.04970864  0.08458056 -0.02424531
+#> batch6    -0.036189372  0.084497622 -0.04342852  0.10265439 -0.03466126
+#> batch7    -0.130445774  0.072421206 -0.10384760  0.10180298 -0.16937270
+#> batch8    -0.127087903  0.103619226 -0.09754607  0.14968985 -0.17621892
+#> batch9    -0.070998169  0.032240075 -0.06309787  0.04674180 -0.08148215
+#> batch10   -0.136043809  0.008565401 -0.14272981  0.01478130 -0.13233313
+#>                                               
+#> Intercept -1.31426124 -1.75724986 -1.263641413
+#> gravity    0.20750687  0.01728695  0.240794215
+#> pressure   0.26006259 -0.22781373  0.136939906
+#> temp10    -0.05236477 -0.40987882 -0.175141922
+#> temp       0.86613674  0.62994281  0.900503031
+#> batch1     0.15195980 -0.14041823  0.120479458
+#> batch2     0.14087509 -0.05179246  0.110789411
+#> batch3     0.16166141 -0.08981571  0.128573856
+#> batch4     0.05824304 -0.09749153  0.052650981
+#> batch5     0.11004389 -0.09315423  0.082446108
+#> batch6     0.11142165 -0.04818180  0.065003348
+#> batch7     0.03627788 -0.25198453  0.017661871
+#> batch8     0.07101700 -0.21517753  0.052435236
+#> batch9     0.02835751 -0.12674384  0.010888555
+#> batch10    0.02517798 -0.15107466  0.004957851
 #> attr(,"typeBCa")
 #> [1] TRUE
 ```
 
 Plot of the confidence intervals for the coefficients of the model based on the bootstrap distributions
 
-```r
+``` r
 plsRglm::plots.confints.bootpls(plsRglm::confints.bootpls(GazYield.boot))
 ```
 
-<img src="man/figures/README-bootplotconfint-1.png" title="plot of chunk bootplotconfint" alt="plot of chunk bootplotconfint" width="100%" />
+<div class="figure">
+<img src="man/figures/README-bootplotconfint-1.png" alt="plot of chunk bootplotconfint" width="100%" />
+<p class="caption">plot of chunk bootplotconfint</p>
+</div>

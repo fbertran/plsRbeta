@@ -3,7 +3,7 @@
 #' Light version of \code{PLS_beta} for cross validation purposes either on
 #' complete or incomplete datasets.
 #' 
-#' This function is called by \code{\link{PLS_glm_kfoldcv_formula}} in order to
+#' This function is called by \code{\link{PLS_beta_kfoldcv_formula}} in order to
 #' perform cross validation either on complete or incomplete datasets.
 #' 
 #' There are seven different predefined models with predefined link functions
@@ -109,17 +109,17 @@
 #' \code{ncol(dataX) * 1} matrix of the coefficients of the the eXplanatory
 #' variables}
 #' @author Frédéric Bertrand\cr
-#' \email{frederic.bertrand@@utt.fr}\cr
+#' \email{frederic.bertrand@@lecnam.net}\cr
 #' \url{https://fbertran.github.io/homepage/}
 #' @seealso \code{\link{PLS_beta}} for more detailed results,
 #' \code{\link{PLS_beta_kfoldcv}} for cross validating models and
-#' \code{\link{PLS_lm_wvc}} for the same function dedicated to plsR models
+#' \code{\link[plsRglm]{PLS_lm_wvc}} for the same function dedicated to plsR models
 #' @references Frédéric Bertrand, Nicolas Meyer,
 #' Michèle Beau-Faller, Karim El Bayed, Izzie-Jacques Namer,
 #' Myriam Maumy-Bertrand (2013). Régression Bêta
 #' PLS. \emph{Journal de la Société Française de Statistique},
 #' \bold{154}(3):143-159.
-#' \url{http://publications-sfds.math.cnrs.fr/index.php/J-SFdS/article/view/215}
+#' \url{https://ojs-test.apps.ocp.math.cnrs.fr/index.php/J-SFdS/article/view/215}
 #' @keywords models regression
 #' @examples
 #' 

@@ -1,3 +1,13 @@
+# plsRbeta 0.3.2
+
+* Maintainer email updated
+* Added unit tests
+* Added package doi
+
+# plsRbeta 0.3.1
+
+* A fix to the package documentation to get rid of CRAN check notes
+
 # plsRbeta 0.3.0
 
 * Fix to methods as requested by CRAN and update of some bootstrap functions
@@ -16,7 +26,7 @@
 
 # plsRbeta 0.2.7
 
-* package help page.
+* Package help page.
 
 # plsRbeta 0.2.6
 

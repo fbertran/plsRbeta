@@ -3,33 +3,31 @@
 \docType{package}
 \name{plsRbeta-package}
 \alias{plsRbeta-package}
-\title{plsRbeta-package}
+\title{plsRbeta: Partial Least Squares Regression for Beta Regression Models}
 \description{
-Provides Partial least squares Regression for (weighted) beta regression models (Bertrand 2013,  <http://journal-sfds.fr/article/view/215>) and k-fold cross-validation of such models using various criteria. It allows for missing data in the explanatory variables. Bootstrap confidence intervals constructions are also available.
-}
-\examples{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-data("GasolineYield",package="betareg")
-modpls <- plsRbeta(yield~.,data=GasolineYield,nt=3,modele="pls-beta")
-modpls$pp
-modpls$Coeffs
-modpls$Std.Coeffs
-modpls$InfCrit
-modpls$PredictY[1,]
-rm("modpls")
-
-data("GasolineYield",package="betareg")
-yGasolineYield <- GasolineYield$yield
-XGasolineYield <- GasolineYield[,2:5]
-modpls <- plsRbeta(yGasolineYield,XGasolineYield,nt=3,modele="pls-beta")
-modpls$pp
-modpls$Coeffs
-modpls$Std.Coeffs
-modpls$InfCrit
-modpls$PredictY[1,]
-rm("modpls")
-
+Provides Partial least squares Regression for (weighted) beta regression models (Bertrand 2013, \url{https://ojs-test.apps.ocp.math.cnrs.fr/index.php/J-SFdS/article/view/215}) and k-fold cross-validation of such models using various criteria. It allows for missing data in the explanatory variables. Bootstrap confidence intervals constructions are also available.
 }
 \references{
-Partial least squares Regression for (weighted) beta regression models (Bertrand 2013,  <http://journal-sfds.fr/article/view/215>), \url{https://github.com/fbertran/plsRbeta/} et \url{https://fbertran.github.io/plsRbeta/}
+Partial least squares Regression for (weighted) beta regression models (Bertrand 2013,  <https://ojs-test.apps.ocp.math.cnrs.fr/index.php/J-SFdS/article/view/215>), \url{https://github.com/fbertran/plsRbeta/} et \url{https://fbertran.github.io/plsRbeta/}
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://fbertran.github.io/plsRbeta/}
+  \item \url{https://github.com/fbertran/plsRbeta/}
+  \item Report bugs at \url{https://github.com/fbertran/plsRbeta/issues/}
+}
+
+}
+\author{
+\strong{Maintainer}: Frederic Bertrand \email{frederic.bertrand@lecnam.net} (\href{https://orcid.org/0000-0002-0837-8281}{ORCID})
+
+Authors:
+\itemize{
+  \item Myriam Maumy-Bertrand \email{myriam.maumy@ehesp.fr} (\href{https://orcid.org/0000-0002-4615-1512}{ORCID})
+}
+
+}
+\keyword{internal}
