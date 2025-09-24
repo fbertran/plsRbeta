@@ -25,4 +25,4 @@ NEWS
 ^fullrespdf*$
 ^inst/animation*$
 ^\.github$
-^technote*$
+^technote*$\.DS_Store$
