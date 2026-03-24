@@ -1734,8 +1734,8 @@ res$YChapeau <- as.matrix(tempregglm$fitted.values)
 rownames(res$YChapeau) <- rownames(ExpliX)
 
 tt <- res$ttPredictY
-res$Std.ValsPredictY <- predict(tempregglm,newdata=data.frame(tt))
-res$ValsPredictY <- predict(tempregglm,newdata=data.frame(tt),type = "response")
+res$Std.ValsPredictY <- predict(tempregglm,newdata=data.frame(tt = I(tt)))
+res$ValsPredictY <- predict(tempregglm,newdata=data.frame(tt = I(tt)),type = "response")
 
 res$Std.XChapeau <- res$tt%*%t(res$pp)
 rownames(res$Std.XChapeau) <- rownames(ExpliX)
@@ -1772,8 +1772,8 @@ rownames(res$YChapeau) <- rownames(ExpliX)
 
 tt <- res$ttPredictY
 #assign("tt", tt, envir=parent.frame(n=sys.nframe()))
-res$Std.ValsPredictY <- predict(tempregbeta,newdata=data.frame(tt))
-res$ValsPredictY <- predict(tempregbeta,newdata=data.frame(tt),type = "response")
+res$Std.ValsPredictY <- predict(tempregbeta,newdata=data.frame(tt = I(tt)))
+res$ValsPredictY <- predict(tempregbeta,newdata=data.frame(tt = I(tt)),type = "response")
 
 res$Std.XChapeau <- res$tt%*%t(res$pp)
 rownames(res$Std.XChapeau) <- rownames(ExpliX)

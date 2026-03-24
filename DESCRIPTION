@@ -1,6 +1,6 @@
 Package: plsRbeta
-Version: 0.3.2
-Date: 2025-09-20
+Version: 0.3.3
+Date: 2026-03-25
 Depends: R (>= 3.5.0)
 Imports: mvtnorm, boot, Formula, MASS, plsRglm, betareg, methods
 Enhances: 
@@ -27,6 +27,6 @@ Classification/MSC: 62J12, 62J99
 LazyData: true
 VignetteBuilder: knitr
 RoxygenNote: 7.3.3
-URL: https://fbertran.github.io/plsRbeta/, https://github.com/fbertran/plsRbeta/
-BugReports: https://github.com/fbertran/plsRbeta/issues/
+URL: https://fbertran.github.io/plsRbeta/, https://github.com/fbertran/plsRbeta
+BugReports: https://github.com/fbertran/plsRbeta/issues
 Config/testthat/edition: 3

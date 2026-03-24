@@ -1,3 +1,7 @@
+# plsRbeta 0.3.3
+
+* Add predict for plsRbeta models
+
 # plsRbeta 0.3.2
 
 * Maintainer email updated

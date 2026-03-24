@@ -949,7 +949,7 @@ res$listValsPredictY <- cbind(res$listValsPredictY,attr(res$RepY,"scaled:center"
 ##############################################
 if (modele %in% c("pls-glm-logistic","pls-glm-family","pls-glm-Gamma","pls-glm-gaussian","pls-glm-inverse.gaussian","pls-glm-poisson")) {
 tt <- res$ttPredictY
-res$listValsPredictY <- cbind(res$listValsPredictY,predict(object=tempregglm,newdata=data.frame(tt),type = "response"))
+res$listValsPredictY <- cbind(res$listValsPredictY,predict(object=tempregglm,newdata=data.frame(tt = I(tt)),type = "response"))
 }
 
 
@@ -974,8 +974,8 @@ attr(res$listValsPredictY,"modele") <- modele
 if (modele %in% c("pls-beta")) {
 tt <- res$ttPredictY
 #assign("tt", tt, envir=parent.frame(n=sys.nframe()))
-res$listValsPredictY <- cbind(res$listValsPredictY,predict(tempregbeta,newdata=data.frame(tt),type = "response"))
-res$listValsPhisPredictY <- cbind(res$listValsPhisPredictY,predict(tempregbeta,newdata=data.frame(tt),type = "precision"))
+res$listValsPredictY <- cbind(res$listValsPredictY,predict(tempregbeta,newdata=data.frame(tt = I(tt)),type = "response"))
+res$listValsPhisPredictY <- cbind(res$listValsPhisPredictY,predict(tempregbeta,newdata=data.frame(tt = I(tt)),type = "precision"))
 }
 
 

@@ -16,8 +16,8 @@ Partial least squares Regression for (weighted) beta regression models (Bertrand
 Useful links:
 \itemize{
   \item \url{https://fbertran.github.io/plsRbeta/}
-  \item \url{https://github.com/fbertran/plsRbeta/}
-  \item Report bugs at \url{https://github.com/fbertran/plsRbeta/issues/}
+  \item \url{https://github.com/fbertran/plsRbeta}
+  \item Report bugs at \url{https://github.com/fbertran/plsRbeta/issues}
 }
 
 }
